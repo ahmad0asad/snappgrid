@@ -1,1 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Crossword Puzzle — SnappGrid</title>
+<meta name="description" content="Play today's free daily mini crossword puzzle. New puzzle every day, no login required. Solve across and down clues in your browser.">
+<link rel="canonical" href="https://snappgrid.pages.dev/games/crossword/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F3EC;
+    --ink: #1A1714;
+    --ink-soft: #4A4540;
+    --ink-muted: #8A847E;
+    --gold: #C8922A;
+    --gold-light: #F0D9A8;
+    --gold-pale: #FBF3E2;
+    --white: #FFFFFF;
+    --border: rgba(26,23,20,0.12);
+    --border-strong: rgba(26,23,20,0.25);
+    --green: #2E7D32;
+    --red: #C62828;
+    --radius: 4px;
+    --radius-lg: 8px;
+    --cell: 58px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 0 clamp(16px, 4vw, 60px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+  .nav-links a.active {
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 2px;
+    color: var(--ink);
+  }
+
+  /* ── AD SLOT ── */
+  .ad-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26,23,20,0.04);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .ad-top { height: 90px; max-width: 728px; margin: 16px auto; }
+  .ad-bottom { height: 250px; max-width: 300px; margin: 0 auto; }
+  .ad-wrap { padding: 0 clamp(16px, 4vw, 60px); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px clamp(16px, 4vw, 60px) 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .page-header-left .breadcrumb {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .page-header-left .breadcrumb a {
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+
+  .page-header-left .breadcrumb a:hover { color: var(--ink); }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+
+  .puzzle-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .meta-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-soft);
+  }
+
+  .meta-badge.gold-badge {
+    background: var(--gold-pale);
+    border-color: var(--gold-light);
+    color: var(--gold);
+  }
+
+  /* ── TIMER ── */
+  #timer {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 2px;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* ── GAME LAYOUT ── */
+  .game-layout {
+    max-width: 1100px;
+    margin: 24px auto 0;
+    padding: 0 clamp(16px, 4vw, 60px) 60px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* ── GRID ── */
+  .grid-area { display: flex; flex-direction: column; gap: 16px; }
+
+  .crossword-grid {
+    display: inline-grid;
+    grid-template-columns: repeat(5, var(--cell));
+    grid-template-rows: repeat(5, var(--cell));
+    gap: 3px;
+    background: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 3px;
+    box-shadow: 5px 5px 0 rgba(26,23,20,0.2);
+    user-select: none;
+  }
+
+  .cell {
+    width: var(--cell);
+    height: var(--cell);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--white);
+    transition: background 0.08s;
+  }
+
+  .cell.black { background: var(--ink); cursor: default; }
+  .cell.selected { background: #FFD700; }
+  .cell.highlighted { background: #FFF8D6; }
+  .cell.correct .cell-letter { color: var(--green); }
+  .cell.wrong .cell-letter { color: var(--red); }
+
+  .cell-number {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .cell.selected .cell-number { color: #776600; }
+
+  .cell-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.15s;
+  }
+
+  /* ── ACTIVE CLUE ── */
+  .active-clue-bar {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+  }
+
+  .active-clue-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .active-clue-text {
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(247,243,236,0.9);
+    line-height: 1.4;
+  }
+
+  /* ── BUTTONS ── */
+  .grid-buttons {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.12s;
+    border: 1.5px solid var(--ink);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn-outline:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .btn-fill {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .btn-fill:hover { opacity: 0.8; }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+  }
+
+  .btn-gold:hover { opacity: 0.85; }
+
+  /* ── SUCCESS BANNER ── */
+  .success-banner {
+    display: none;
+    background: var(--green);
+    color: var(--white);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.5px;
+    animation: slideDown 0.3s ease;
+  }
+
+  .success-banner.visible { display: block; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── CLUES PANEL ── */
+  .clues-panel { display: flex; flex-direction: column; gap: 28px; }
+
+  .clue-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .clue-row {
+    display: flex;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.1s;
+    border-left: 3px solid transparent;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .clue-row:hover { background: rgba(26,23,20,0.05); }
+
+  .clue-row.active {
+    background: var(--gold-pale);
+    border-left-color: var(--gold);
+    color: var(--ink);
+  }
+
+  .clue-row.done {
+    text-decoration: line-through;
+    opacity: 0.4;
+  }
+
+  .clue-row-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    min-width: 16px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── HOW TO PLAY ── */
+  .how-box {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-top: 8px;
+  }
+
+  .how-box-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+
+  .how-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 3px 0;
+  }
+
+  .how-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    background: var(--cream);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    padding: 1px 6px;
+    color: var(--ink);
+    min-width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* ── NEXT PUZZLE ── */
+  .next-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 60px) 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .next-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .next-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,23,20,0.08);
+  }
+
+  .next-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .next-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .next-card-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .next-card-arrow {
+    font-size: 16px;
+    margin-top: auto;
+    padding-top: 12px;
+    color: var(--gold);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 760px) {
+    :root { --cell: 52px; }
+
+    .game-layout {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .grid-area { align-items: stretch; }
+    .crossword-grid { margin: 0 auto; }
+    .nav-links { display: none; }
+    .next-section { grid-template-columns: 1fr; }
+    .puzzle-meta { gap: 8px; }
+  }
+
+  @media (max-width: 420px) {
+    :root { --cell: 44px; }
+    .cell-letter { font-size: 20px; }
+    .cell-number { font-size: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Snapp<span>Grid</span></a>
+  <ul class="nav-links">
+    <li><a href="/games/crossword/" class="active">Crossword</a></li>
+    <li><a href="/games/wordsearch/">Word Search</a></li>
+    <li><a href="/games/sudoku/">Sudoku</a></li>
+    <li><a href="/#subscribe">Subscribe</a></li>
+  </ul>
+</nav>
+
+<!-- AD TOP -->
+<div class="ad-wrap">
+  <div class="ad-slot ad-top">Advertisement</div>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="breadcrumb">
+      <a href="/">SnappGrid</a> / Crossword
+    </div>
+    <h1 class="page-title">Daily Crossword</h1>
+  </div>
+  <div class="puzzle-meta">
+    <span class="meta-badge gold-badge" id="puzzle-date">Puzzle #001</span>
+    <span class="meta-badge">5 words</span>
+    <span class="meta-badge">Easy</span>
+    <div id="timer">0:00</div>
+  </div>
+</div>
+
+<!-- GAME LAYOUT -->
+<div class="game-layout">
+
+  <!-- LEFT: GRID AREA -->
+  <div class="grid-area">
+
+    <div class="success-banner" id="success-banner">
+      ✓ Puzzle solved! Well done.
+    </div>
+
+    <div class="crossword-grid" id="grid" role="grid" aria-label="Crossword puzzle grid"></div>
+
+    <div class="active-clue-bar" id="active-clue-bar">
+      <span class="active-clue-tag" id="active-clue-tag">—</span>
+      <span class="active-clue-text" id="active-clue-text">Select a cell to begin</span>
+    </div>
+
+    <div class="grid-buttons">
+      <button class="btn btn-outline" onclick="resetGame()">Reset</button>
+      <button class="btn btn-outline" onclick="checkAnswers()">Check</button>
+      <button class="btn btn-gold" onclick="revealAll()">Reveal</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: CLUES PANEL -->
+  <div class="clues-panel" id="clues-panel">
+
+    <div>
+      <div class="clue-group-title">Across</div>
+      <div id="clues-across"></div>
+    </div>
+
+    <div>
+      <div class="clue-group-title">Down</div>
+      <div id="clues-down"></div>
+    </div>
+
+    <div class="how-box">
+      <div class="how-box-title">How to play</div>
+      <div class="how-row"><span class="how-key">Click</span> Select cell</div>
+      <div class="how-row"><span class="how-key">Click×2</span> Flip direction</div>
+      <div class="how-row"><span class="how-key">Type</span> Fill letter</div>
+      <div class="how-row"><span class="how-key">Tab</span> Next clue</div>
+      <div class="how-row"><span class="how-key">⌫</span> Delete letter</div>
+      <div class="how-row"><span class="how-key">↑↓←→</span> Navigate</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AD BOTTOM -->
+<div class="ad-wrap" style="margin-bottom: 40px;">
+  <div class="ad-slot ad-bottom">Advertisement</div>
+</div>
+
+<!-- NEXT SECTION -->
+<div class="next-section">
+  <a href="/games/wordsearch/" class="next-card">
+    <div class="next-card-label">Also today</div>
+    <div class="next-card-title">Word Search</div>
+    <div class="next-card-desc">Find hidden words in a grid. Relaxing and satisfying.</div>
+    <div class="next-card-arrow">→</div>
+  </a>
+  <a href="/games/sudoku/" class="next-card">
+    <div class="next-card-label">Coming soon</div>
+    <div class="next-card-title">Sudoku</div>
+    <div class="next-card-desc">Pure logic, no guessing. Fill the 9×9 grid.</div>
+    <div class="next-card-arrow">→</div>
+  </a>
+  <a href="/#subscribe" class="next-card" style="border-color: var(--gold-light); background: var(--gold-pale);">
+    <div class="next-card-label">Never miss one</div>
+    <div class="next-card-title">Daily Reminder</div>
+    <div class="next-card-desc">Get tomorrow's puzzle straight to your inbox.</div>
+    <div class="next-card-arrow" style="color: var(--gold);">→</div>
+  </a>
+</div>
+
+<script>
+// ── PUZZLE DATA ─────────────────────────────────────────
+// To add more puzzles: add objects to the PUZZLES array.
+// The game picks today's puzzle by index (day of year % puzzles.length).
+
+const PUZZLES = [
+  {
+    id: "001",
+    title: "Puzzle #001",
+    grid: [
+      [1,1,1,1,1],
+      [1,0,0,0,1],
+      [1,1,1,1,1],
+      [1,0,0,0,1],
+      [1,1,1,1,1]
+    ],
+    solution: [
+      ["S","H","O","U","T"],
+      ["P",null,null,null,"R"],
+      ["I","R","A","T","E"],
+      ["N",null,null,null,"A"],
+      ["E","M","B","E","D"]
+    ],
+    cellNums: [
+      [1,null,null,null,2],
+      [null,null,null,null,null],
+      [3,null,null,null,null],
+      [null,null,null,null,null],
+      [4,null,null,null,null]
+    ],
+    clues: {
+      across: [
+        { num:1, text:"Loud cry or yell",           row:0, col:0, len:5 },
+        { num:3, text:"Furiously angry",              row:2, col:0, len:5 },
+        { num:4, text:"Fix firmly into a surface",   row:4, col:0, len:5 }
+      ],
+      down: [
+        { num:1, text:"Backbone; vertebral column",  row:0, col:0, len:5 },
+        { num:2, text:"Step or walk upon",            row:0, col:4, len:5 }
+      ]
+    }
+  },
+  {
+    id: "002",
+    title: "Puzzle #002",
+    grid: [
+      [1,1,1,1,1],
+      [1,0,0,0,1],
+      [1,1,1,1,1],
+      [1,0,0,0,1],
+      [1,1,1,1,1]
+    ],
+    solution: [
+      ["B","L","A","Z","E"],
+      ["R",null,null,null,"L"],
+      ["A","L","O","F","T"],
+      ["V",null,null,null,"I"],
+      ["E","V","A","D","E"]
+    ],
+    cellNums: [
+      [1,null,null,null,2],
+      [null,null,null,null,null],
+      [3,null,null,null,null],
+      [null,null,null,null,null],
+      [4,null,null,null,null]
+    ],
+    clues: {
+      across: [
+        { num:1, text:"Intense fire or brilliant light", row:0, col:0, len:5 },
+        { num:3, text:"High up in the air",              row:2, col:0, len:5 },
+        { num:4, text:"Escape or avoid cleverly",        row:4, col:0, len:5 }
+      ],
+      down: [
+        { num:1, text:"Courageous; showing no fear",     row:0, col:0, len:5 },
+        { num:2, text:"Slender; graceful",                row:0, col:4, len:5 }
+      ]
+    }
+  }
+];
+
+// ── PICK TODAY'S PUZZLE ─────────────────────────────────
+function getDayIndex() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+  return dayOfYear % PUZZLES.length;
+}
+
+const puzzle = PUZZLES[getDayIndex()];
+document.getElementById('puzzle-date').textContent = puzzle.title;
+
+// ── STATE ───────────────────────────────────────────────
+let userGrid = puzzle.solution.map(row =>
+  row.map(c => c === null ? null : "")
+);
+let selected = { row: 0, col: 0, dir: "across" };
+let checked = false;
+let solved = false;
+let timerInterval = null;
+let seconds = 0;
+
+// ── TIMER ───────────────────────────────────────────────
+function startTimer() {
+  timerInterval = setInterval(() => {
+    seconds++;
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    document.getElementById('timer').textContent =
+      m + ":" + String(s).padStart(2, "0");
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+}
+
+// ── HELPERS ─────────────────────────────────────────────
+function getClueCells(clue, dir) {
+  return Array.from({ length: clue.len }, (_, i) =>
+    dir === "across"
+      ? [clue.row, clue.col + i]
+      : [clue.row + i, clue.col]
+  );
+}
+
+function findClue(row, col, dir) {
+  const list = dir === "across" ? puzzle.clues.across : puzzle.clues.down;
+  return list.find(c => {
+    const cells = getClueCells(c, dir);
+    return cells.some(([r, cc]) => r === row && cc === col);
+  }) || null;
+}
+
+function getHighlightCells() {
+  const clue = findClue(selected.row, selected.col, selected.dir);
+  return clue ? getClueCells(clue, selected.dir) : [];
+}
+
+function isWordDone(clue, dir) {
+  return getClueCells(clue, dir).every(([r, c]) =>
+    userGrid[r][c] && userGrid[r][c] === puzzle.solution[r][c]
+  );
+}
+
+// ── ADVANCE / RETREAT ───────────────────────────────────
+function advance() {
+  const clue = findClue(selected.row, selected.col, selected.dir);
+  if (!clue) return;
+  const cells = getClueCells(clue, selected.dir);
+  const idx = cells.findIndex(([r, c]) => r === selected.row && c === selected.col);
+  // Move to next empty in word first
+  for (let i = idx + 1; i < cells.length; i++) {
+    const [r, c] = cells[i];
+    if (!userGrid[r][c]) { selected = { ...selected, row: r, col: c }; render(); return; }
+  }
+  // Otherwise just move forward
+  if (idx + 1 < cells.length) {
+    const [r, c] = cells[idx + 1];
+    selected = { ...selected, row: r, col: c };
+    render();
+  }
+}
+
+function retreat() {
+  const clue = findClue(selected.row, selected.col, selected.dir);
+  if (!clue) return;
+  const cells = getClueCells(clue, selected.dir);
+  const idx = cells.findIndex(([r, c]) => r === selected.row && c === selected.col);
+  if (idx > 0) {
+    const [r, c] = cells[idx - 1];
+    selected = { ...selected, row: r, col: c };
+    render();
+  }
+}
+
+function nextClue() {
+  const all = [
+    ...puzzle.clues.across.map(c => ({ ...c, dir: "across" })),
+    ...puzzle.clues.down.map(c => ({ ...c, dir: "down" }))
+  ];
+  const cur = all.findIndex(c =>
+    c.dir === selected.dir &&
+    c.num === (findClue(selected.row, selected.col, selected.dir) || {}).num
+  );
+  const next = all[(cur + 1) % all.length];
+  selected = { row: next.row, col: next.col, dir: next.dir };
+  render();
+}
+
+// ── GAME ACTIONS ────────────────────────────────────────
+function resetGame() {
+  userGrid = puzzle.solution.map(row => row.map(c => c === null ? null : ""));
+  selected = { row: 0, col: 0, dir: "across" };
+  checked = false;
+  solved = false;
+  seconds = 0;
+  stopTimer();
+  startTimer();
+  document.getElementById('success-banner').classList.remove('visible');
+  document.getElementById('timer').textContent = "0:00";
+  render();
+}
+
+function checkAnswers() {
+  checked = true;
+  render();
+}
+
+function revealAll() {
+  userGrid = puzzle.solution.map(row => row.map(c => c));
+  solved = true;
+  stopTimer();
+  render();
+}
+
+function checkWin(grid) {
+  return grid.every((row, r) =>
+    row.every((cell, c) =>
+      puzzle.solution[r][c] === null || cell === puzzle.solution[r][c]
+    )
+  );
+}
+
+// ── CELL CLICK ──────────────────────────────────────────
+function handleCellClick(r, c) {
+  if (!puzzle.grid[r][c]) return;
+
+  if (!timerInterval && !solved) startTimer();
+
+  if (selected.row === r && selected.col === c) {
+    const newDir = selected.dir === "across" ? "down" : "across";
+    if (findClue(r, c, newDir)) {
+      selected = { row: r, col: c, dir: newDir };
+    }
+  } else {
+    const preferDir = selected.dir;
+    if (findClue(r, c, preferDir)) {
+      selected = { row: r, col: c, dir: preferDir };
+    } else {
+      const other = preferDir === "across" ? "down" : "across";
+      if (findClue(r, c, other)) {
+        selected = { row: r, col: c, dir: other };
+      }
+    }
+  }
+  render();
+}
+
+// ── CLUE CLICK ──────────────────────────────────────────
+function handleClueClick(clue, dir) {
+  if (!timerInterval && !solved) startTimer();
+  selected = { row: clue.row, col: clue.col, dir };
+  render();
+}
+
+// ── KEYBOARD ────────────────────────────────────────────
+document.addEventListener("keydown", e => {
+  if (!selected) return;
+  const { row, col, dir } = selected;
+
+  if (e.key === "Tab") {
+    e.preventDefault();
+    nextClue();
+    return;
+  }
+
+  if (e.key === "ArrowRight") {
+    e.preventDefault();
+    if (dir === "across") advance();
+    else { selected = { row, col, dir: "across" }; render(); }
+    return;
+  }
+  if (e.key === "ArrowLeft") {
+    e.preventDefault();
+    if (dir === "across") retreat();
+    else { selected = { row, col, dir: "across" }; render(); }
+    return;
+  }
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    if (dir === "down") advance();
+    else { selected = { row, col, dir: "down" }; render(); }
+    return;
+  }
+  if (e.key === "ArrowUp") {
+    e.preventDefault();
+    if (dir === "down") retreat();
+    else { selected = { row, col, dir: "down" }; render(); }
+    return;
+  }
+
+  if (e.key === "Backspace") {
+    e.preventDefault();
+    if (userGrid[row][col] === "") retreat();
+    else {
+      userGrid[row][col] = "";
+      checked = false;
+    }
+    render();
+    return;
+  }
+
+  if (/^[a-zA-Z]$/.test(e.key)) {
+    e.preventDefault();
+    if (!timerInterval && !solved) startTimer();
+    const letter = e.key.toUpperCase();
+    userGrid[row][col] = letter;
+    checked = false;
+
+    if (checkWin(userGrid)) {
+      solved = true;
+      stopTimer();
+      document.getElementById('success-banner').classList.add('visible');
+      render();
+      return;
+    }
+    render();
+    advance();
+  }
+});
+
+// ── RENDER ──────────────────────────────────────────────
+function render() {
+  const gridEl = document.getElementById('grid');
+  const highlight = getHighlightCells();
+  const activeClue = findClue(selected.row, selected.col, selected.dir);
+
+  // Build grid cells
+  let html = "";
+  for (let r = 0; r < 5; r++) {
+    for (let c = 0; c < 5; c++) {
+      const isWhite = puzzle.grid[r][c] === 1;
+      if (!isWhite) {
+        html += `<div class="cell black" role="gridcell"></div>`;
+        continue;
+      }
+
+      const isSel = selected.row === r && selected.col === c;
+      const isHigh = highlight.some(([hr, hc]) => hr === r && hc === c);
+      const num = puzzle.cellNums[r][c];
+      const letter = userGrid[r][c] || "";
+
+      let cls = "cell";
+      if (isSel) cls += " selected";
+      else if (isHigh) cls += " highlighted";
+
+      if (checked && letter) {
+        if (letter === puzzle.solution[r][c]) cls += " correct";
+        else cls += " wrong";
+      }
+
+      html += `<div class="${cls}" role="gridcell" onclick="handleCellClick(${r},${c})">`;
+      if (num) html += `<span class="cell-number">${num}</span>`;
+      html += `<span class="cell-letter">${letter}</span>`;
+      html += `</div>`;
+    }
+  }
+  gridEl.innerHTML = html;
+
+  // Active clue bar
+  const tag = document.getElementById('active-clue-tag');
+  const text = document.getElementById('active-clue-text');
+  if (activeClue) {
+    tag.textContent = activeClue.num + (selected.dir === "across" ? "A" : "D");
+    text.textContent = activeClue.text;
+  } else {
+    tag.textContent = "—";
+    text.textContent = "Select a cell to begin";
+  }
+
+  // Clue lists
+  ["across", "down"].forEach(dir => {
+    const container = document.getElementById("clues-" + dir);
+    container.innerHTML = puzzle.clues[dir].map(clue => {
+      const isActive = activeClue && activeClue.num === clue.num && selected.dir === dir;
+      const isDone = isWordDone(clue, dir);
+      let cls = "clue-row";
+      if (isActive) cls += " active";
+      if (isDone) cls += " done";
+      return `<div class="${cls}" onclick="handleClueClick(${JSON.stringify(clue)}, '${dir}')">
+        <span class="clue-row-num">${clue.num}</span>
+        <span>${clue.text}</span>
+      </div>`;
+    }).join("");
+  });
+}
+
+// ── INIT ────────────────────────────────────────────────
+render();
+</script>
+
+</body>
+</html>
