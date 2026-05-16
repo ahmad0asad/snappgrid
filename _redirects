@@ -1,1 +1,5 @@
-
+# Cloudflare Pages redirects
+/game/crossword  /games/crossword/  301
+/game/wordsearch /games/wordsearch/ 301
+/game/sudoku     /games/sudoku/     301
+/game/trivia     /games/trivia/     301

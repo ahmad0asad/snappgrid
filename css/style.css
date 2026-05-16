@@ -1,1 +1,95 @@
+/* ── SNAPPGRID SHARED STYLES ───────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #F7F3EC; --ink: #1A1714; --ink-soft: #4A4540; --ink-muted: #8A847E;
+  --gold: #C8922A; --gold-light: #F0D9A8; --gold-pale: #FBF3E2;
+  --white: #FFFFFF; --border: rgba(26,23,20,0.12); --border-strong: rgba(26,23,20,0.25);
+  --green: #2E7D32; --green-pale: #EAF3DE; --green-light: #C0DD97;
+  --red: #C62828; --red-pale: #FAECE7; --red-light: #F0B0A0;
+  --blue: #2060C0;
+  --radius: 4px; --radius-lg: 8px; --radius-xl: 12px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
 
+/* ── NAV ── */
+nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--border); padding: 0 clamp(16px,4vw,60px); display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.nav-logo { font-family: 'Playfair Display',serif; font-size: 20px; font-weight: 900; color: var(--ink); text-decoration: none; letter-spacing: -0.5px; }
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; align-items: center; gap: 20px; list-style: none; }
+.nav-links a { font-size: 12px; font-weight: 500; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+.nav-links a.nav-cta { background: var(--ink); color: var(--cream); padding: 6px 14px; border-radius: var(--radius); }
+.nav-links a.nav-cta:hover { opacity: 0.85; border-bottom: none; }
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); margin: 4px 0; border-radius: 2px; }
+
+/* ── AD SLOTS ── */
+.ad-slot { display: flex; align-items: center; justify-content: center; background: rgba(26,23,20,0.04); border: 1px dashed var(--border-strong); border-radius: var(--radius); font-family: 'DM Mono',monospace; font-size: 11px; color: var(--ink-muted); letter-spacing: 1px; text-transform: uppercase; }
+.ad-top { height: 90px; max-width: 728px; margin: 14px auto; }
+.ad-bottom { height: 250px; max-width: 300px; margin: 0 auto; }
+.ad-wrap { padding: 0 clamp(16px,4vw,60px); }
+
+/* ── PAGE HEADER ── */
+.page-header { max-width: 1100px; margin: 0 auto; padding: 24px clamp(16px,4vw,60px) 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.breadcrumb { font-family: 'DM Mono',monospace; font-size: 11px; color: var(--ink-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.breadcrumb a { color: var(--ink-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--ink); }
+.page-title { font-family: 'Playfair Display',serif; font-size: clamp(22px,4vw,34px); font-weight: 700; color: var(--ink); letter-spacing: -0.5px; }
+.puzzle-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.meta-badge { font-family: 'DM Mono',monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 11px; border-radius: 100px; border: 1px solid var(--border-strong); color: var(--ink-soft); }
+.meta-badge.gold-badge { background: var(--gold-pale); border-color: var(--gold-light); color: var(--gold); }
+#timer { font-family: 'DM Mono',monospace; font-size: 20px; font-weight: 500; color: var(--ink); letter-spacing: 2px; min-width: 60px; text-align: right; }
+
+/* ── SHARED BUTTONS ── */
+.btn { padding: 10px 16px; font-family: 'DM Sans',sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: var(--radius); cursor: pointer; transition: all 0.12s; border: 1.5px solid var(--ink); }
+.btn-outline { background: transparent; color: var(--ink); }
+.btn-outline:hover { background: var(--ink); color: var(--cream); }
+.btn-fill { background: var(--ink); color: var(--cream); }
+.btn-fill:hover { opacity: 0.8; }
+.btn-gold { background: var(--gold); color: var(--white); border-color: var(--gold); }
+.btn-gold:hover { opacity: 0.85; }
+
+/* ── SUCCESS BANNER ── */
+.success-banner { display: none; background: var(--green); color: var(--white); padding: 12px 16px; border-radius: var(--radius); font-size: 14px; font-weight: 600; text-align: center; letter-spacing: 0.5px; animation: slideDown 0.3s ease; }
+.success-banner.visible { display: block; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── NEXT CARDS ── */
+.next-section { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px,4vw,60px) 60px; display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.next-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; text-decoration: none; color: inherit; transition: transform 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; gap: 5px; }
+.next-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,23,20,0.08); }
+.next-card-label { font-family: 'DM Mono',monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); }
+.next-card-title { font-family: 'Playfair Display',serif; font-size: 17px; font-weight: 700; color: var(--ink); }
+.next-card-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin-top: 3px; }
+.next-card-arrow { font-size: 15px; margin-top: auto; padding-top: 10px; color: var(--gold); }
+
+/* ── SECTION LABELS ── */
+.section-label { font-family: 'DM Mono',monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; }
+.section-title { font-family: 'Playfair Display',serif; font-size: clamp(28px,4vw,44px); font-weight: 700; color: var(--ink); letter-spacing: -0.5px; line-height: 1.1; }
+
+/* ── FOOTER ── */
+footer { background: var(--ink); padding: clamp(28px,4vw,48px) clamp(16px,5vw,80px); }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.footer-logo { font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--cream); text-decoration: none; }
+.footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+.footer-links a { font-size: 11px; color: rgba(247,243,236,0.4); text-decoration: none; font-family: 'DM Mono',monospace; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.15s; }
+.footer-links a:hover { color: var(--cream); }
+.footer-copy { font-size: 11px; color: rgba(247,243,236,0.25); font-family: 'DM Mono',monospace; width: 100%; text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(247,243,236,0.08); }
+
+/* ── DAILY REFRESH TOAST ── */
+.refresh-toast { display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--cream); padding: 12px 20px; border-radius: var(--radius-lg); font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 999; gap: 12px; align-items: center; border: 1px solid var(--gold); }
+.refresh-toast.visible { display: flex; }
+.refresh-toast button { background: var(--gold); color: var(--white); border: none; padding: 6px 14px; border-radius: var(--radius); font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans',sans-serif; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: var(--cream); border-bottom: 1px solid var(--border); padding: 16px 20px; gap: 12px; align-items: flex-start; }
+  .nav-hamburger { display: block; }
+  .next-section { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+  .footer-links { justify-content: center; }
+  .footer-copy { margin-top: 16px; padding-top: 16px; }
+}

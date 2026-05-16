@@ -3,740 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Daily Word Search Puzzle — SnappGrid</title>
-<meta name="description" content="Play today's free daily word search puzzle online. Find hidden words in all directions. New puzzle every day, no login required.">
-<link rel="canonical" href="https://snappgrid.pages.dev/games/wordsearch/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F7F3EC;
-    --ink: #1A1714;
-    --ink-soft: #4A4540;
-    --ink-muted: #8A847E;
-    --gold: #C8922A;
-    --gold-light: #F0D9A8;
-    --gold-pale: #FBF3E2;
-    --white: #FFFFFF;
-    --border: rgba(26,23,20,0.12);
-    --border-strong: rgba(26,23,20,0.25);
-    --green: #2E7D32;
-    --radius: 4px;
-    --radius-lg: 8px;
-    --cell: 48px;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-  }
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--cream);
-    border-bottom: 1px solid var(--border);
-    padding: 0 clamp(16px,4vw,60px);
-    display: flex; align-items: center; justify-content: space-between;
-    height: 56px;
-  }
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px; font-weight: 900;
-    color: var(--ink); text-decoration: none; letter-spacing: -0.5px;
-  }
-  .nav-logo span { color: var(--gold); }
-  .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
-  .nav-links a {
-    font-size: 12px; font-weight: 500; color: var(--ink-soft);
-    text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
-    transition: color 0.15s;
-  }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-links a.active { color: var(--ink); border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
-
-  .ad-slot {
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(26,23,20,0.04);
-    border: 1px dashed var(--border-strong); border-radius: var(--radius);
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: var(--ink-muted); letter-spacing: 1px; text-transform: uppercase;
-  }
-  .ad-top { height: 90px; max-width: 728px; margin: 16px auto; }
-  .ad-bottom { height: 250px; max-width: 300px; margin: 0 auto; }
-  .ad-wrap { padding: 0 clamp(16px,4vw,60px); }
-
-  .page-header {
-    max-width: 1100px; margin: 0 auto;
-    padding: 28px clamp(16px,4vw,60px) 0;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
-  }
-  .breadcrumb {
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: var(--ink-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px;
-  }
-  .breadcrumb a { color: var(--ink-muted); text-decoration: none; }
-  .breadcrumb a:hover { color: var(--ink); }
-  .page-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(24px,4vw,36px); font-weight: 700;
-    color: var(--ink); letter-spacing: -0.5px;
-  }
-  .puzzle-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .meta-badge {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 5px 12px; border-radius: 100px;
-    border: 1px solid var(--border-strong); color: var(--ink-soft);
-  }
-  .meta-badge.gold-badge { background: var(--gold-pale); border-color: var(--gold-light); color: var(--gold); }
-  #timer {
-    font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500;
-    color: var(--ink); letter-spacing: 2px; min-width: 70px; text-align: right;
-  }
-
-  /* ── GAME LAYOUT ── */
-  .game-layout {
-    max-width: 1100px; margin: 24px auto 0;
-    padding: 0 clamp(16px,4vw,60px) 60px;
-    display: grid; grid-template-columns: auto 1fr;
-    gap: 40px; align-items: start;
-  }
-  .grid-area { display: flex; flex-direction: column; gap: 16px; }
-
-  /* ── WORD SEARCH GRID ── */
-  .ws-grid {
-    display: inline-grid;
-    grid-template-columns: repeat(10, var(--cell));
-    grid-template-rows: repeat(10, var(--cell));
-    gap: 2px;
-    background: var(--border);
-    border: 2px solid var(--ink);
-    border-radius: 3px;
-    box-shadow: 5px 5px 0 rgba(26,23,20,0.15);
-    cursor: crosshair;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  .ws-cell {
-    width: var(--cell); height: var(--cell);
-    display: flex; align-items: center; justify-content: center;
-    background: var(--white);
-    font-family: 'DM Mono', monospace;
-    font-size: 18px; font-weight: 500;
-    color: var(--ink);
-    transition: background 0.06s;
-    position: relative;
-  }
-  .ws-cell:hover { background: #F0EBE0; }
-  .ws-cell.selecting { background: #FFE08A; color: var(--ink); }
-  .ws-cell.found-0 { background: #FFE066; color: #7A5800; }
-  .ws-cell.found-1 { background: #A8E6CF; color: #1A5C3A; }
-  .ws-cell.found-2 { background: #FFB3B3; color: #7A1A1A; }
-  .ws-cell.found-3 { background: #B3D9FF; color: #1A4A7A; }
-  .ws-cell.found-4 { background: #D9B3FF; color: #4A1A7A; }
-  .ws-cell.found-5 { background: #B3FFB3; color: #1A7A2A; }
-  .ws-cell.found-6 { background: #FFD9B3; color: #7A3A1A; }
-  .ws-cell.found-7 { background: #FFB3E6; color: #7A1A5A; }
-
-  /* ── STATUS BAR ── */
-  .status-bar {
-    background: var(--ink); color: var(--cream);
-    padding: 12px 16px; border-radius: var(--radius);
-    display: flex; align-items: center; gap: 10px; min-height: 48px;
-    font-size: 13px;
-  }
-  .status-icon { font-size: 16px; }
-  .status-text { font-style: italic; opacity: 0.85; }
-
-  /* ── BUTTONS ── */
-  .grid-buttons { display: flex; gap: 6px; }
-  .btn {
-    flex: 1; padding: 10px 8px;
-    font-size: 11px; font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 1px; text-transform: uppercase;
-    border-radius: var(--radius); cursor: pointer;
-    transition: all 0.12s; border: 1.5px solid var(--ink);
-  }
-  .btn-outline { background: transparent; color: var(--ink); }
-  .btn-outline:hover { background: var(--ink); color: var(--cream); }
-  .btn-fill { background: var(--ink); color: var(--cream); }
-  .btn-fill:hover { opacity: 0.8; }
-  .btn-gold { background: var(--gold); color: var(--white); border-color: var(--gold); }
-  .btn-gold:hover { opacity: 0.85; }
-
-  /* ── SUCCESS ── */
-  .success-banner {
-    display: none; background: var(--green); color: var(--white);
-    padding: 12px 16px; border-radius: var(--radius);
-    font-size: 14px; font-weight: 600; text-align: center;
-    letter-spacing: 0.5px; animation: slideDown 0.3s ease;
-  }
-  .success-banner.visible { display: block; }
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── WORD LIST PANEL ── */
-  .words-panel { display: flex; flex-direction: column; gap: 24px; }
-
-  .theme-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gold); background: var(--gold-pale);
-    border: 1px solid var(--gold-light);
-    padding: 5px 14px; border-radius: 100px;
-    margin-bottom: 4px; width: fit-content;
-  }
-
-  .words-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px; font-weight: 700; color: var(--ink);
-    margin-bottom: 12px;
-  }
-
-  .word-list { display: flex; flex-direction: column; gap: 6px; }
-
-  .word-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 12px; border-radius: var(--radius);
-    background: var(--white); border: 1.5px solid var(--border);
-    font-family: 'DM Mono', monospace; font-size: 14px;
-    font-weight: 500; color: var(--ink);
-    transition: all 0.2s;
-  }
-
-  .word-item.found {
-    text-decoration: line-through;
-    opacity: 0.55;
-  }
-
-  .word-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--border-strong); flex-shrink: 0;
-    transition: background 0.2s;
-  }
-
-  .word-dot.found-0 { background: #C8A020; }
-  .word-dot.found-1 { background: #2E9E6E; }
-  .word-dot.found-2 { background: #C83030; }
-  .word-dot.found-3 { background: #2060C0; }
-  .word-dot.found-4 { background: #6030A0; }
-  .word-dot.found-5 { background: #208020; }
-  .word-dot.found-6 { background: #B05020; }
-  .word-dot.found-7 { background: #A020A0; }
-
-  /* ── PROGRESS ── */
-  .progress-wrap { margin-top: 4px; }
-  .progress-label {
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1px;
-    margin-bottom: 6px; display: flex; justify-content: space-between;
-  }
-  .progress-bar-bg {
-    background: var(--border); border-radius: 100px; height: 6px;
-  }
-  .progress-bar-fill {
-    background: var(--gold); height: 6px; border-radius: 100px;
-    transition: width 0.4s ease;
-  }
-
-  /* ── HOW TO PLAY ── */
-  .how-box {
-    background: var(--white); border: 1.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 16px 20px;
-  }
-  .how-box-title {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: var(--ink-muted); margin-bottom: 10px;
-  }
-  .how-row {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 12px; color: var(--ink-soft); padding: 3px 0;
-  }
-  .how-key {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    background: var(--cream); border: 1px solid var(--border-strong);
-    border-radius: 3px; padding: 1px 6px; color: var(--ink);
-    white-space: nowrap; flex-shrink: 0;
-  }
-
-  /* ── DIRECTIONS HINT ── */
-  .dir-hint {
-    background: var(--white); border: 1.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 16px 20px;
-  }
-  .dir-hint-title {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: var(--ink-muted); margin-bottom: 10px;
-  }
-  .dir-grid {
-    display: grid; grid-template-columns: repeat(3,28px);
-    gap: 4px; margin: 0 auto; width: fit-content;
-  }
-  .dir-cell {
-    width: 28px; height: 28px; border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; background: var(--cream);
-    border: 1px solid var(--border-strong);
-  }
-  .dir-cell.center { background: var(--gold-pale); border-color: var(--gold-light); font-weight: 700; font-size: 10px; font-family: 'DM Mono',monospace; }
-
-  /* ── NEXT SECTION ── */
-  .next-section {
-    max-width: 1100px; margin: 0 auto;
-    padding: 0 clamp(16px,4vw,60px) 60px;
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
-  }
-  .next-card {
-    background: var(--white); border: 1.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 20px;
-    text-decoration: none; color: inherit;
-    transition: transform 0.15s, box-shadow 0.15s;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .next-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,23,20,0.08); }
-  .next-card-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); }
-  .next-card-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); }
-  .next-card-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px; }
-  .next-card-arrow { font-size: 16px; margin-top: auto; padding-top: 12px; color: var(--gold); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 780px) {
-    :root { --cell: 36px; }
-    .game-layout { grid-template-columns: 1fr; gap: 24px; }
-    .ws-grid { margin: 0 auto; }
-    .nav-links { display: none; }
-    .next-section { grid-template-columns: 1fr; }
-    .words-title { font-size: 17px; }
-  }
-  @media (max-width: 420px) {
-    :root { --cell: 30px; }
-    .ws-cell { font-size: 14px; }
-  }
+<title>Free Daily Word Search Puzzle — Play Online | SnappGrid</title>
+<meta name="description" content="Play today's free daily word search puzzle online. Find hidden words in all 8 directions. New themed puzzle every day, no login required.">
+<link rel="canonical" href="https://snappgrid.com/games/wordsearch/">
+<meta property="og:title" content="Free Daily Word Search Puzzle — Play Online | SnappGrid">
+<meta property="og:description" content="Play today's free daily word search puzzle online. Find hidden words in all 8 directions. New themed puzzle every day, no login required.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://snappgrid.com/games/wordsearch/">
+<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Daily Word Search Puzzle — Play Online | SnappGrid">
+<meta name="twitter:description" content="Play today's free daily word search puzzle online. Find hidden words in all 8 directions. New themed puzzle every day, no login required.">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Word Search","applicationCategory":"GameApplication","operatingSystem":"Web Browser","url":"https://snappgrid.com/games/wordsearch/","description":"Free daily word search puzzle. Find hidden words in all 8 directions. New puzzle every day.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="../../css/style.css">
+</head><style>
+:root{--wsc:44px;}
+.game-layout{max-width:1100px;margin:22px auto 0;padding:0 clamp(16px,4vw,60px) 48px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;}
+.grid-area{display:flex;flex-direction:column;gap:14px;}
+.ws-grid{display:inline-grid;grid-template-columns:repeat(10,var(--wsc));grid-template-rows:repeat(10,var(--wsc));gap:2px;background:var(--border);border:2px solid var(--ink);border-radius:3px;box-shadow:5px 5px 0 rgba(26,23,20,.13);cursor:crosshair;user-select:none;-webkit-user-select:none;}
+.wc{width:var(--wsc);height:var(--wsc);display:flex;align-items:center;justify-content:center;background:var(--white);font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:var(--ink);transition:background .06s;}
+.wc:hover{background:#F0EBE0;}
+.wc.selecting{background:#FFE08A;color:var(--ink);}
+.wc.found-0{background:#FFE066;color:#7A5800;}
+.wc.found-1{background:#A8E6CF;color:#1A5C3A;}
+.wc.found-2{background:#FFB3B3;color:#7A1A1A;}
+.wc.found-3{background:#B3D9FF;color:#1A4A7A;}
+.wc.found-4{background:#D9B3FF;color:#4A1A7A;}
+.wc.found-5{background:#B3FFB3;color:#1A7A2A;}
+.wc.found-6{background:#FFD9B3;color:#7A3A1A;}
+.wc.found-7{background:#FFB3E6;color:#7A1A5A;}
+.status-bar{background:var(--ink);color:var(--cream);padding:11px 14px;border-radius:var(--radius);display:flex;align-items:center;gap:10px;min-height:46px;font-size:13px;}
+.words-panel{display:flex;flex-direction:column;gap:22px;}
+.theme-tag{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-pale);border:1px solid var(--gold-light);padding:4px 12px;border-radius:100px;margin-bottom:4px;width:fit-content;}
+.words-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.word-list{display:flex;flex-direction:column;gap:5px;}
+.word-item{display:flex;align-items:center;gap:9px;padding:7px 11px;border-radius:var(--radius);background:var(--white);border:1.5px solid var(--border);font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ink);transition:all .2s;}
+.word-item.found{text-decoration:line-through;opacity:.5;}
+.word-dot{width:9px;height:9px;border-radius:50%;background:var(--border-strong);flex-shrink:0;transition:background .2s;}
+.word-dot.found-0{background:#C8A020;}.word-dot.found-1{background:#2E9E6E;}.word-dot.found-2{background:#C83030;}.word-dot.found-3{background:#2060C0;}.word-dot.found-4{background:#6030A0;}.word-dot.found-5{background:#208020;}.word-dot.found-6{background:#B05020;}.word-dot.found-7{background:#A020A0;}
+.prog-wrap{margin-top:2px;}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.prog-lbl{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:1px;}
+.prog-bg{background:var(--border);border-radius:100px;height:5px;}
+.prog-fill{background:var(--gold);height:5px;border-radius:100px;transition:width .4s ease;}
+.dir-hint{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;}
+.dir-hint-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:9px;}
+.dir-grid{display:grid;grid-template-columns:repeat(3,26px);gap:3px;margin:0 auto;width:fit-content;}
+.dc{width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);}
+.dc.center{background:var(--gold-pale);border-color:var(--gold-light);font-weight:700;font-size:9px;font-family:'DM Mono',monospace;}
+.how-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;}
+.how-box-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:9px;}
+.hr{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-soft);padding:2px 0;}
+.hk{font-family:'DM Mono',monospace;font-size:10px;background:var(--cream);border:1px solid var(--border-strong);border-radius:3px;padding:1px 5px;color:var(--ink);white-space:nowrap;flex-shrink:0;}
+@media(max-width:760px){:root{--wsc:34px;}.game-layout{grid-template-columns:1fr;gap:22px;}.ws-grid{margin:0 auto;}.wc{font-size:13px;}}
+@media(max-width:420px){:root{--wsc:28px;}.wc{font-size:11px;}}
 </style>
-</head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a href="/" class="nav-logo">Snapp<span>Grid</span></a>
-  <ul class="nav-links">
-    <li><a href="/games/crossword/">Crossword</a></li>
-    <li><a href="/games/wordsearch/" class="active">Word Search</a></li>
-    <li><a href="/games/sudoku/">Sudoku</a></li>
-    <li><a href="/#subscribe">Subscribe</a></li>
-  </ul>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
+  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/" class="active">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-
-<!-- AD TOP -->
-<div class="ad-wrap">
-  <div class="ad-slot ad-top">Advertisement</div>
-</div>
-
-<!-- PAGE HEADER -->
+<div class="ad-wrap"><div class="ad-slot ad-top" aria-label="Advertisement">Advertisement</div></div>
 <div class="page-header">
-  <div>
-    <div class="breadcrumb"><a href="/">SnappGrid</a> / Word Search</div>
-    <h1 class="page-title">Daily Word Search</h1>
-  </div>
-  <div class="puzzle-meta">
-    <span class="meta-badge gold-badge" id="puzzle-label">Puzzle #001</span>
-    <span class="meta-badge" id="theme-badge">Nature</span>
-    <span class="meta-badge">10 × 10</span>
-    <div id="timer">0:00</div>
-  </div>
+  <div><div class="breadcrumb"><a href="/">SnappGrid</a> / Word Search</div><h1 class="page-title">Daily Word Search</h1></div>
+  <div class="puzzle-meta"><span class="meta-badge gold-badge" id="puzzle-label">Puzzle #001</span><span class="meta-badge" id="theme-badge">Nature</span><span class="meta-badge">10×10</span><div id="timer">0:00</div></div>
 </div>
-
-<!-- GAME LAYOUT -->
 <div class="game-layout">
-
-  <!-- LEFT: GRID -->
   <div class="grid-area">
     <div class="success-banner" id="success-banner">✓ All words found! Excellent work.</div>
     <div class="ws-grid" id="ws-grid" role="grid" aria-label="Word search grid"></div>
-    <div class="status-bar">
-      <span class="status-icon" id="status-icon">◎</span>
-      <span class="status-text" id="status-text">Click and drag to find a word</span>
-    </div>
-    <div class="grid-buttons">
-      <button class="btn btn-outline" onclick="resetGame()">Reset</button>
-      <button class="btn btn-gold" onclick="revealAll()">Reveal All</button>
+    <div class="status-bar"><span id="status-icon">◎</span><span id="status-text">Click and drag to find a word</span></div>
+    <div style="display:flex;gap:6px;">
+      <button class="btn btn-outline" onclick="resetGame()" style="flex:1;">Reset</button>
+      <button class="btn btn-gold" onclick="revealAll()" style="flex:1;">Reveal All</button>
     </div>
   </div>
-
-  <!-- RIGHT: WORDS PANEL -->
   <div class="words-panel">
-
     <div>
       <div class="theme-tag" id="theme-tag">◆ Nature</div>
       <div class="words-title">Find these words</div>
       <div class="word-list" id="word-list"></div>
     </div>
-
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span>Progress</span>
-        <span id="progress-count">0 / 8</span>
-      </div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
-      </div>
+    <div class="prog-wrap">
+      <div class="prog-top"><span class="prog-lbl">Progress</span><span class="prog-lbl" id="prog-count">0 / 8</span></div>
+      <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
-
     <div class="dir-hint">
       <div class="dir-hint-title">Words hidden in all 8 directions</div>
-      <div class="dir-grid">
-        <div class="dir-cell">↖</div>
-        <div class="dir-cell">↑</div>
-        <div class="dir-cell">↗</div>
-        <div class="dir-cell">←</div>
-        <div class="dir-cell center">A</div>
-        <div class="dir-cell">→</div>
-        <div class="dir-cell">↙</div>
-        <div class="dir-cell">↓</div>
-        <div class="dir-cell">↘</div>
-      </div>
+      <div class="dir-grid"><div class="dc">↖</div><div class="dc">↑</div><div class="dc">↗</div><div class="dc">←</div><div class="dc center">A</div><div class="dc">→</div><div class="dc">↙</div><div class="dc">↓</div><div class="dc">↘</div></div>
     </div>
-
     <div class="how-box">
       <div class="how-box-title">How to play</div>
-      <div class="how-row"><span class="how-key">Click + Drag</span> Select letters</div>
-      <div class="how-row"><span class="how-key">Release</span> Check for word</div>
-      <div class="how-row"><span class="how-key">Any direction</span> Words go 8 ways</div>
-      <div class="how-row"><span class="how-key">Also backwards</span> Words may reverse</div>
+      <div class="hr"><span class="hk">Click+Drag</span> Select letters</div>
+      <div class="hr"><span class="hk">Release</span> Check for word</div>
+      <div class="hr"><span class="hk">8 directions</span> Including diagonals</div>
+      <div class="hr"><span class="hk">Backwards too</span> Words may reverse</div>
     </div>
-
   </div>
 </div>
-
-<!-- AD BOTTOM -->
-<div class="ad-wrap" style="margin-bottom:40px;">
-  <div class="ad-slot ad-bottom">Advertisement</div>
+<div class="ad-wrap" style="margin-bottom:40px;"><div class="ad-slot ad-bottom" aria-label="Advertisement">Advertisement</div></div>
+<div class="next-section"><a href="/games/crossword/" class="next-card">
+  <div class="next-card-label">Also today</div>
+  <div class="next-card-title">Crossword</div>
+  <div class="next-card-desc">Fill crossing words using across and down clues.</div>
+  <div class="next-card-arrow">→</div>
+</a><a href="/games/sudoku/" class="next-card">
+  <div class="next-card-label">Also today</div>
+  <div class="next-card-title">Sudoku</div>
+  <div class="next-card-desc">Pure logic. Fill every row, column and 3×3 box.</div>
+  <div class="next-card-arrow">→</div>
+</a><a href="/games/trivia/" class="next-card">
+  <div class="next-card-label">Also today</div>
+  <div class="next-card-title">Trivia Quiz</div>
+  <div class="next-card-desc">10 questions daily across science, history & more.</div>
+  <div class="next-card-arrow">→</div>
+</a><a href="/#subscribe" class="next-card" style="border-color:var(--gold-light);background:var(--gold-pale);">
+  <div class="next-card-label">Never miss one</div>
+  <div class="next-card-title">Daily Reminder</div>
+  <div class="next-card-desc">All four puzzles to your inbox every morning.</div>
+  <div class="next-card-arrow" style="color:var(--gold);">→</div>
+</a></div>
+<div class="refresh-toast" id="refresh-toast">
+  🎉 New puzzles are ready!
+  <button onclick="location.reload()">Refresh now</button>
 </div>
-
-<!-- NEXT SECTION -->
-<div class="next-section">
-  <a href="/games/crossword/" class="next-card">
-    <div class="next-card-label">Also today</div>
-    <div class="next-card-title">Crossword</div>
-    <div class="next-card-desc">Fill crossing words using across and down clues.</div>
-    <div class="next-card-arrow">→</div>
-  </a>
-  <a href="/games/sudoku/" class="next-card">
-    <div class="next-card-label">Coming soon</div>
-    <div class="next-card-title">Sudoku</div>
-    <div class="next-card-desc">Pure logic, no guessing. Fill the 9×9 grid.</div>
-    <div class="next-card-arrow">→</div>
-  </a>
-  <a href="/#subscribe" class="next-card" style="border-color:var(--gold-light);background:var(--gold-pale);">
-    <div class="next-card-label">Never miss one</div>
-    <div class="next-card-title">Daily Reminder</div>
-    <div class="next-card-desc">Get tomorrow's puzzle straight to your inbox.</div>
-    <div class="next-card-arrow" style="color:var(--gold);">→</div>
-  </a>
-</div>
-
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">SnappGrid</a>
+    <ul class="footer-links">
+      <li><a href="/games/crossword/">Crossword</a></li>
+      <li><a href="/games/wordsearch/">Word Search</a></li>
+      <li><a href="/games/sudoku/">Sudoku</a></li>
+      <li><a href="/games/trivia/">Trivia</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+    </ul>
+    <div class="footer-copy">© <span id="yr"></span> SnappGrid · Free daily puzzles · No account required</div>
+  </div>
+</footer>
 <script>
-// ── PUZZLE DATA ─────────────────────────────────────────────
-const PUZZLES = [
-  {
-    id: "001", theme: "Nature",
-    grid: [
-      ["R","I","V","E","R","K","P","Q","W","S"],
-      ["M","N","X","Z","A","J","B","C","D","T"],
-      ["P","Q","G","H","C","L","O","U","D","O"],
-      ["S","T","U","V","W","X","Y","Z","A","R"],
-      ["E","A","R","T","H","B","C","D","F","M"],
-      ["G","H","I","J","K","O","L","M","N","P"],
-      ["F","L","A","M","E","C","Q","R","S","T"],
-      ["F","R","O","S","T","E","U","V","W","X"],
-      ["Y","Z","A","B","C","A","D","E","F","G"],
-      ["B","L","O","O","M","N","H","I","J","K"]
-    ],
-    words: ["RIVER","CLOUD","STORM","EARTH","FLAME","OCEAN","FROST","BLOOM"]
-  },
-  {
-    id: "002", theme: "Space",
-    grid: [
-      ["M","O","O","N","X","K","P","M","Q","V"],
-      ["B","C","D","E","F","G","H","A","I","E"],
-      ["S","T","A","R","J","K","L","R","M","N"],
-      ["N","O","P","Q","R","S","T","S","U","U"],
-      ["O","R","B","I","T","V","W","X","Y","S"],
-      ["Z","A","B","C","D","E","F","G","H","I"],
-      ["C","O","M","E","T","J","K","L","M","N"],
-      ["O","P","Q","R","S","T","U","V","W","X"],
-      ["S","O","L","A","R","Y","Z","A","B","C"],
-      ["N","O","V","A","D","E","F","G","H","I"]
-    ],
-    words: ["MOON","STAR","ORBIT","COMET","SOLAR","VENUS","MARS","NOVA"]
-  }
-];
-
-// ── PICK TODAY'S PUZZLE ─────────────────────────────────────
-function getDayIndex() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  return Math.floor(diff / 86400000) % PUZZLES.length;
+function toggleNav(){
+  const nl=document.getElementById('nav-links');
+  const hb=document.getElementById('hamburger');
+  nl.classList.toggle('open');
+  hb.setAttribute('aria-expanded', nl.classList.contains('open'));
 }
-
-const puzzle = PUZZLES[getDayIndex()];
-document.getElementById('puzzle-label').textContent = 'Puzzle #' + puzzle.id;
-document.getElementById('theme-badge').textContent = puzzle.theme;
-document.getElementById('theme-tag').textContent = '◆ ' + puzzle.theme;
-
-// ── STATE ────────────────────────────────────────────────────
-let dragging = false;
-let dragStart = null;
-let dragCells = [];
-let foundCells = {};     // "r,c" → colorIdx
-let foundWords = [];     // [{word, colorIdx}]
-let solved = false;
-let seconds = 0;
-let timerInterval = null;
-
-// ── TIMER ────────────────────────────────────────────────────
-function startTimer() {
-  if (timerInterval) return;
-  timerInterval = setInterval(() => {
-    seconds++;
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    document.getElementById('timer').textContent = m + ':' + String(s).padStart(2,'0');
-  }, 1000);
-}
-function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
-
-// ── DRAG HELPERS ─────────────────────────────────────────────
-function getDragCells(r1, c1, r2, c2) {
-  const dr = r2 - r1, dc = c2 - c1;
-  if (dr === 0 && dc === 0) return [[r1, c1]];
-  // Must be horizontal, vertical, or 45° diagonal
-  if (dr !== 0 && dc !== 0 && Math.abs(dr) !== Math.abs(dc)) return [[r1, c1]];
-  const len = Math.max(Math.abs(dr), Math.abs(dc)) + 1;
-  const sr = dr === 0 ? 0 : dr / Math.abs(dr);
-  const sc = dc === 0 ? 0 : dc / Math.abs(dc);
-  return Array.from({ length: len }, (_, i) => [r1 + i * sr, c1 + i * sc]);
-}
-
-function cellsToWord(cells) {
-  return cells.map(([r, c]) => puzzle.grid[r][c]).join('');
-}
-
-function startDrag(r, c) {
-  if (solved) return;
-  startTimer();
-  dragging = true;
-  dragStart = [r, c];
-  dragCells = [[r, c]];
-  setStatus('◎', 'Selecting...');
-  renderGrid();
-}
-
-function updateDrag(r, c) {
-  if (!dragging) return;
-  dragCells = getDragCells(dragStart[0], dragStart[1], r, c);
-  renderGrid();
-}
-
-function endDrag() {
-  if (!dragging) return;
-  dragging = false;
-  if (dragCells.length > 1) checkSelection();
-  else dragCells = [];
-  renderGrid();
-}
-
-function checkSelection() {
-  const word = cellsToWord(dragCells);
-  const wordRev = word.split('').reverse().join('');
-  const target = puzzle.words.find(w =>
-    !foundWords.find(f => f.word === w) && (w === word || w === wordRev)
-  );
-  if (target) {
-    const colorIdx = foundWords.length;
-    foundWords.push({ word: target, colorIdx });
-    dragCells.forEach(([r, c]) => { foundCells[r + ',' + c] = colorIdx; });
-    setStatus('✓', '"' + target + '" found!');
-    dragCells = [];
-    updateWordList();
-    updateProgress();
-    if (foundWords.length === puzzle.words.length) {
-      solved = true;
-      stopTimer();
-      document.getElementById('success-banner').classList.add('visible');
-      setStatus('★', 'All words found! Congratulations!');
+document.getElementById('yr').textContent=new Date().getFullYear();
+// Daily auto-refresh
+(function(){
+  const KEY='snappgrid_date';
+  const today=new Date().toDateString();
+  const stored=localStorage.getItem(KEY);
+  if(stored && stored!==today){
+    localStorage.setItem(KEY,today);
+    const t=document.getElementById('refresh-toast');
+    if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
+  } else { localStorage.setItem(KEY,today); }
+  setInterval(()=>{
+    if(localStorage.getItem(KEY)!==new Date().toDateString()){
+      localStorage.setItem(KEY,new Date().toDateString());
+      const t=document.getElementById('refresh-toast');
+      if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
     }
-  } else {
-    setStatus('✗', 'Not a word — try again');
-    setTimeout(() => {
-      dragCells = [];
-      setStatus('◎', 'Click and drag to find a word');
-      renderGrid();
-    }, 600);
-  }
-  renderGrid();
-}
-
-// ── STATUS ───────────────────────────────────────────────────
-function setStatus(icon, text) {
-  document.getElementById('status-icon').textContent = icon;
-  document.getElementById('status-text').textContent = text;
-}
-
-// ── WORD LIST + PROGRESS ─────────────────────────────────────
-function updateWordList() {
-  const container = document.getElementById('word-list');
-  container.innerHTML = puzzle.words.map(word => {
-    const foundEntry = foundWords.find(f => f.word === word);
-    const isFnd = !!foundEntry;
-    const colorIdx = isFnd ? foundEntry.colorIdx : -1;
-    return `<div class="word-item ${isFnd ? 'found' : ''}">
-      <div class="word-dot ${isFnd ? 'found-' + colorIdx : ''}"></div>
-      <span>${word}</span>
-    </div>`;
-  }).join('');
-}
-
-function updateProgress() {
-  const total = puzzle.words.length;
-  const done = foundWords.length;
-  document.getElementById('progress-count').textContent = done + ' / ' + total;
-  document.getElementById('progress-fill').style.width = (done / total * 100) + '%';
-}
-
-// ── CELL FROM POINT ──────────────────────────────────────────
-function getCellFromPoint(x, y) {
-  const el = document.elementFromPoint(x, y);
-  if (!el) return null;
-  const cell = el.closest('.ws-cell');
-  if (!cell) return null;
-  return [+cell.dataset.row, +cell.dataset.col];
-}
-
-// ── RENDER GRID ──────────────────────────────────────────────
-function renderGrid() {
-  const gridEl = document.getElementById('ws-grid');
-  const selecting = new Set(dragCells.map(([r, c]) => r + ',' + c));
-  let html = '';
-  for (let r = 0; r < 10; r++) {
-    for (let c = 0; c < 10; c++) {
-      const key = r + ',' + c;
-      const letter = puzzle.grid[r][c];
-      let cls = 'ws-cell';
-      if (selecting.has(key)) cls += ' selecting';
-      else if (foundCells[key] !== undefined) cls += ' found-' + foundCells[key];
-      html += `<div class="${cls}" data-row="${r}" data-col="${c}">${letter}</div>`;
-    }
-  }
-  gridEl.innerHTML = html;
-}
-
-// ── GAME ACTIONS ─────────────────────────────────────────────
-function resetGame() {
-  dragging = false; dragStart = null; dragCells = [];
-  foundCells = {}; foundWords = [];
-  solved = false; seconds = 0;
-  stopTimer();
-  document.getElementById('timer').textContent = '0:00';
-  document.getElementById('success-banner').classList.remove('visible');
-  setStatus('◎', 'Click and drag to find a word');
-  updateWordList();
-  updateProgress();
-  renderGrid();
-}
-
-function revealAll() {
-  puzzle.words.forEach(word => {
-    if (!foundWords.find(f => f.word === word)) {
-      const colorIdx = foundWords.length;
-      foundWords.push({ word, colorIdx });
-      // Mark cells by scanning grid for word
-      const cells = findWordInGrid(word);
-      if (cells) cells.forEach(([r, c]) => { foundCells[r + ',' + c] = colorIdx; });
-    }
-  });
-  solved = true;
-  stopTimer();
-  document.getElementById('success-banner').classList.add('visible');
-  setStatus('★', 'All words revealed!');
-  updateWordList();
-  updateProgress();
-  renderGrid();
-}
-
-function findWordInGrid(word) {
-  const dirs = [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
-  for (let r = 0; r < 10; r++) {
-    for (let c = 0; c < 10; c++) {
-      for (const [dr, dc] of dirs) {
-        const cells = Array.from({ length: word.length }, (_, i) => [r + i*dr, c + i*dc]);
-        if (cells.some(([cr, cc]) => cr < 0 || cr >= 10 || cc < 0 || cc >= 10)) continue;
-        if (cells.map(([cr, cc]) => puzzle.grid[cr][cc]).join('') === word) return cells;
-      }
-    }
-  }
-  return null;
-}
-
-// ── MOUSE EVENTS ─────────────────────────────────────────────
-const gridEl = document.getElementById('ws-grid');
-
-gridEl.addEventListener('mousedown', e => {
-  const cell = e.target.closest('.ws-cell');
-  if (!cell) return;
-  e.preventDefault();
-  startDrag(+cell.dataset.row, +cell.dataset.col);
-});
-
-gridEl.addEventListener('mouseover', e => {
-  if (!dragging) return;
-  const cell = e.target.closest('.ws-cell');
-  if (!cell) return;
-  updateDrag(+cell.dataset.row, +cell.dataset.col);
-});
-
-document.addEventListener('mouseup', () => { if (dragging) endDrag(); });
-
-// ── TOUCH EVENTS ─────────────────────────────────────────────
-gridEl.addEventListener('touchstart', e => {
-  e.preventDefault();
-  const t = e.touches[0];
-  const coords = getCellFromPoint(t.clientX, t.clientY);
-  if (coords) startDrag(coords[0], coords[1]);
-}, { passive: false });
-
-gridEl.addEventListener('touchmove', e => {
-  e.preventDefault();
-  if (!dragging) return;
-  const t = e.touches[0];
-  const coords = getCellFromPoint(t.clientX, t.clientY);
-  if (coords) updateDrag(coords[0], coords[1]);
-}, { passive: false });
-
-gridEl.addEventListener('touchend', e => {
-  e.preventDefault();
-  endDrag();
-}, { passive: false });
-
-// ── INIT ─────────────────────────────────────────────────────
-updateWordList();
-updateProgress();
-renderGrid();
+  },60000);
+})();
 </script>
-</body>
-</html>
+<script>
+const PUZZLES=[
+  {id:"001",theme:"Nature",grid:[["R","I","V","E","R","K","P","Q","W","S"],["M","N","X","Z","A","J","B","C","D","T"],["P","Q","G","H","C","L","O","U","D","O"],["S","T","U","V","W","X","Y","Z","A","R"],["E","A","R","T","H","B","C","D","F","M"],["G","H","I","J","K","O","L","M","N","P"],["F","L","A","M","E","C","Q","R","S","T"],["F","R","O","S","T","E","U","V","W","X"],["Y","Z","A","B","C","A","D","E","F","G"],["B","L","O","O","M","N","H","I","J","K"]],words:["RIVER","CLOUD","STORM","EARTH","FLAME","OCEAN","FROST","BLOOM"]},
+  {id:"002",theme:"Space",grid:[["M","O","O","N","X","K","P","M","Q","V"],["B","C","D","E","F","G","H","A","I","E"],["S","T","A","R","J","K","L","R","M","N"],["N","O","P","Q","R","S","T","S","U","U"],["O","R","B","I","T","V","W","X","Y","S"],["Z","A","B","C","D","E","F","G","H","I"],["C","O","M","E","T","J","K","L","M","N"],["O","P","Q","R","S","T","U","V","W","X"],["S","O","L","A","R","Y","Z","A","B","C"],["N","O","V","A","D","E","F","G","H","I"]],words:["MOON","STAR","ORBIT","COMET","SOLAR","VENUS","MARS","NOVA"]},
+  {id:"003",theme:"Animals",grid:[["T","I","G","E","R","K","P","Q","W","S"],["B","C","D","E","F","G","H","E","I","L"],["O","T","T","E","R","L","O","U","D","I"],["P","Q","R","S","T","U","Y","Z","A","O"],["A","N","T","L","E","R","S","D","F","N"],["G","H","I","J","K","L","M","N","O","P"],["E","A","G","L","E","C","Q","R","S","T"],["L","I","Z","A","R","D","U","V","W","X"],["Y","Z","A","B","C","A","D","E","F","G"],["W","H","A","L","E","N","H","I","J","K"]],words:["TIGER","OTTER","EAGLE","LIZARD","WHALE","ANTLERS","LION","SEAL"]},
+  {id:"004",theme:"Food",grid:[["P","I","Z","Z","A","K","P","Q","W","S"],["B","C","D","E","F","G","H","A","I","T"],["S","U","S","H","I","L","O","U","D","A"],["P","Q","R","S","T","U","Y","Z","A","C"],["T","A","C","O","S","B","C","D","F","O"],["G","H","I","J","K","L","M","N","O","P"],["B","A","G","E","L","C","Q","R","S","T"],["C","U","R","R","Y","E","U","V","W","X"],["Y","Z","A","B","C","A","D","E","F","G"],["S","A","L","A","D","N","H","I","J","K"]],words:["PIZZA","SUSHI","TACOS","BAGEL","CURRY","SALAD","PASTA","STEAK"]}
+];
+function getDayIdx(){const n=new Date(),s=new Date(n.getFullYear(),0,0);return Math.floor((n-s)/86400000)%PUZZLES.length;}
+const puzzle=PUZZLES[getDayIdx()];
+document.getElementById('puzzle-label').textContent='Puzzle #'+puzzle.id;
+document.getElementById('theme-badge').textContent=puzzle.theme;
+document.getElementById('theme-tag').textContent='◆ '+puzzle.theme;
+let dragging=false,dragStart=null,dragCells=[],foundCells={},foundWords=[],solved=false,secs=0,timer=null;
+function startTimer(){if(timer)return;timer=setInterval(()=>{secs++;const m=Math.floor(secs/60),s=secs%60;document.getElementById('timer').textContent=m+':'+String(s).padStart(2,'0');},1000);}
+function stopTimer(){clearInterval(timer);timer=null;}
+function getDragCells(r1,c1,r2,c2){const dr=r2-r1,dc=c2-c1;if(dr===0&&dc===0)return[[r1,c1]];if(dr!==0&&dc!==0&&Math.abs(dr)!==Math.abs(dc))return[[r1,c1]];const len=Math.max(Math.abs(dr),Math.abs(dc))+1;const sr=dr===0?0:dr/Math.abs(dr),sc=dc===0?0:dc/Math.abs(dc);return Array.from({length:len},(_,i)=>[r1+i*sr,c1+i*sc]);}
+function cellsToWord(cells){return cells.map(([r,c])=>puzzle.grid[r][c]).join('');}
+function setStatus(icon,text){document.getElementById('status-icon').textContent=icon;document.getElementById('status-text').textContent=text;}
+function startDrag(r,c){if(solved)return;startTimer();dragging=true;dragStart=[r,c];dragCells=[[r,c]];setStatus('◎','Selecting...');renderGrid();}
+function updateDrag(r,c){if(!dragging)return;dragCells=getDragCells(dragStart[0],dragStart[1],r,c);renderGrid();}
+function endDrag(){if(!dragging)return;dragging=false;if(dragCells.length>1)checkSel();else dragCells=[];renderGrid();}
+function checkSel(){const word=cellsToWord(dragCells);const wordR=word.split('').reverse().join('');const target=puzzle.words.find(w=>!foundWords.find(f=>f.word===w)&&(w===word||w===wordR));if(target){const ci=foundWords.length;foundWords.push({word:target,colorIdx:ci});dragCells.forEach(([r,c])=>{foundCells[r+','+c]=ci;});setStatus('✓','"'+target+'" found!');dragCells=[];updateWordList();updateProgress();if(foundWords.length===puzzle.words.length){solved=true;stopTimer();document.getElementById('success-banner').classList.add('visible');setStatus('★','All words found! Congratulations!');}}else{setStatus('✗','Not a word — try again');setTimeout(()=>{dragCells=[];setStatus('◎','Click and drag to find a word');renderGrid();},600);}renderGrid();}
+function updateWordList(){const c=document.getElementById('word-list');c.innerHTML=puzzle.words.map(word=>{const fe=foundWords.find(f=>f.word===word);const ci=fe?fe.colorIdx:-1;return`<div class="word-item${fe?' found':''}"><div class="word-dot${fe?' found-'+ci:''}"></div><span>${word}</span></div>`;}).join('');}
+function updateProgress(){const t=puzzle.words.length,d=foundWords.length;document.getElementById('prog-count').textContent=d+' / '+t;document.getElementById('prog-fill').style.width=(d/t*100)+'%';}
+function getCellFromPoint(x,y){const el=document.elementFromPoint(x,y);if(!el)return null;const cell=el.closest('.wc');if(!cell)return null;return[+cell.dataset.row,+cell.dataset.col];}
+function findWordInGrid(word){const dirs=[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];for(let r=0;r<10;r++){for(let c=0;c<10;c++){for(const[dr,dc]of dirs){const cells=Array.from({length:word.length},(_,i)=>[r+i*dr,c+i*dc]);if(cells.some(([cr,cc])=>cr<0||cr>=10||cc<0||cc>=10))continue;if(cells.map(([cr,cc])=>puzzle.grid[cr][cc]).join('')===word)return cells;}}}return null;}
+function resetGame(){dragging=false;dragStart=null;dragCells=[];foundCells={};foundWords=[];solved=false;secs=0;stopTimer();document.getElementById('timer').textContent='0:00';document.getElementById('success-banner').classList.remove('visible');setStatus('◎','Click and drag to find a word');updateWordList();updateProgress();renderGrid();}
+function revealAll(){puzzle.words.forEach(word=>{if(!foundWords.find(f=>f.word===word)){const ci=foundWords.length;foundWords.push({word,colorIdx:ci});const cells=findWordInGrid(word);if(cells)cells.forEach(([r,c])=>{foundCells[r+','+c]=ci;});}});solved=true;stopTimer();document.getElementById('success-banner').classList.add('visible');setStatus('★','All words revealed!');updateWordList();updateProgress();renderGrid();}
+function renderGrid(){const gridEl=document.getElementById('ws-grid');const sel=new Set(dragCells.map(([r,c])=>r+','+c));let html='';for(let r=0;r<10;r++){for(let c=0;c<10;c++){const key=r+','+c;const letter=puzzle.grid[r][c];let cls='wc';if(sel.has(key))cls+=' selecting';else if(foundCells[key]!==undefined)cls+=' found-'+foundCells[key];html+=`<div class="${cls}" data-row="${r}" data-col="${c}">${letter}</div>`;}}gridEl.innerHTML=html;}
+const gridEl=document.getElementById('ws-grid');
+gridEl.addEventListener('mousedown',e=>{const cell=e.target.closest('.wc');if(!cell)return;e.preventDefault();startDrag(+cell.dataset.row,+cell.dataset.col);});
+gridEl.addEventListener('mouseover',e=>{if(!dragging)return;const cell=e.target.closest('.wc');if(!cell)return;updateDrag(+cell.dataset.row,+cell.dataset.col);});
+document.addEventListener('mouseup',()=>{if(dragging)endDrag();});
+gridEl.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0];const coords=getCellFromPoint(t.clientX,t.clientY);if(coords)startDrag(coords[0],coords[1]);},{passive:false});
+gridEl.addEventListener('touchmove',e=>{e.preventDefault();if(!dragging)return;const t=e.touches[0];const coords=getCellFromPoint(t.clientX,t.clientY);if(coords)updateDrag(coords[0],coords[1]);},{passive:false});
+gridEl.addEventListener('touchend',e=>{e.preventDefault();endDrag();},{passive:false});
+updateWordList();updateProgress();renderGrid();
+</script>
+</body></html>

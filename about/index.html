@@ -6,246 +6,132 @@
 <title>About SnappGrid — Free Daily Puzzle Games</title>
 <meta name="description" content="SnappGrid is a free daily puzzle site. Crossword, word search, sudoku, trivia — fresh puzzles every day, no account needed.">
 <link rel="canonical" href="https://snappgrid.com/about/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F7F3EC; --ink: #1A1714; --ink-soft: #4A4540; --ink-muted: #8A847E;
-    --gold: #C8922A; --gold-light: #F0D9A8; --gold-pale: #FBF3E2;
-    --white: #FFFFFF; --border: rgba(26,23,20,0.12); --border-strong: rgba(26,23,20,0.25);
-    --radius: 4px; --radius-lg: 8px;
-  }
-  body { font-family: 'DM Sans',sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-
-  nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--border); padding: 0 clamp(16px,5vw,80px); display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  .nav-logo { font-family: 'Playfair Display',serif; font-size: 20px; font-weight: 900; color: var(--ink); text-decoration: none; letter-spacing: -0.5px; }
-  .nav-logo span { color: var(--gold); }
-  .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
-  .nav-links a { font-size: 12px; font-weight: 500; color: var(--ink-soft); text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.15s; }
-  .nav-links a:hover { color: var(--ink); }
-
-  /* ── HERO ── */
-  .about-hero {
-    background: var(--ink); padding: clamp(60px,8vw,100px) clamp(20px,5vw,80px);
-    text-align: center;
-  }
-  .about-hero-label { font-family: 'DM Mono',monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(247,243,236,0.4); margin-bottom: 16px; }
-  .about-hero-title { font-family: 'Playfair Display',serif; font-size: clamp(40px,7vw,80px); font-weight: 900; color: var(--cream); letter-spacing: -2px; line-height: 1.0; margin-bottom: 20px; }
-  .about-hero-title em { font-style: normal; color: var(--gold); }
-  .about-hero-sub { font-size: clamp(16px,2vw,20px); color: rgba(247,243,236,0.6); max-width: 560px; margin: 0 auto; line-height: 1.6; }
-
-  /* ── CONTENT ── */
-  .page-wrap { max-width: 800px; margin: 0 auto; padding: clamp(48px,6vw,80px) clamp(20px,5vw,40px); }
-
-  /* ── MISSION ── */
-  .mission-block { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 64px; }
-  .mission-block p { font-size: 17px; color: var(--ink-soft); line-height: 1.75; }
-
-  /* ── VALUES ── */
-  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-bottom: 64px; }
-  .value-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-  .value-icon { font-size: 28px; margin-bottom: 12px; }
-  .value-title { font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
-  .value-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-
-  /* ── GAMES ── */
-  .section-label { font-family: 'DM Mono',monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
-  .section-title { font-family: 'Playfair Display',serif; font-size: clamp(28px,4vw,40px); font-weight: 700; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 32px; }
-
-  .games-list { display: flex; flex-direction: column; gap: 1px; margin-bottom: 64px; border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-  .game-row { display: flex; align-items: center; gap: 20px; padding: 20px 24px; background: var(--white); transition: background 0.15s; text-decoration: none; color: inherit; }
-  .game-row:hover { background: var(--gold-pale); }
-  .game-row + .game-row { border-top: 1px solid var(--border); }
-  .game-num { font-family: 'DM Mono',monospace; font-size: 11px; color: var(--ink-muted); min-width: 24px; }
-  .game-info { flex: 1; }
-  .game-name { font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
-  .game-desc-sm { font-size: 13px; color: var(--ink-soft); }
-  .game-status { font-family: 'DM Mono',monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
-  .status-live { background: #EAF3DE; color: #3B6D11; }
-  .status-soon { background: var(--gold-pale); color: var(--gold); border: 1px solid var(--gold-light); }
-
-  /* ── PUZZLE BOOKS ── */
-  .books-block { background: var(--ink); border-radius: var(--radius-lg); padding: 40px; margin-bottom: 64px; }
-  .books-block .section-label { color: rgba(247,243,236,0.4); }
-  .books-block .section-title { color: var(--cream); margin-bottom: 16px; }
-  .books-block p { color: rgba(247,243,236,0.65); line-height: 1.7; margin-bottom: 16px; }
-  .books-block a { color: var(--gold); text-decoration: none; font-weight: 600; }
-  .books-block a:hover { text-decoration: underline; }
-
-  /* ── FAQ ── */
-  .faq-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 64px; border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-  .faq-item { padding: 20px 24px; background: var(--white); border-bottom: 1px solid var(--border); }
-  .faq-item:last-child { border-bottom: none; }
-  .faq-q { font-weight: 600; color: var(--ink); margin-bottom: 6px; font-size: 15px; }
-  .faq-a { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
-
-  /* ── CTA ── */
-  .cta-block { text-align: center; padding: 48px 24px; background: var(--gold-pale); border: 1.5px solid var(--gold-light); border-radius: var(--radius-lg); }
-  .cta-block h2 { font-family: 'Playfair Display',serif; font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
-  .cta-block p { color: var(--ink-soft); margin-bottom: 24px; }
-  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--cream); padding: 14px 28px; border-radius: var(--radius); font-size: 14px; font-weight: 600; text-decoration: none; letter-spacing: 0.3px; box-shadow: 3px 3px 0 var(--gold); transition: transform 0.15s, box-shadow 0.15s; }
-  .btn-primary:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--gold); }
-
-  footer { background: var(--ink); padding: 32px clamp(20px,5vw,80px); margin-top: 80px; }
-  .footer-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  .footer-logo { font-family: 'Playfair Display',serif; font-size: 18px; font-weight: 900; color: var(--cream); text-decoration: none; }
-  .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
-  .footer-links a { font-size: 11px; color: rgba(247,243,236,0.45); text-decoration: none; font-family: 'DM Mono',monospace; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.15s; }
-  .footer-links a:hover { color: var(--cream); }
-
-  @media (max-width: 640px) { .mission-block { grid-template-columns: 1fr; } .nav-links { display: none; } .footer-inner { flex-direction: column; } }
+<meta property="og:title" content="About SnappGrid — Free Daily Puzzle Games">
+<meta property="og:description" content="SnappGrid is a free daily puzzle site. Crossword, word search, sudoku, trivia — fresh puzzles every day, no account needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://snappgrid.com/about/">
+<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About SnappGrid — Free Daily Puzzle Games">
+<meta name="twitter:description" content="SnappGrid is a free daily puzzle site. Crossword, word search, sudoku, trivia — fresh puzzles every day, no account needed.">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"About SnappGrid","url":"https://snappgrid.com/about/","description":"About SnappGrid — free daily puzzle games with no login required."}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="css/style.css">
+</head><style>
+.about-hero{background:var(--ink);padding:clamp(60px,8vw,100px) clamp(20px,5vw,80px);text-align:center;}
+.ah-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(247,243,236,.4);margin-bottom:14px;}
+.ah-title{font-family:'Playfair Display',serif;font-size:clamp(40px,7vw,76px);font-weight:900;color:var(--cream);letter-spacing:-2px;line-height:1.0;margin-bottom:18px;}
+.ah-title em{font-style:normal;color:var(--gold);}
+.ah-sub{font-size:clamp(15px,2vw,19px);color:rgba(247,243,236,.6);max-width:520px;margin:0 auto;line-height:1.6;}
+.page-wrap{max-width:800px;margin:0 auto;padding:clamp(44px,6vw,72px) clamp(20px,5vw,40px);}
+.mission{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:56px;}
+.mission p{font-size:16px;color:var(--ink-soft);line-height:1.75;}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:56px;}
+.vc{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px;}
+.vc-icon{font-size:26px;margin-bottom:10px;}
+.vc-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+.vc-desc{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+.games-list{display:flex;flex-direction:column;gap:0;margin-bottom:56px;border:1.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.gr{display:flex;align-items:center;gap:18px;padding:18px 22px;background:var(--white);transition:background .15s;text-decoration:none;color:inherit;}
+.gr:hover{background:var(--gold-pale);}
+.gr+.gr{border-top:1px solid var(--border);}
+.gr-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted);min-width:22px;}
+.gr-info{flex:1;}
+.gr-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.gr-desc{font-size:12px;color:var(--ink-soft);}
+.gr-status{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:100px;}
+.s-live{background:#EAF3DE;color:#3B6D11;}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-bottom:56px;border:1.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.fi{padding:18px 22px;background:var(--white);border-bottom:1px solid var(--border);}
+.fi:last-child{border-bottom:none;}
+.fi-q{font-weight:600;color:var(--ink);margin-bottom:5px;font-size:14px;}
+.fi-a{font-size:13px;color:var(--ink-soft);line-height:1.65;}
+.cta-block{text-align:center;padding:40px 20px;background:var(--gold-pale);border:1.5px solid var(--gold-light);border-radius:var(--radius-lg);}
+.cta-block h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.cta-block p{color:var(--ink-soft);margin-bottom:20px;font-size:14px;}
+.btn-cta{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:var(--cream);padding:13px 26px;border-radius:var(--radius);font-size:14px;font-weight:600;text-decoration:none;box-shadow:3px 3px 0 var(--gold);transition:transform .15s,box-shadow .15s;}
+.btn-cta:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--gold);}
+@media(max-width:600px){.mission{grid-template-columns:1fr;}}
 </style>
-</head>
-<body>
-<nav>
-  <a href="/" class="nav-logo">Snapp<span>Grid</span></a>
-  <ul class="nav-links">
-    <li><a href="/games/crossword/">Crossword</a></li>
-    <li><a href="/games/wordsearch/">Word Search</a></li>
-    <li><a href="/games/sudoku/">Sudoku</a></li>
-    <li><a href="/#subscribe">Subscribe</a></li>
-  </ul>
+<body><nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
+  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-
-<!-- HERO -->
-<div class="about-hero">
-  <div class="about-hero-label">About SnappGrid</div>
-  <h1 class="about-hero-title">Puzzles that<br><em>snap.</em></h1>
-  <p class="about-hero-sub">Free daily puzzles for everyone — no account, no app, no nonsense. Just open a browser and play.</p>
-</div>
-
+<div class="about-hero"><div class="ah-label">About SnappGrid</div><h1 class="ah-title">Puzzles that<br><em>snap.</em></h1><p class="ah-sub">Free daily puzzles for everyone — no account, no app, no nonsense. Open a browser and play.</p></div>
 <div class="page-wrap">
-
-  <!-- MISSION -->
-  <div class="mission-block">
-    <p>SnappGrid exists because great puzzle games shouldn't require a subscription, a login, or an app download. We built a place where anyone can play a fresh crossword, word search, sudoku, or trivia quiz every single day — for free, from any device, in seconds.</p>
-    <p>New puzzles go live every day at midnight. Missed yesterday's? Every past puzzle stays in the archive forever, playable whenever you like. No streaks to maintain, no pressure — just puzzles.</p>
-  </div>
-
-  <!-- VALUES -->
+  <div class="mission"><p>SnappGrid exists because great puzzle games shouldn't require a subscription, a login, or an app download. We built a place where anyone can play a fresh crossword, word search, sudoku or trivia quiz every single day — for free, from any device.</p><p>New puzzles go live every day at midnight. Every past puzzle stays in the archive forever, playable whenever you like. No streaks to maintain, no pressure — just puzzles.</p></div>
   <div class="values-grid">
-    <div class="value-card">
-      <div class="value-icon">⚡</div>
-      <div class="value-title">Instant play</div>
-      <div class="value-desc">No sign-up, no download, no waiting. Click and start in under three seconds on any device.</div>
-    </div>
-    <div class="value-card">
-      <div class="value-icon">♾</div>
-      <div class="value-title">Always free</div>
-      <div class="value-desc">Every game, every day, forever free. Supported by unobtrusive advertising, not paywalls.</div>
-    </div>
-    <div class="value-card">
-      <div class="value-icon">🧠</div>
-      <div class="value-title">Genuinely challenging</div>
-      <div class="value-desc">Puzzles designed to stretch your brain, not frustrate it. Fair clues, clean grids, satisfying finishes.</div>
-    </div>
-    <div class="value-card">
-      <div class="value-icon">🔒</div>
-      <div class="value-title">Privacy first</div>
-      <div class="value-desc">We collect only what we need. Your puzzle progress stays in your browser. See our privacy policy for full details.</div>
-    </div>
+    <div class="vc"><div class="vc-icon">⚡</div><div class="vc-title">Instant play</div><div class="vc-desc">No sign-up, no download, no waiting. Click and start in under 3 seconds on any device.</div></div>
+    <div class="vc"><div class="vc-icon">♾</div><div class="vc-title">Always free</div><div class="vc-desc">Every game, every day, forever free. Supported by unobtrusive advertising.</div></div>
+    <div class="vc"><div class="vc-icon">🧠</div><div class="vc-title">Genuinely fun</div><div class="vc-desc">Puzzles designed to stretch your brain — fair clues, clean grids, satisfying finishes.</div></div>
+    <div class="vc"><div class="vc-icon">🔒</div><div class="vc-title">Privacy first</div><div class="vc-desc">We collect only what we need. Your progress stays in your browser.</div></div>
   </div>
-
-  <!-- GAMES -->
-  <div class="section-label">Our games</div>
-  <h2 class="section-title">Something for every puzzle lover</h2>
+  <div class="section-label" style="margin-bottom:16px;">Our games</div>
   <div class="games-list">
-    <a href="/games/crossword/" class="game-row">
-      <span class="game-num">01</span>
-      <div class="game-info">
-        <div class="game-name">Crossword</div>
-        <div class="game-desc-sm">Fill the grid using across and down clues. Daily mini crossword, 5×5.</div>
-      </div>
-      <span class="game-status status-live">Live</span>
-    </a>
-    <a href="/games/wordsearch/" class="game-row">
-      <span class="game-num">02</span>
-      <div class="game-info">
-        <div class="game-name">Word Search</div>
-        <div class="game-desc-sm">Find hidden words in all 8 directions. Daily themed 10×10 grid.</div>
-      </div>
-      <span class="game-status status-live">Live</span>
-    </a>
-    <a href="/games/sudoku/" class="game-row">
-      <span class="game-num">03</span>
-      <div class="game-info">
-        <div class="game-name">Sudoku</div>
-        <div class="game-desc-sm">Pure logic. Fill every row, column, and box with digits 1–9.</div>
-      </div>
-      <span class="game-status status-live">Live</span>
-    </a>
-    <a href="/games/trivia/" class="game-row">
-      <span class="game-num">04</span>
-      <div class="game-info">
-        <div class="game-name">Trivia Quiz</div>
-        <div class="game-desc-sm">Ten daily questions across history, science, geography, and pop culture.</div>
-      </div>
-      <span class="game-status status-soon">Coming soon</span>
-    </a>
+    <a href="/games/crossword/" class="gr"><span class="gr-num">01</span><div class="gr-info"><div class="gr-name">Crossword</div><div class="gr-desc">Fill the grid using across and down clues. Daily 5×5.</div></div><span class="gr-status s-live">Live</span></a>
+    <a href="/games/wordsearch/" class="gr"><span class="gr-num">02</span><div class="gr-info"><div class="gr-name">Word Search</div><div class="gr-desc">Find hidden words in all 8 directions. Themed 10×10 grid.</div></div><span class="gr-status s-live">Live</span></a>
+    <a href="/games/sudoku/" class="gr"><span class="gr-num">03</span><div class="gr-info"><div class="gr-name">Sudoku</div><div class="gr-desc">Pure logic. Fill every row, column and 3×3 box with 1–9.</div></div><span class="gr-status s-live">Live</span></a>
+    <a href="/games/trivia/" class="gr"><span class="gr-num">04</span><div class="gr-info"><div class="gr-name">Trivia Quiz</div><div class="gr-desc">Ten daily questions across history, science, geography and culture.</div></div><span class="gr-status s-live">Live</span></a>
   </div>
-
-  <!-- PUZZLE BOOKS -->
-  <div class="books-block">
-    <div class="section-label">Beyond the browser</div>
-    <h2 class="section-title">Puzzle books</h2>
-    <p>Love puzzles on paper? We publish a range of printable puzzle books — crossword collections, word searches, trivia quizzes, and more — available as instant PDF downloads.</p>
-    <p>Every book is printable at home, perfectly formatted for A4 or letter paper, and priced fairly. No Amazon account required.</p>
-    <a href="/books/">Browse puzzle books →</a>
-  </div>
-
-  <!-- FAQ -->
-  <div class="section-label">Common questions</div>
-  <h2 class="section-title">FAQ</h2>
+  <div class="section-label" style="margin-bottom:16px;">Common questions</div>
   <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q">Is SnappGrid really free?</div>
-      <div class="faq-a">Yes, completely. Every game, every day, forever free. We keep the lights on with unobtrusive display advertising.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do I need to create an account?</div>
-      <div class="faq-a">No. You can play every game without registering. The optional email subscription is only for daily puzzle reminders.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">How often are puzzles updated?</div>
-      <div class="faq-a">New puzzles go live every day at midnight UTC. Each game type (crossword, word search, sudoku, trivia) gets a fresh puzzle daily.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Can I play old puzzles?</div>
-      <div class="faq-a">Yes. Every past puzzle is kept in the archive and remains playable. Browse the archive from any game page.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Does SnappGrid work on mobile?</div>
-      <div class="faq-a">Fully. All games are designed mobile-first. The crossword and sudoku have on-screen keypads; word search supports tap-and-drag.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">How do I unsubscribe from emails?</div>
-      <div class="faq-a">Every email we send includes an unsubscribe link at the bottom. One click removes you immediately.</div>
-    </div>
+    <div class="fi"><div class="fi-q">Is SnappGrid really free?</div><div class="fi-a">Yes, completely. Every game, every day, forever free. We keep the lights on with unobtrusive display advertising.</div></div>
+    <div class="fi"><div class="fi-q">Do I need to create an account?</div><div class="fi-a">No. You can play every game without registering. The optional email subscription is only for daily puzzle reminders.</div></div>
+    <div class="fi"><div class="fi-q">How often are puzzles updated?</div><div class="fi-a">New puzzles go live every day at midnight UTC. Each game type gets a fresh puzzle daily.</div></div>
+    <div class="fi"><div class="fi-q">Can I play old puzzles?</div><div class="fi-a">Yes. Every past puzzle is kept in the archive and remains playable.</div></div>
+    <div class="fi"><div class="fi-q">Does SnappGrid work on mobile?</div><div class="fi-a">Fully. All games are designed mobile-first with on-screen controls and touch support.</div></div>
+    <div class="fi"><div class="fi-q">How do I unsubscribe from emails?</div><div class="fi-a">Every email includes an unsubscribe link. One click removes you immediately.</div></div>
   </div>
-
-  <!-- CTA -->
-  <div class="cta-block">
-    <h2>Ready to play?</h2>
-    <p>Fresh puzzles are waiting. No signup required.</p>
-    <a href="/games/crossword/" class="btn-primary">Play today's crossword →</a>
-  </div>
-
+  <div class="cta-block"><h2>Ready to play?</h2><p>Fresh puzzles are waiting. No signup required.</p><a href="/games/crossword/" class="btn-cta">Play today's crossword →</a></div>
 </div>
-
-<footer>
+<div class="refresh-toast" id="refresh-toast">
+  🎉 New puzzles are ready!
+  <button onclick="location.reload()">Refresh now</button>
+</div><footer>
   <div class="footer-inner">
     <a href="/" class="footer-logo">SnappGrid</a>
     <ul class="footer-links">
       <li><a href="/games/crossword/">Crossword</a></li>
       <li><a href="/games/wordsearch/">Word Search</a></li>
       <li><a href="/games/sudoku/">Sudoku</a></li>
+      <li><a href="/games/trivia/">Trivia</a></li>
+      <li><a href="/blog/">Blog</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
       <li><a href="/privacy/">Privacy</a></li>
     </ul>
+    <div class="footer-copy">© <span id="yr"></span> SnappGrid · Free daily puzzles · No account required</div>
   </div>
-</footer>
-</body>
-</html>
+</footer><script>
+function toggleNav(){
+  const nl=document.getElementById('nav-links');
+  const hb=document.getElementById('hamburger');
+  nl.classList.toggle('open');
+  hb.setAttribute('aria-expanded', nl.classList.contains('open'));
+}
+document.getElementById('yr').textContent=new Date().getFullYear();
+// Daily auto-refresh
+(function(){
+  const KEY='snappgrid_date';
+  const today=new Date().toDateString();
+  const stored=localStorage.getItem(KEY);
+  if(stored && stored!==today){
+    localStorage.setItem(KEY,today);
+    const t=document.getElementById('refresh-toast');
+    if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
+  } else { localStorage.setItem(KEY,today); }
+  setInterval(()=>{
+    if(localStorage.getItem(KEY)!==new Date().toDateString()){
+      localStorage.setItem(KEY,new Date().toDateString());
+      const t=document.getElementById('refresh-toast');
+      if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
+    }
+  },60000);
+})();
+</script></body></html>
