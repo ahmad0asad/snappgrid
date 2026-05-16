@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Daily Connections Puzzle — SnappGrid</title>
+<meta name="description" content="Play today's free daily Connections puzzle. Group 16 words into 4 categories. New puzzle every day, no login required.">
+<link rel="canonical" href="https://snappgrid.com/games/connections/">
+<meta property="og:title" content="SnappGrid Daily Connections">
+<meta property="og:description" content="Group 16 words into 4 hidden categories. Free daily puzzle, no login needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://snappgrid.com/games/connections/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Connections","applicationCategory":"GameApplication","operatingSystem":"Web Browser","url":"https://snappgrid.com/games/connections/","description":"Free daily connections puzzle. Group 16 words into 4 categories.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="../../css/style.css">
+<style>
+/* ── CONNECTIONS SPECIFIC ── */
+.game-container { max-width: 640px; margin: 24px auto 0; padding: 0 clamp(14px,4vw,40px) 56px; }
+
+/* ── FOUND GROUPS ── */
+.found-groups { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; min-height: 0; }
+.found-group {
+  border-radius: 10px; padding: 14px 18px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; animation: groupReveal 0.5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes groupReveal { from { opacity:0; transform:scaleY(0.5) translateY(-10px); } to { opacity:1; transform:scaleY(1) translateY(0); } }
+.fg-theme { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.75; }
+.fg-words { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; }
+.fg-c0 { background: #F9DF6D; color: #1A1714; }
+.fg-c1 { background: #A0C35A; color: #fff; }
+.fg-c2 { background: #6AAFE6; color: #fff; }
+.fg-c3 { background: #BA81C5; color: #fff; }
+
+/* ── WORDS GRID ── */
+.words-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  margin-bottom: 18px;
+}
+.word-card {
+  background: #EFECE6; border: 2px solid transparent;
+  border-radius: 10px; padding: 10px 6px;
+  min-height: 64px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500;
+  color: var(--ink); text-align: center; line-height: 1.3;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  transition: background 0.12s, transform 0.1s, border-color 0.12s;
+  user-select: none; -webkit-user-select: none;
+  position: relative; overflow: hidden;
+}
+.word-card:hover:not(.selected):not(.disabled) { background: #E0DCD4; }
+.word-card.selected {
+  background: #5C5850; color: #fff; border-color: #5C5850;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26,23,20,0.2);
+}
+.word-card.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+.word-card.shake { animation: shake 0.4s ease; }
+.word-card.bounce { animation: bounce 0.4s ease; }
+.word-card.correct-flash { animation: correctFlash 0.6s ease forwards; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  15% { transform: translateX(-6px); }
+  30% { transform: translateX(6px); }
+  45% { transform: translateX(-5px); }
+  60% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+  90% { transform: translateX(3px); }
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+@keyframes correctFlash {
+  0% { background: #F9DF6D; }
+  100% { background: #F9DF6D; opacity: 0; transform: scale(0.95); }
+}
+
+/* ── MISTAKES ── */
+.mistakes-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px; justify-content: center;
+}
+.mistakes-label { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink-muted); }
+.mistake-dots { display: flex; gap: 6px; }
+.mistake-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--ink); transition: all 0.3s ease;
+}
+.mistake-dot.used {
+  background: transparent; border: 2px solid var(--border-strong);
+  transform: scale(0.8);
+}
+.mistake-dot.pulse { animation: dotPulse 0.4s ease; }
+@keyframes dotPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.4)} }
+
+/* ── ACTION BUTTONS ── */
+.action-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.act-btn {
+  padding: 11px 22px; border-radius: 100px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s; border: 2px solid var(--border-strong);
+  background: transparent; color: var(--ink); letter-spacing: 0.3px;
+}
+.act-btn:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.act-btn.submit-btn {
+  background: var(--ink); color: var(--cream); border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--gold);
+  padding: 11px 32px;
+}
+.act-btn.submit-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--gold); }
+.act-btn.submit-btn:disabled {
+  background: var(--border-strong); color: var(--ink-muted); border-color: var(--border-strong);
+  cursor: default; box-shadow: none; transform: none; opacity: 0.5;
+}
+.act-btn.sound-btn { width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+
+/* ── TOAST ── */
+.toast-notification {
+  display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: var(--cream); padding: 10px 20px;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  z-index: 200; white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  animation: toastIn 0.3s ease;
+}
+.toast-notification.visible { display: block; }
+.toast-notification.one-away { background: #B05A20; }
+.toast-notification.wrong { background: var(--red); }
+.toast-notification.already { background: #666; }
+@keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(-8px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+/* ── RESULTS OVERLAY ── */
+.results-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(247,243,236,0.95);
+  backdrop-filter: blur(4px); z-index: 300;
+  align-items: center; justify-content: center; padding: 20px;
+  overflow-y: auto;
+}
+.results-overlay.visible { display: flex; }
+.results-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl); padding: clamp(24px,5vw,44px);
+  max-width: 500px; width: 100%; text-align: center;
+  box-shadow: 6px 6px 0 rgba(26,23,20,0.08); position: relative;
+  max-height: 90vh; overflow-y: auto;
+}
+.results-emoji { font-size: 52px; margin-bottom: 12px; }
+.results-title { font-family: 'Playfair Display', serif; font-size: clamp(26px,5vw,36px); font-weight: 900; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 6px; }
+.results-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; }
+.results-groups { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+.rg-item { border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; text-align: left; }
+.rg-item .rg-theme { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.7; min-width: 90px; }
+.rg-item .rg-words { font-size: 13px; font-weight: 600; }
+.guess-grid { margin-bottom: 24px; }
+.guess-grid-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--ink-muted); margin-bottom: 10px; }
+.guess-rows { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+.guess-row { display: flex; gap: 4px; }
+.guess-square { width: 32px; height: 32px; border-radius: 4px; }
+.gs-c0 { background: #F9DF6D; }
+.gs-c1 { background: #A0C35A; }
+.gs-c2 { background: #6AAFE6; }
+.gs-c3 { background: #BA81C5; }
+.share-section { display: flex; flex-direction: column; gap: 10px; }
+.share-btn {
+  padding: 13px 24px; background: var(--ink); color: var(--cream);
+  border: none; border-radius: 100px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  box-shadow: 3px 3px 0 var(--gold); transition: all 0.15s;
+}
+.share-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--gold); }
+.share-btn.copied { background: var(--green); box-shadow: 3px 3px 0 #1A5C3A; }
+.play-again-btn {
+  padding: 11px 24px; background: transparent; color: var(--ink);
+  border: 2px solid var(--border-strong); border-radius: 100px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s;
+}
+.play-again-btn:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+.streak-display {
+  background: var(--gold-pale); border: 1.5px solid var(--gold-light);
+  border-radius: var(--radius-lg); padding: 12px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.streak-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--gold); }
+.streak-lbl { font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink-soft); }
+
+/* ── HOW TO PLAY ── */
+.how-section {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg); padding: 16px 18px; margin-bottom: 18px;
+}
+.how-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
+.how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.how-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--ink-soft); }
+.how-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── STREAK BADGE (top of game) ── */
+.streak-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gold);
+  background: var(--gold-pale); border: 1px solid var(--gold-light);
+  padding: 4px 12px; border-radius: 100px; margin-bottom: 16px;
+}
+
+/* ── DIFFICULTY LEGEND ── */
+.diff-legend {
+  display: flex; gap: 12px; justify-content: center;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.diff-item { display: flex; align-items: center; gap: 5px; }
+.diff-dot { width: 10px; height: 10px; border-radius: 50%; }
+.diff-text { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+@media (max-width: 480px) {
+  .word-card { font-size: 11px; min-height: 56px; padding: 8px 4px; }
+  .words-grid { gap: 6px; }
+  .action-row { gap: 6px; }
+  .act-btn { padding: 9px 14px; font-size: 13px; }
+  .act-btn.submit-btn { padding: 9px 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/games/crossword/">Crossword</a></li>
+    <li><a href="/games/wordsearch/">Word Search</a></li>
+    <li><a href="/games/sudoku/">Sudoku</a></li>
+    <li><a href="/games/trivia/">Trivia</a></li>
+    <li><a href="/games/connections/" class="active">Connections</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#subscribe" class="nav-cta">Subscribe</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- AD TOP -->
+<div class="ad-wrap"><div class="ad-slot ad-top" aria-label="Advertisement">Advertisement</div></div>
+
+<!-- PAGE HEADER -->
+<div class="page-header" style="max-width:640px;">
+  <div>
+    <div class="breadcrumb"><a href="/">SnappGrid</a> / Connections</div>
+    <h1 class="page-title">Daily Connections</h1>
+  </div>
+  <div class="puzzle-meta">
+    <span class="meta-badge gold-badge" id="puzzle-label">Puzzle #001</span>
+    <span class="meta-badge">16 words</span>
+    <div id="timer">0:00</div>
+  </div>
+</div>
+
+<!-- GAME CONTAINER -->
+<div class="game-container">
+
+  <!-- STREAK BADGE -->
+  <div id="streak-badge" style="text-align:center;"></div>
+
+  <!-- HOW TO PLAY -->
+  <div class="how-section">
+    <div class="how-title">How to play</div>
+    <div class="how-grid">
+      <div class="how-item"><div class="how-dot" style="background:#F9DF6D;border:1px solid #E8C740;"></div><span>Yellow — easiest</span></div>
+      <div class="how-item"><div class="how-dot" style="background:#A0C35A;"></div><span>Green — medium</span></div>
+      <div class="how-item"><div class="how-dot" style="background:#6AAFE6;"></div><span>Blue — hard</span></div>
+      <div class="how-item"><div class="how-dot" style="background:#BA81C5;"></div><span>Purple — hardest</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-muted);margin-top:9px;font-family:'DM Mono',monospace;">Select 4 words that share a hidden connection. Watch out for red herrings!</p>
+  </div>
+
+  <!-- FOUND GROUPS -->
+  <div class="found-groups" id="found-groups"></div>
+
+  <!-- WORDS GRID -->
+  <div class="words-grid" id="words-grid" role="grid" aria-label="Connections word grid"></div>
+
+  <!-- MISTAKES -->
+  <div class="mistakes-row">
+    <span class="mistakes-label">Mistakes remaining</span>
+    <div class="mistake-dots" id="mistake-dots"></div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="action-row">
+    <button class="act-btn sound-btn" onclick="toggleSound()" id="sound-btn" title="Toggle sound" aria-label="Toggle sound">🔊</button>
+    <button class="act-btn" onclick="handleDeselect()" id="deselect-btn">Deselect all</button>
+    <button class="act-btn" onclick="handleShuffle()" id="shuffle-btn">Shuffle</button>
+    <button class="act-btn submit-btn" onclick="handleSubmit()" id="submit-btn" disabled>Submit</button>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast-notification" id="toast"></div>
+
+<!-- RESULTS OVERLAY -->
+<div class="results-overlay" id="results-overlay" aria-modal="true" role="dialog">
+  <div class="results-card">
+    <div class="results-emoji" id="res-emoji">🎉</div>
+    <div class="results-title" id="res-title">Brilliant!</div>
+    <div class="results-sub" id="res-sub">You found all four connections.</div>
+
+    <div class="streak-display" id="streak-display" style="display:none;">
+      <div><div class="streak-num" id="streak-num">1</div><div class="streak-lbl">day streak 🔥</div></div>
+    </div>
+
+    <div class="results-groups" id="results-groups"></div>
+
+    <div class="guess-grid">
+      <div class="guess-grid-label">Your guesses</div>
+      <div class="guess-rows" id="guess-rows"></div>
+    </div>
+
+    <div class="share-section">
+      <button class="share-btn" onclick="handleShare()" id="share-btn">📋 Copy results</button>
+      <button class="play-again-btn" onclick="closeResults()">Play tomorrow's puzzle</button>
+    </div>
+  </div>
+</div>
+
+<!-- AD BOTTOM -->
+<div class="ad-wrap" style="margin-top:32px;margin-bottom:40px;max-width:640px;margin-left:auto;margin-right:auto;">
+  <div class="ad-slot ad-bottom">Advertisement</div>
+</div>
+
+<!-- NEXT SECTION -->
+<div class="next-section" style="max-width:640px;margin-left:auto;margin-right:auto;padding-left:clamp(14px,4vw,40px);padding-right:clamp(14px,4vw,40px);">
+  <a href="/games/crossword/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Crossword</div><div class="next-card-desc">Fill crossing words with across and down clues.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/trivia/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Trivia Quiz</div><div class="next-card-desc">10 daily questions across history, science & more.</div><div class="next-card-arrow">→</div></a>
+  <a href="/#subscribe" class="next-card" style="border-color:var(--gold-light);background:var(--gold-pale);"><div class="next-card-label">Never miss one</div><div class="next-card-title">Daily Reminder</div><div class="next-card-desc">All 5 puzzles delivered to your inbox each morning.</div><div class="next-card-arrow" style="color:var(--gold);">→</div></a>
+</div>
+
+<!-- DAILY REFRESH TOAST -->
+<div class="refresh-toast" id="refresh-toast">
+  🎉 New puzzles are ready!
+  <button onclick="location.reload()">Refresh now</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">SnappGrid</a>
+    <ul class="footer-links">
+      <li><a href="/games/crossword/">Crossword</a></li>
+      <li><a href="/games/wordsearch/">Word Search</a></li>
+      <li><a href="/games/sudoku/">Sudoku</a></li>
+      <li><a href="/games/trivia/">Trivia</a></li>
+      <li><a href="/games/connections/">Connections</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+    </ul>
+    <div class="footer-copy">© <span id="yr"></span> SnappGrid · Free daily puzzles · No account required</div>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════
+// PUZZLE DATA — 30 puzzles, date-locked rotation
+// ════════════════════════════════════════════════
+const PUZZLES = [
+  { id:'001', groups:[
+    { theme:'Soft cheeses', color:0, words:['BRIE','GOUDA','CAMEMBERT','RICOTTA'] },
+    { theme:'___ ball', color:1, words:['BASKET','FOOT','FIRE','SNOW'] },
+    { theme:'Famous Charlies', color:2, words:['CHAPLIN','SHEEN','DARWIN','DICKENS'] },
+    { theme:'Palindromes', color:3, words:['LEVEL','CIVIC','RADAR','NOON'] }
+  ]},
+  { id:'002', groups:[
+    { theme:'Cloud types', color:0, words:['CIRRUS','CUMULUS','STRATUS','NIMBUS'] },
+    { theme:'Shades of blue', color:1, words:['NAVY','COBALT','TEAL','AZURE'] },
+    { theme:'Types of pasta', color:2, words:['PENNE','FUSILLI','RIGATONI','LINGUINE'] },
+    { theme:'___ storm', color:3, words:['BRAIN','THUNDER','SAND','ICE'] }
+  ]},
+  { id:'003', groups:[
+    { theme:'Disney princesses', color:0, words:['ARIEL','BELLE','MOANA','MULAN'] },
+    { theme:'James Bond films', color:1, words:['SKYFALL','GOLDENEYE','SPECTRE','THUNDERBALL'] },
+    { theme:'Music genres', color:2, words:['JAZZ','BLUES','SOUL','FUNK'] },
+    { theme:'Shades of green', color:3, words:['OLIVE','JADE','SAGE','MINT'] }
+  ]},
+  { id:'004', groups:[
+    { theme:'Elements (odd symbols)', color:0, words:['GOLD','IRON','LEAD','TIN'] },
+    { theme:'Planets with rings', color:1, words:['SATURN','URANUS','NEPTUNE','JUPITER'] },
+    { theme:'Famous scientists', color:2, words:['DARWIN','CURIE','NEWTON','HAWKING'] },
+    { theme:'Types of energy', color:3, words:['SOLAR','KINETIC','NUCLEAR','THERMAL'] }
+  ]},
+  { id:'005', groups:[
+    { theme:'Synonyms for happy', color:0, words:['JOYFUL','ELATED','BLISSFUL','GLEEFUL'] },
+    { theme:'___ house', color:1, words:['TREE','WARE','ROAD','POWER'] },
+    { theme:'Homophones of numbers', color:2, words:['ATE','FOR','TOO','WON'] },
+    { theme:'Over + ___', color:3, words:['LOOK','COME','TURN','LOAD'] }
+  ]},
+  { id:'006', groups:[
+    { theme:'Types of bread', color:0, words:['CIABATTA','BRIOCHE','FOCACCIA','SOURDOUGH'] },
+    { theme:'Spices', color:1, words:['CUMIN','TURMERIC','PAPRIKA','CARDAMOM'] },
+    { theme:'Famous chefs (surname)', color:2, words:['RAMSAY','OLIVER','BLUMENTHAL','CHILD'] },
+    { theme:'Shades of red', color:3, words:['CRIMSON','SCARLET','VERMILLION','MAROON'] }
+  ]},
+  { id:'007', groups:[
+    { theme:'Capital cities', color:0, words:['OSLO','LIMA','NAIROBI','SEOUL'] },
+    { theme:'Deserts', color:1, words:['SAHARA','GOBI','MOJAVE','ATACAMA'] },
+    { theme:'Mountain ranges', color:2, words:['ALPS','ANDES','ROCKIES','URALS'] },
+    { theme:'Island groups', color:3, words:['AZORES','MALDIVES','CANARY','GALAPAGOS'] }
+  ]},
+  { id:'008', groups:[
+    { theme:'Golf terms', color:0, words:['BIRDIE','EAGLE','BOGEY','PAR'] },
+    { theme:'Olympic combat sports', color:1, words:['FENCING','JUDO','BOXING','WRESTLING'] },
+    { theme:'___ sport', color:2, words:['WATER','BLOOD','MOTOR','WINTER'] },
+    { theme:'Famous football #7s', color:3, words:['BECKHAM','RONALDO','CANTONA','KEEGAN'] }
+  ]},
+  { id:'009', groups:[
+    { theme:'Ancient wonders', color:0, words:['COLOSSUS','LIGHTHOUSE','MAUSOLEUM','PYRAMID'] },
+    { theme:'Roman emperors', color:1, words:['NERO','CALIGULA','HADRIAN','CLAUDIUS'] },
+    { theme:'WWII allied leaders', color:2, words:['CHURCHILL','ROOSEVELT','STALIN','EISENHOWER'] },
+    { theme:'Famous revolutions', color:3, words:['FRENCH','AMERICAN','INDUSTRIAL','BOLSHEVIK'] }
+  ]},
+  { id:'010', groups:[
+    { theme:'Friends characters', color:0, words:['ROSS','RACHEL','MONICA','PHOEBE'] },
+    { theme:'Game of Thrones houses', color:1, words:['LANNISTER','STARK','TARGARYEN','BARATHEON'] },
+    { theme:'Oscar best picture winners', color:2, words:['TITANIC','GLADIATOR','CHICAGO','CRASH'] },
+    { theme:'Types of road', color:3, words:['AVENUE','BOULEVARD','LANE','CRESCENT'] }
+  ]},
+  { id:'011', groups:[
+    { theme:'Ballroom dances', color:0, words:['WALTZ','TANGO','FOXTROT','QUICKSTEP'] },
+    { theme:'Card games', color:1, words:['POKER','BRIDGE','RUMMY','SNAP'] },
+    { theme:'Famous Williams', color:2, words:['SHAKESPEARE','WORDSWORTH','TURNER','BLAKE'] },
+    { theme:'___ card', color:3, words:['WILD','TRUMP','CREDIT','POST'] }
+  ]},
+  { id:'012', groups:[
+    { theme:'Coffee drinks', color:0, words:['LATTE','ESPRESSO','CAPPUCCINO','MACCHIATO'] },
+    { theme:'Yoga poses', color:1, words:['COBRA','WARRIOR','TREE','BRIDGE'] },
+    { theme:'Words meaning tired', color:2, words:['WEARY','EXHAUSTED','FATIGUED','LISTLESS'] },
+    { theme:'___ power', color:3, words:['FLOWER','WILL','BRAIN','FIRE'] }
+  ]},
+  { id:'013', groups:[
+    { theme:'Shades of yellow', color:0, words:['AMBER','LEMON','GOLD','CANARY'] },
+    { theme:'Types of shark', color:1, words:['HAMMERHEAD','BULL','TIGER','NURSE'] },
+    { theme:'Black + ___', color:2, words:['BIRD','BERRY','SMITH','BOARD'] },
+    { theme:'Shakespeare plays', color:3, words:['HAMLET','OTHELLO','MACBETH','TEMPEST'] }
+  ]},
+  { id:'014', groups:[
+    { theme:'Animal group names', color:0, words:['PRIDE','MURDER','SCHOOL','PARLIAMENT'] },
+    { theme:'___ fish', color:1, words:['SWORD','STAR','JELLY','CAT'] },
+    { theme:'Famous Jameses', color:2, words:['BOND','BROWN','DEAN','MAY'] },
+    { theme:'Card game terms', color:3, words:['TRUMP','SUIT','DEAL','HAND'] }
+  ]},
+  { id:'015', groups:[
+    { theme:'Languages', color:0, words:['MANDARIN','SWAHILI','ARABIC','BENGALI'] },
+    { theme:'Currencies', color:1, words:['YEN','PESO','KRONA','RUPEE'] },
+    { theme:'___ ache', color:2, words:['HEAD','HEART','TOOTH','STOMACH'] },
+    { theme:'Famous Alexanders', color:3, words:['GREAT','HAMILTON','MCQUEEN','BELL'] }
+  ]},
+  { id:'016', groups:[
+    { theme:'Cocktails', color:0, words:['MOJITO','NEGRONI','COSMOPOLITAN','DAIQUIRI'] },
+    { theme:'Flowers', color:1, words:['DAHLIA','PEONY','ORCHID','ZINNIA'] },
+    { theme:'Book + ___', color:2, words:['MARK','WORM','SHELF','CASE'] },
+    { theme:'___ phobia prefix', color:3, words:['ACRO','AGORA','CLAUSTRO','XENO'] }
+  ]},
+  { id:'017', groups:[
+    { theme:'Types of triangle', color:0, words:['SCALENE','ISOSCELES','EQUILATERAL','RIGHT'] },
+    { theme:'Words meaning huge', color:1, words:['COLOSSAL','MAMMOTH','TITANIC','VAST'] },
+    { theme:'Famous Elizabeths', color:2, words:['TAYLOR','WARREN','HURLEY','HOLMES'] },
+    { theme:'Tooth + ___', color:3, words:['FAIRY','BRUSH','PASTE','PICK'] }
+  ]},
+  { id:'018', groups:[
+    { theme:'Old European currencies', color:0, words:['FRANC','MARK','LIRA','DRACHMA'] },
+    { theme:'Constellations', color:1, words:['ORION','GEMINI','PERSEUS','CASSIOPEIA'] },
+    { theme:'___ stone', color:2, words:['LIME','COBBLE','CORNER','SAND'] },
+    { theme:'Famous Bobs', color:3, words:['DYLAN','MARLEY','HOPE','ROSS'] }
+  ]},
+  { id:'019', groups:[
+    { theme:'Types of hat', color:0, words:['FEDORA','BERET','TRILBY','CLOCHE'] },
+    { theme:'Mythological creatures', color:1, words:['CENTAUR','MINOTAUR','PHOENIX','GRIFFIN'] },
+    { theme:'___ work', color:2, words:['FRAME','NET','TEAM','PAPER'] },
+    { theme:'Famous Davids', color:3, words:['BOWIE','BECKHAM','ATTENBOROUGH','COPPERFIELD'] }
+  ]},
+  { id:'020', groups:[
+    { theme:'Types of tea', color:0, words:['CHAMOMILE','PEPPERMINT','JASMINE','OOLONG'] },
+    { theme:'Hand + ___', color:1, words:['SHAKE','BAG','STAND','MADE'] },
+    { theme:'Olympic host cities', color:2, words:['ATHENS','MUNICH','MONTREAL','SEOUL'] },
+    { theme:'Words meaning fake', color:3, words:['COUNTERFEIT','FORGED','SHAM','BOGUS'] }
+  ]},
+  { id:'021', groups:[
+    { theme:'Shades of purple', color:0, words:['LAVENDER','VIOLET','MAUVE','LILAC'] },
+    { theme:'___ berry', color:1, words:['STRAW','BLUE','RASP','GOOSE'] },
+    { theme:'Hard cheeses', color:2, words:['PARMESAN','CHEDDAR','GRUYERE','MANCHEGO'] },
+    { theme:'___ fall', color:3, words:['WATER','DOWN','FOOT','FREE'] }
+  ]},
+  { id:'022', groups:[
+    { theme:'Words meaning walk slowly', color:0, words:['STROLL','SAUNTER','TRUDGE','AMBLE'] },
+    { theme:'Leg bones', color:1, words:['FEMUR','TIBIA','FIBULA','PATELLA'] },
+    { theme:'Famous Johns', color:2, words:['KEATS','STEINBECK','COLTRANE','CLEESE'] },
+    { theme:'Sun + ___', color:3, words:['FLOWER','BURN','SCREEN','SET'] }
+  ]},
+  { id:'023', groups:[
+    { theme:'Woodwind instruments', color:0, words:['FLUTE','OBOE','CLARINET','BASSOON'] },
+    { theme:'___ board', color:1, words:['CARD','KEY','SKATE','SNOW'] },
+    { theme:'Words meaning old', color:2, words:['ANCIENT','ARCHAIC','ANTIQUE','VINTAGE'] },
+    { theme:'Famous Jacks', color:3, words:['NICHOLSON','SPARROW','KEROUAC','LONDON'] }
+  ]},
+  { id:'024', groups:[
+    { theme:'Latin dances', color:0, words:['SALSA','MERENGUE','BACHATA','CUMBIA'] },
+    { theme:'Thunder + ___', color:1, words:['STORM','BOLT','BIRD','CLAP'] },
+    { theme:'Famous Marys', color:2, words:['POPPINS','SHELLEY','BERRY','MAGDALENE'] },
+    { theme:'___ work', color:3, words:['HOME','GUESS','OVER','GUESS'] }
+  ]},
+  { id:'025', groups:[
+    { theme:'Words meaning quickly', color:0, words:['SWIFTLY','RAPIDLY','HASTILY','BRISKLY'] },
+    { theme:'___ man', color:1, words:['SNOW','GENTLE','SPIDER','SUPER'] },
+    { theme:'Greek gods', color:2, words:['ZEUS','APOLLO','HERMES','POSEIDON'] },
+    { theme:'High + ___', color:3, words:['WAY','LIGHT','LAND','SCORE'] }
+  ]},
+  { id:'026', groups:[
+    { theme:'Sea + ___', color:0, words:['HORSE','GULL','WEED','FOOD'] },
+    { theme:'___ side', color:1, words:['OUT','IN','ROAD','BLIND'] },
+    { theme:'Words meaning steal', color:2, words:['PILFER','FILCH','PURLOIN','EMBEZZLE'] },
+    { theme:'Punctuation marks', color:3, words:['COMMA','COLON','HYPHEN','APOSTROPHE'] }
+  ]},
+  { id:'027', groups:[
+    { theme:'Parts of a flower', color:0, words:['PETAL','STAMEN','PISTIL','SEPAL'] },
+    { theme:'___ ship', color:1, words:['FRIEND','SPORTS','SCHOLAR','HARD'] },
+    { theme:'Synonyms for brave', color:2, words:['VALIANT','GALLANT','DAUNTLESS','INTREPID'] },
+    { theme:'___ place', color:3, words:['MARKET','BIRTH','WORK','FIRE'] }
+  ]},
+  { id:'028', groups:[
+    { theme:'Synonyms for confused', color:0, words:['BAFFLED','BEWILDERED','PERPLEXED','PUZZLED'] },
+    { theme:'Famous Amys', color:1, words:['WINEHOUSE','ADAMS','SCHUMER','LEE'] },
+    { theme:'Cross + ___', color:2, words:['WORD','ROADS','BOW','FIRE'] },
+    { theme:'___ fall', color:3, words:['WIND','PIT','NIGHT','RAIN'] }
+  ]},
+  { id:'029', groups:[
+    { theme:'Synonyms for angry', color:0, words:['FURIOUS','IRATE','LIVID','SEETHING'] },
+    { theme:'Famous Roberts', color:1, words:['DOWNEY','PATTINSON','REDFORD','PLANT'] },
+    { theme:'Words meaning small', color:2, words:['TINY','MINUSCULE','PETITE','DIMINUTIVE'] },
+    { theme:'Poker hands', color:3, words:['FLUSH','STRAIGHT','ROYAL','FULL'] }
+  ]},
+  { id:'030', groups:[
+    { theme:'Garden flowers', color:0, words:['LUPIN','FOXGLOVE','BEGONIA','SNAPDRAGON'] },
+    { theme:'Famous Georges', color:1, words:['WASHINGTON','ORWELL','CLOONEY','MICHAEL'] },
+    { theme:'Words before ROAD', color:2, words:['HIGH','RAIL','MOTOR','CROSS'] },
+    { theme:'Words with a silent first letter', color:3, words:['KNIFE','GNOME','PSALM','HOUR'] }
+  ]}
+];
+
+// Fix puzzle 024 - HOME, GUESS duplicate
+PUZZLES[23].groups[3].words = ['HOME','FIRE','GUESS','OVER'];
+
+// ════════════════════════════════════════════════
+// COLORS CONFIG
+// ════════════════════════════════════════════════
+const COLORS = [
+  { bg:'#F9DF6D', border:'#E8C740', text:'#1A1714', emoji:'🟨', cls:'fg-c0', name:'Yellow' },
+  { bg:'#A0C35A', border:'#7FA83A', text:'#fff',    emoji:'🟩', cls:'fg-c1', name:'Green' },
+  { bg:'#6AAFE6', border:'#4A90C6', text:'#fff',    emoji:'🟦', cls:'fg-c2', name:'Blue' },
+  { bg:'#BA81C5', border:'#9A61A5', text:'#fff',    emoji:'🟪', cls:'fg-c3', name:'Purple' }
+];
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let puzzle, shuffledWords, selected, foundGroups, mistakes, guessHistory, gameOver, soundOn, audioCtx, timerInterval, seconds;
+
+// ════════════════════════════════════════════════
+// AUDIO ENGINE (Web Audio API — no external files)
+// ════════════════════════════════════════════════
+function initAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playTone(freq, dur, type='sine', vol=0.25, startTime=0) {
+  if (!soundOn || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type = type; osc.frequency.value = freq;
+    const t = audioCtx.currentTime + startTime;
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.start(t); osc.stop(t + dur + 0.01);
+  } catch(e) {}
+}
+
+function sndClick() {
+  playTone(900, 0.04, 'sine', 0.08);
+}
+
+function sndSelect() {
+  playTone(660, 0.06, 'sine', 0.12);
+}
+
+function sndDeselect() {
+  playTone(440, 0.05, 'sine', 0.08);
+}
+
+function sndCorrect(colorIdx) {
+  const scales = [
+    [523, 659, 784, 1047],  // yellow - C major arp
+    [587, 740, 880, 1175],  // green  - D major arp
+    [659, 831, 988, 1319],  // blue   - E major arp
+    [698, 880, 1047, 1397]  // purple - F major arp
+  ];
+  const notes = scales[colorIdx] || scales[0];
+  notes.forEach((f, i) => playTone(f, 0.18, 'sine', 0.28, i * 0.09));
+}
+
+function sndWrong() {
+  playTone(180, 0.12, 'sawtooth', 0.2);
+  playTone(160, 0.25, 'sawtooth', 0.15, 0.12);
+}
+
+function sndOneAway() {
+  playTone(523, 0.1, 'sine', 0.2);
+  playTone(523, 0.1, 'sine', 0.2, 0.15);
+  playTone(659, 0.15, 'sine', 0.25, 0.30);
+}
+
+function sndShuffle() {
+  [800, 600, 900, 700].forEach((f, i) => playTone(f, 0.07, 'sine', 0.1, i * 0.05));
+}
+
+function sndWin() {
+  const melody = [523, 659, 784, 659, 784, 1047, 784, 1047, 1319];
+  melody.forEach((f, i) => playTone(f, 0.2, 'sine', 0.3, i * 0.1));
+}
+
+function sndLose() {
+  [440, 370, 311, 277].forEach((f, i) => playTone(f, 0.3, 'sine', 0.25, i * 0.15));
+}
+
+// ════════════════════════════════════════════════
+// TIMER
+// ════════════════════════════════════════════════
+function startTimer() {
+  if (timerInterval) return;
+  timerInterval = setInterval(() => {
+    seconds++;
+    const m = Math.floor(seconds / 60), s = seconds % 60;
+    const el = document.getElementById('timer');
+    if (el) el.textContent = m + ':' + String(s).padStart(2, '0');
+  }, 1000);
+}
+function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
+
+// ════════════════════════════════════════════════
+// STREAK
+// ════════════════════════════════════════════════
+function getStreak() { return parseInt(localStorage.getItem('sg_conn_streak') || '0'); }
+function getStreakDate() { return localStorage.getItem('sg_conn_streak_date') || ''; }
+function updateStreak(won) {
+  const today = new Date().toDateString();
+  const lastDate = getStreakDate();
+  let streak = getStreak();
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  if (won) {
+    if (lastDate === today) return; // already counted today
+    if (lastDate === yesterday.toDateString()) streak++;
+    else streak = 1;
+    localStorage.setItem('sg_conn_streak', streak);
+    localStorage.setItem('sg_conn_streak_date', today);
+  } else {
+    if (lastDate !== today) { localStorage.setItem('sg_conn_streak', 0); }
+  }
+  return streak;
+}
+
+function renderStreakBadge() {
+  const streak = getStreak();
+  const badge = document.getElementById('streak-badge');
+  if (streak > 0 && badge) {
+    badge.innerHTML = '<div class="streak-badge">🔥 ' + streak + ' day streak</div>';
+  }
+}
+
+// ════════════════════════════════════════════════
+// DAILY PUZZLE SELECTION
+// ════════════════════════════════════════════════
+function getDayIndex() {
+  const launch = new Date('2026-06-01');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = Math.floor((today - launch) / 86400000);
+  return Math.abs(days) % PUZZLES.length;
+}
+
+// ════════════════════════════════════════════════
+// SHUFFLE
+// ════════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+function init() {
+  const idx = getDayIndex();
+  puzzle = PUZZLES[idx];
+  document.getElementById('puzzle-label').textContent = 'Puzzle #' + puzzle.id;
+
+  // Build flat word list [{word, groupIdx}]
+  const allWords = [];
+  puzzle.groups.forEach((g, gi) => g.words.forEach(w => allWords.push({ word: w, groupIdx: gi })));
+  shuffledWords = shuffle(allWords);
+
+  selected = [];
+  foundGroups = [];
+  mistakes = 0;
+  guessHistory = [];
+  gameOver = false;
+  soundOn = localStorage.getItem('sg_sound') !== 'off';
+  seconds = 0;
+
+  updateSoundBtn();
+  renderStreakBadge();
+  renderMistakes();
+  renderGrid();
+  renderFoundGroups();
+}
+
+// ════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════
+function renderGrid() {
+  const grid = document.getElementById('words-grid');
+  // Only show unplaced words
+  const remaining = shuffledWords.filter(w => !foundGroups.includes(w.groupIdx));
+  grid.innerHTML = remaining.map((item, i) => {
+    const isSel = selected.includes(i);
+    return '<button class="word-card' + (isSel ? ' selected' : '') + '" ' +
+           'onclick="handleWordClick(' + i + ')" ' +
+           'data-idx="' + i + '" ' +
+           'aria-pressed="' + isSel + '">' +
+           item.word + '</button>';
+  }).join('');
+}
+
+function renderFoundGroups() {
+  const el = document.getElementById('found-groups');
+  el.innerHTML = foundGroups.map(gi => {
+    const g = puzzle.groups[gi];
+    const c = COLORS[g.color];
+    return '<div class="found-group ' + c.cls + '">' +
+           '<div class="fg-theme">' + g.theme + '</div>' +
+           '<div class="fg-words">' + g.words.join(' · ') + '</div>' +
+           '</div>';
+  }).join('');
+}
+
+function renderMistakes() {
+  const el = document.getElementById('mistake-dots');
+  let html = '';
+  for (let i = 0; i < 4; i++) {
+    html += '<div class="mistake-dot' + (i >= (4 - mistakes) ? ' used' : '') + '" id="dot-' + i + '"></div>';
+  }
+  el.innerHTML = html;
+}
+
+function updateSoundBtn() {
+  const btn = document.getElementById('sound-btn');
+  if (btn) btn.textContent = soundOn ? '🔊' : '🔇';
+}
+
+// ════════════════════════════════════════════════
+// WORD CLICK
+// ════════════════════════════════════════════════
+function handleWordClick(visIdx) {
+  if (gameOver) return;
+  initAudio();
+  startTimer();
+
+  const alreadySel = selected.indexOf(visIdx);
+  if (alreadySel >= 0) {
+    selected.splice(alreadySel, 1);
+    sndDeselect();
+  } else {
+    if (selected.length >= 4) return;
+    selected.push(visIdx);
+    sndSelect();
+  }
+
+  document.getElementById('submit-btn').disabled = selected.length !== 4;
+  renderGrid();
+}
+
+// ════════════════════════════════════════════════
+// DESELECT + SHUFFLE
+// ════════════════════════════════════════════════
+function handleDeselect() {
+  initAudio();
+  sndClick();
+  selected = [];
+  document.getElementById('submit-btn').disabled = true;
+  renderGrid();
+}
+
+function handleShuffle() {
+  initAudio();
+  sndShuffle();
+  const remaining = shuffledWords.filter(w => !foundGroups.includes(w.groupIdx));
+  const shuffledRemaining = shuffle(remaining);
+  // Replace remaining slots in shuffledWords
+  let ri = 0;
+  for (let i = 0; i < shuffledWords.length; i++) {
+    if (!foundGroups.includes(shuffledWords[i].groupIdx)) {
+      shuffledWords[i] = shuffledRemaining[ri++];
+    }
+  }
+  selected = [];
+  document.getElementById('submit-btn').disabled = true;
+  renderGrid();
+  // Bounce animation
+  document.querySelectorAll('.word-card').forEach((el, i) => {
+    setTimeout(() => { el.classList.add('bounce'); setTimeout(() => el.classList.remove('bounce'), 400); }, i * 30);
+  });
+}
+
+// ════════════════════════════════════════════════
+// SUBMIT
+// ════════════════════════════════════════════════
+function handleSubmit() {
+  if (selected.length !== 4 || gameOver) return;
+  initAudio();
+
+  const remaining = shuffledWords.filter(w => !foundGroups.includes(w.groupIdx));
+  const selectedItems = selected.map(i => remaining[i]);
+  const groupCounts = {};
+  selectedItems.forEach(item => { groupCounts[item.groupIdx] = (groupCounts[item.groupIdx] || 0) + 1; });
+
+  // Check if all 4 are in same group
+  const entries = Object.entries(groupCounts);
+  const isCorrect = entries.length === 1 && entries[0][1] === 4;
+
+  // Record guess for share
+  guessHistory.push(selectedItems.map(i => i.groupIdx));
+
+  if (isCorrect) {
+    const correctGroupIdx = parseInt(entries[0][0]);
+    const g = puzzle.groups[correctGroupIdx];
+
+    // Flash cards
+    document.querySelectorAll('.word-card.selected').forEach(el => {
+      el.style.background = COLORS[g.color].bg;
+      el.style.color = COLORS[g.color].text;
+    });
+
+    setTimeout(() => {
+      foundGroups.push(correctGroupIdx);
+      selected = [];
+      renderGrid();
+      renderFoundGroups();
+      sndCorrect(g.color);
+      document.getElementById('submit-btn').disabled = true;
+
+      const allFound = puzzle.groups.every((_, gi) => foundGroups.includes(gi));
+      if (allFound) {
+        stopTimer();
+        setTimeout(() => showResults(true), 600);
+      }
+    }, 500);
+
+  } else {
+    // Check one away
+    const maxCount = Math.max(...Object.values(groupCounts));
+    if (maxCount === 3) {
+      showToast('One away!', 'one-away', 1800);
+      sndOneAway();
+    } else {
+      sndWrong();
+    }
+
+    mistakes++;
+    renderMistakes();
+
+    // Animate mistake dot
+    const dotEl = document.getElementById('dot-' + (4 - mistakes));
+    if (dotEl) { dotEl.classList.add('pulse'); setTimeout(() => dotEl.classList.remove('pulse'), 400); }
+
+    // Shake selected cards
+    document.querySelectorAll('.word-card.selected').forEach(el => {
+      el.classList.add('shake');
+      setTimeout(() => el.classList.remove('shake'), 400);
+    });
+
+    if (mistakes >= 4) {
+      setTimeout(() => {
+        selected = [];
+        stopTimer();
+        showResults(false);
+      }, 600);
+    } else {
+      selected = [];
+      setTimeout(() => {
+        document.getElementById('submit-btn').disabled = true;
+        renderGrid();
+      }, 450);
+    }
+  }
+}
+
+// ════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg, type, dur) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'toast-notification visible' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast-notification'; }, dur || 2000);
+}
+
+// ════════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════════
+function showResults(won) {
+  gameOver = true;
+  if (won) { sndWin(); } else { sndLose(); }
+
+  const streak = updateStreak(won);
+
+  // Emoji + title
+  let emoji, title, sub;
+  if (won && mistakes === 0)     { emoji='🏆'; title='Perfect!';  sub='No mistakes — flawless!'; }
+  else if (won && mistakes === 1) { emoji='🎉'; title='Brilliant!'; sub='Only one slip — excellent work!'; }
+  else if (won && mistakes <= 3) { emoji='😊'; title='Well done!'; sub='You found all four connections.'; }
+  else                           { emoji='😅'; title='So close!'; sub='Better luck with tomorrow\'s puzzle!'; }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-sub').textContent = sub;
+
+  // Streak display
+  if (won && streak > 1) {
+    const sd = document.getElementById('streak-display');
+    document.getElementById('streak-num').textContent = streak;
+    sd.style.display = 'flex';
+  }
+
+  // Groups
+  const rg = document.getElementById('results-groups');
+  rg.innerHTML = puzzle.groups.map((g, gi) => {
+    const c = COLORS[g.color];
+    return '<div class="rg-item" style="background:' + c.bg + ';color:' + c.text + ';">' +
+           '<span class="rg-theme">' + g.theme + '</span>' +
+           '<span class="rg-words">' + g.words.join(', ') + '</span>' +
+           '</div>';
+  }).join('');
+
+  // Guess grid
+  const gr = document.getElementById('guess-rows');
+  gr.innerHTML = guessHistory.map(guess => {
+    return '<div class="guess-row">' +
+           guess.map(gi => '<div class="guess-square gs-c' + puzzle.groups[gi].color + '"></div>').join('') +
+           '</div>';
+  }).join('');
+
+  document.getElementById('results-overlay').classList.add('visible');
+}
+
+function closeResults() {
+  document.getElementById('results-overlay').classList.remove('visible');
+}
+
+// ════════════════════════════════════════════════
+// SHARE
+// ════════════════════════════════════════════════
+function handleShare() {
+  const lines = [
+    'SnappGrid Connections #' + puzzle.id,
+    'Mistakes: ' + mistakes + '/4',
+    '',
+    ...guessHistory.map(guess => guess.map(gi => COLORS[puzzle.groups[gi].color].emoji).join('')),
+    '',
+    'snappgrid.com/games/connections/'
+  ];
+  const text = lines.join('\n');
+  const btn = document.getElementById('share-btn');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      sndCorrect(1);
+      setTimeout(() => { btn.textContent = '📋 Copy results'; btn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy results'; }, 2000);
+  }
+}
+
+// ════════════════════════════════════════════════
+// SOUND TOGGLE
+// ════════════════════════════════════════════════
+function toggleSound() {
+  initAudio();
+  soundOn = !soundOn;
+  localStorage.setItem('sg_sound', soundOn ? 'on' : 'off');
+  updateSoundBtn();
+  if (soundOn) sndClick();
+}
+
+// ════════════════════════════════════════════════
+// NAV + SHARED JS
+// ════════════════════════════════════════════════
+function toggleNav() {
+  const nl = document.getElementById('nav-links');
+  const hb = document.getElementById('hamburger');
+  nl.classList.toggle('open');
+  hb.setAttribute('aria-expanded', nl.classList.contains('open'));
+}
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Daily auto-refresh
+(function() {
+  const KEY = 'snappgrid_date';
+  const today = new Date().toDateString();
+  const stored = localStorage.getItem(KEY);
+  if (stored && stored !== today) {
+    localStorage.setItem(KEY, today);
+    const t = document.getElementById('refresh-toast');
+    if (t) { t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 8000); }
+  } else { localStorage.setItem(KEY, today); }
+  setInterval(() => {
+    if (localStorage.getItem(KEY) !== new Date().toDateString()) {
+      localStorage.setItem(KEY, new Date().toDateString());
+      const t = document.getElementById('refresh-toast');
+      if (t) { t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 8000); }
+    }
+  }, 60000);
+})();
+
+// ════════════════════════════════════════════════
+// KEYBOARD
+// ════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && selected.length === 4) handleSubmit();
+  if (e.key === 'Escape') { handleDeselect(); }
+});
+
+// ════════════════════════════════════════════════
+// START
+// ════════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
