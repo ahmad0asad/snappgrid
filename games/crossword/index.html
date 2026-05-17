@@ -2,45 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Daily Crossword Puzzle — Play Online | SnappGrid</title>
-<meta name="description" content="Play today's free daily mini crossword puzzle online. New puzzle every day, no login or download required. Works on any device.">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Free Daily Crossword Puzzle — SnappGrid</title>
+<meta name="description" content="Play today's free mini crossword. 5 words, 5×5 grid, clues across and down. New puzzle every day — no login needed.">
 <link rel="canonical" href="https://snappgrid.com/games/crossword/">
-<meta property="og:title" content="Free Daily Crossword Puzzle — Play Online | SnappGrid">
-<meta property="og:description" content="Play today's free daily mini crossword puzzle online. New puzzle every day, no login or download required. Works on any device.">
+<meta property="og:title" content="Free Daily Crossword Puzzle — SnappGrid">
+<meta property="og:description" content="Play today's free mini crossword. 5 words, 5×5 grid, clues across and down. New puzzle every day — no login needed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snappgrid.com/games/crossword/">
-<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free Daily Crossword Puzzle — Play Online | SnappGrid">
-<meta name="twitter:description" content="Play today's free daily mini crossword puzzle online. New puzzle every day, no login or download required. Works on any device.">
-<meta name="robots" content="index, follow">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Crossword","applicationCategory":"GameApplication","operatingSystem":"Web Browser","browserRequirements":"Requires JavaScript","url":"https://snappgrid.com/games/crossword/","description":"Free daily mini crossword puzzle. New puzzle every day, no login required.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":"Daily fresh puzzles, Keyboard navigation, Check and reveal, Mobile friendly"}
-</script>
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Crossword","applicationCategory":"GameApplication","url":"https://snappgrid.com/games/crossword/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="../../css/style.css">
 </head><style>
-:root{--cell:56px;}
-.game-layout{max-width:1100px;margin:22px auto 0;padding:0 clamp(16px,4vw,60px) 48px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;}
-.grid-area{display:flex;flex-direction:column;gap:14px;}
-.cw-grid{display:inline-grid;grid-template-columns:repeat(5,var(--cell));grid-template-rows:repeat(5,var(--cell));gap:3px;background:var(--ink);border:3px solid var(--ink);border-radius:3px;box-shadow:5px 5px 0 rgba(26,23,20,.18);user-select:none;}
-.cell{width:var(--cell);height:var(--cell);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--white);transition:background .08s;}
-.cell.black{background:var(--ink);cursor:default;}
+
+/* INP Performance: contain layout/paint on game board */
+.board-contain{contain:layout style;will-change:auto;}
+.tile-anim{will-change:transform;}
+/* content-visibility for below-fold content */
+.next-section{content-visibility:auto;contain-intrinsic-size:0 300px;}
+footer{content-visibility:auto;contain-intrinsic-size:0 150px;}
+/* Prevent layout shifts */
+.ad-slot{aspect-ratio:unset;}
+.ad-top{height:90px;}
+.ad-bottom{height:250px;}
+
+:root{--cell:58px;}
+.page-header{max-width:1100px;margin:0 auto;padding:20px clamp(16px,4vw,60px) 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.game-layout{max-width:1100px;margin:20px auto 0;padding:0 clamp(16px,4vw,60px) 48px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;}
+.grid-area{display:flex;flex-direction:column;gap:12px;contain:layout style;}
+.cw-grid{display:inline-grid;grid-template-columns:repeat(5,var(--cell));grid-template-rows:repeat(5,var(--cell));gap:3px;background:var(--ink);border:3px solid var(--ink);border-radius:3px;box-shadow:5px 5px 0 rgba(26,23,20,.15);user-select:none;}
+.cell{width:var(--cell);height:var(--cell);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--white);transition:background .08s;contain:layout;}
+.cell.black{background:var(--ink);cursor:default;pointer-events:none;}
 .cell.selected{background:#FFD700;}
 .cell.highlighted{background:#FFF8D6;}
 .cell.correct .cl{color:var(--green);}
 .cell.wrong .cl{color:var(--red);}
 .cn{position:absolute;top:2px;left:3px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;color:var(--ink-muted);line-height:1;pointer-events:none;}
-.cell.selected .cn{color:#776600;}
-.cl{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);line-height:1;pointer-events:none;transition:color .15s;}
-.active-clue{background:var(--ink);color:var(--cream);padding:11px 14px;border-radius:var(--radius);display:flex;align-items:center;gap:10px;min-height:48px;}
-.act-tag{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);white-space:nowrap;flex-shrink:0;}
+.cl{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1;pointer-events:none;}
+.active-clue{background:var(--ink);color:var(--cream);padding:10px 14px;border-radius:var(--radius);display:flex;align-items:center;gap:10px;min-height:46px;}
+.act-tag{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);white-space:nowrap;}
 .act-text{font-size:13px;font-style:italic;color:rgba(247,243,236,.9);line-height:1.4;}
 .grid-btns{display:flex;gap:6px;}
-.grid-btns .btn{flex:1;}
-.clues-panel{display:flex;flex-direction:column;gap:24px;}
-.cg-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-muted);border-bottom:1.5px solid var(--ink);padding-bottom:7px;margin-bottom:8px;font-weight:500;}
+.grid-btns .btn{flex:1;cursor:pointer;}
+.clues-panel{display:flex;flex-direction:column;gap:22px;}
+.cg-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-muted);border-bottom:1.5px solid var(--ink);padding-bottom:7px;margin-bottom:8px;}
 .cr{display:flex;gap:10px;padding:7px 10px;border-radius:var(--radius);cursor:pointer;transition:background .1s;border-left:3px solid transparent;font-size:13px;color:var(--ink-soft);line-height:1.45;}
 .cr:hover{background:rgba(26,23,20,.05);}
 .cr.active{background:var(--gold-pale);border-left-color:var(--gold);color:var(--ink);}
@@ -49,27 +56,33 @@
 .how-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;}
 .how-box-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:9px;}
 .hr{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-soft);padding:2px 0;}
-.hk{font-family:'DM Mono',monospace;font-size:10px;background:var(--cream);border:1px solid var(--border-strong);border-radius:3px;padding:1px 5px;color:var(--ink);white-space:nowrap;flex-shrink:0;}
-@media(max-width:720px){:root{--cell:48px;}.game-layout{grid-template-columns:1fr;gap:22px;}.cw-grid{margin:0 auto;}}
-@media(max-width:400px){:root{--cell:40px;}.cl{font-size:19px;}}
+.hk{font-family:'DM Mono',monospace;font-size:10px;background:var(--cream);border:1px solid var(--border-strong);border-radius:3px;padding:1px 5px;color:var(--ink);}
+.archive-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gold-light);padding-bottom:1px;}
+@media(max-width:720px){:root{--cell:46px;}.game-layout{grid-template-columns:1fr;gap:20px;}.cw-grid{margin:0 auto;}.cl{font-size:20px;}}
+@media(max-width:420px){:root{--cell:38px;}.cl{font-size:16px;}}
 </style>
 <body>
-<nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
-  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/" class="active">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
-  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+<nav aria-label="Main navigation"><a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a><ul class="nav-links" id="nav-links"><li><a href="/games/crossword/" class="active">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul><button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" id="hamburger"><span></span><span></span><span></span></button></nav>
 <div class="ad-wrap"><div class="ad-slot ad-top" aria-label="Advertisement">Advertisement</div></div>
 <div class="page-header">
-  <div><div class="breadcrumb"><a href="/">SnappGrid</a> / Crossword</div><h1 class="page-title">Daily Crossword</h1></div>
-  <div class="puzzle-meta"><span class="meta-badge gold-badge" id="puzzle-label">Puzzle #001</span><span class="meta-badge">5 words</span><span class="meta-badge">Easy</span><div id="timer">0:00</div></div>
+  <div>
+    <div class="breadcrumb"><a href="/">SnappGrid</a> / <a href="/games/crossword/archive/">Crossword</a></div>
+    <h1 class="page-title">Daily Crossword</h1>
+  </div>
+  <div class="puzzle-meta">
+    <span class="meta-badge gold-badge" id="puzzle-label">Puzzle #001</span>
+    <span class="meta-badge">5 words</span>
+    <a href="/games/crossword/archive/" class="archive-link">📚 Archive</a>
+    <div id="timer">0:00</div>
+  </div>
+</div>
+<div id="archive-notice" style="display:none;max-width:1100px;margin:0 auto;padding:8px clamp(16px,4vw,60px);background:var(--gold-pale);border-bottom:1px solid var(--gold-light);font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;">
+  📚 You are viewing an archived puzzle — <a href="/games/crossword/" style="color:var(--gold);">play today's puzzle →</a>
 </div>
 <div class="game-layout">
-  <div class="grid-area">
-    <div class="success-banner" id="success-banner">✓ Puzzle solved! Well done.</div>
-    <div class="cw-grid" id="cw-grid" role="grid" aria-label="Crossword puzzle grid"></div>
+  <div class="grid-area board-contain">
+    <div class="success-banner" id="success-banner">✓ Puzzle solved! Excellent work.</div>
+    <div class="cw-grid" id="cw-grid" role="grid" aria-label="Crossword grid"></div>
     <div class="active-clue"><span class="act-tag" id="act-tag">—</span><span class="act-text" id="act-text">Select a cell to begin</span></div>
     <div class="grid-btns">
       <button class="btn btn-outline" onclick="resetGame()">Reset</button>
@@ -86,94 +99,43 @@
       <div class="hr"><span class="hk">Click×2</span> Flip direction</div>
       <div class="hr"><span class="hk">Type</span> Fill letter</div>
       <div class="hr"><span class="hk">Tab</span> Next clue</div>
-      <div class="hr"><span class="hk">⌫</span> Delete letter</div>
+      <div class="hr"><span class="hk">⌫</span> Delete</div>
       <div class="hr"><span class="hk">↑↓←→</span> Navigate</div>
     </div>
   </div>
 </div>
 <div class="ad-wrap" style="margin-bottom:40px;"><div class="ad-slot ad-bottom" aria-label="Advertisement">Advertisement</div></div>
-<div class="next-section"><a href="/games/wordsearch/" class="next-card">
-  <div class="next-card-label">Also today</div>
-  <div class="next-card-title">Word Search</div>
-  <div class="next-card-desc">Find hidden words in all 8 directions.</div>
-  <div class="next-card-arrow">→</div>
-</a><a href="/games/sudoku/" class="next-card">
-  <div class="next-card-label">Also today</div>
-  <div class="next-card-title">Sudoku</div>
-  <div class="next-card-desc">Pure logic. Fill every row, column and 3×3 box.</div>
-  <div class="next-card-arrow">→</div>
-</a><a href="/games/trivia/" class="next-card">
-  <div class="next-card-label">Also today</div>
-  <div class="next-card-title">Trivia Quiz</div>
-  <div class="next-card-desc">10 questions daily across science, history & more.</div>
-  <div class="next-card-arrow">→</div>
-</a><a href="/#subscribe" class="next-card" style="border-color:var(--gold-light);background:var(--gold-pale);">
-  <div class="next-card-label">Never miss one</div>
-  <div class="next-card-title">Daily Reminder</div>
-  <div class="next-card-desc">All four puzzles to your inbox every morning.</div>
-  <div class="next-card-arrow" style="color:var(--gold);">→</div>
-</a></div>
-<div class="refresh-toast" id="refresh-toast">
-  🎉 New puzzles are ready!
-  <button onclick="location.reload()">Refresh now</button>
+<div class="next-section" style="max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,60px) 60px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+  <a href="/games/connections/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Connections</div><div class="next-card-desc">Group 16 words into 4 hidden categories.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/wordle/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Wordle</div><div class="next-card-desc">Guess the 5-letter word in 6 tries.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/trivia/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Trivia</div><div class="next-card-desc">10 daily questions across mixed topics.</div><div class="next-card-arrow">→</div></a>
 </div>
-<footer>
-  <div class="footer-inner">
-    <a href="/" class="footer-logo">SnappGrid</a>
-    <ul class="footer-links">
-      <li><a href="/games/crossword/">Crossword</a></li>
-      <li><a href="/games/wordsearch/">Word Search</a></li>
-      <li><a href="/games/sudoku/">Sudoku</a></li>
-      <li><a href="/games/trivia/">Trivia</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/privacy/">Privacy</a></li>
-    </ul>
-    <div class="footer-copy">© <span id="yr"></span> SnappGrid · Free daily puzzles · No account required</div>
-  </div>
-</footer>
+<div class="refresh-toast" id="refresh-toast">🎉 New puzzles ready!<button onclick="location.reload()">Refresh</button></div>
+<footer><div class="footer-inner"><a href="/" class="footer-logo">SnappGrid</a><ul class="footer-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul><div class="footer-copy">&copy; <span id="yr"></span> SnappGrid &middot; Free daily puzzles</div></div></footer>
+<script src="puzzles.js"></script>
 <script>
-function toggleNav(){
-  const nl=document.getElementById('nav-links');
-  const hb=document.getElementById('hamburger');
-  nl.classList.toggle('open');
-  hb.setAttribute('aria-expanded', nl.classList.contains('open'));
+
+const LAUNCH=new Date('2026-06-01');
+
+function getDayIdx(){
+  const p=new URLSearchParams(location.search),d=p.get('day');
+  if(d!==null){const n=parseInt(d,10);if(!isNaN(n)&&n>=0&&n<PUZZLES.length)return n;}
+  const launch=new Date('2026-06-01'),today=new Date();today.setHours(0,0,0,0);
+  return Math.max(0,Math.floor((today-launch)/86400000))%PUZZLES.length;
 }
-document.getElementById('yr').textContent=new Date().getFullYear();
-// Daily auto-refresh
-(function(){
-  const KEY='snappgrid_date';
-  const today=new Date().toDateString();
-  const stored=localStorage.getItem(KEY);
-  if(stored && stored!==today){
-    localStorage.setItem(KEY,today);
-    const t=document.getElementById('refresh-toast');
-    if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
-  } else { localStorage.setItem(KEY,today); }
-  setInterval(()=>{
-    if(localStorage.getItem(KEY)!==new Date().toDateString()){
-      localStorage.setItem(KEY,new Date().toDateString());
-      const t=document.getElementById('refresh-toast');
-      if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
-    }
-  },60000);
-})();
-</script>
-<script>
-const PUZZLES=[
-  {id:"001",title:"Puzzle #001",grid:[[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1]],solution:[["S","H","O","U","T"],["P",null,null,null,"R"],["I","R","A","T","E"],["N",null,null,null,"A"],["E","M","B","E","D"]],cellNums:[[1,null,null,null,2],[null,null,null,null,null],[3,null,null,null,null],[null,null,null,null,null],[4,null,null,null,null]],clues:{across:[{num:1,text:"Loud cry or yell",row:0,col:0,len:5},{num:3,text:"Furiously angry",row:2,col:0,len:5},{num:4,text:"Fix firmly into a surface",row:4,col:0,len:5}],down:[{num:1,text:"Backbone; vertebral column",row:0,col:0,len:5},{num:2,text:"Step or walk upon",row:0,col:4,len:5}]}},
-  {id:"002",title:"Puzzle #002",grid:[[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1]],solution:[["B","L","A","Z","E"],["R",null,null,null,"L"],["A","L","O","F","T"],["V",null,null,null,"I"],["E","V","A","D","E"]],cellNums:[[1,null,null,null,2],[null,null,null,null,null],[3,null,null,null,null],[null,null,null,null,null],[4,null,null,null,null]],clues:{across:[{num:1,text:"Intense fire or brilliant light",row:0,col:0,len:5},{num:3,text:"High up in the air",row:2,col:0,len:5},{num:4,text:"Escape or avoid cleverly",row:4,col:0,len:5}],down:[{num:1,text:"Courageous; showing no fear",row:0,col:0,len:5},{num:2,text:"Slender; graceful",row:0,col:4,len:5}]}},
-  {id:"003",title:"Puzzle #003",grid:[[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1]],solution:[["F","L","O","A","T"],["R",null,null,null,"L"],["I","D","L","E","R"],["S",null,null,null,"T"],["K","N","A","C","K"]],cellNums:[[1,null,null,null,2],[null,null,null,null,null],[3,null,null,null,null],[null,null,null,null,null],[4,null,null,null,null]],clues:{across:[{num:1,text:"Drift on water or in air",row:0,col:0,len:5},{num:3,text:"One who loafs around",row:2,col:0,len:5},{num:4,text:"Clever trick or skill",row:4,col:0,len:5}],down:[{num:1,text:"Crispy potato snack",row:0,col:0,len:5},{num:2,text:"Completely; in full",row:0,col:4,len:5}]}},
-  {id:"004",title:"Puzzle #004",grid:[[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1]],solution:[["G","R","A","C","E"],["L",null,null,null,"L"],["A","L","G","A","E"],["R",null,null,null,"V"],["E","A","G","E","R"]],cellNums:[[1,null,null,null,2],[null,null,null,null,null],[3,null,null,null,null],[null,null,null,null,null],[4,null,null,null,null]],clues:{across:[{num:1,text:"Elegant beauty or charm",row:0,col:0,len:5},{num:3,text:"Simple aquatic plants",row:2,col:0,len:5},{num:4,text:"Keenly enthusiastic",row:4,col:0,len:5}],down:[{num:1,text:"Shining; radiating light",row:0,col:0,len:5},{num:2,text:"Ornamental jar or container",row:0,col:4,len:5}]}}
-];
-function getDayIdx(){const n=new Date(),s=new Date(n.getFullYear(),0,0);return Math.floor((n-s)/86400000)%PUZZLES.length;}
+
 const puzzle=PUZZLES[getDayIdx()];
 document.getElementById('puzzle-label').textContent=puzzle.title;
-let userGrid=puzzle.solution.map(r=>r.map(c=>c===null?null:""));
-let sel={row:0,col:0,dir:"across"};
-let checked=false,solved=false,secs=0,timer=null;
-function startTimer(){if(timer)return;timer=setInterval(()=>{secs++;const m=Math.floor(secs/60),s=secs%60;document.getElementById('timer').textContent=m+':'+String(s).padStart(2,'0');},1000);}
+const urlDay=new URLSearchParams(location.search).get('day');
+if(urlDay!==null){const d=document.getElementById('archive-notice');if(d){d.style.display='block';}}
+
+let userGrid=puzzle.solution.map(r=>r.map(c=>c===null?null:''));
+let sel={row:0,col:0,dir:'across'},checked=false,solved=false,secs=0,timer=null;
+
+// DOM cache — set once at init
+let gridEl,acrossEl,downEl,actTag,actText,timerEl,successEl;
+
+function startTimer(){if(timer)return;timer=setInterval(()=>{secs++;const m=Math.floor(secs/60),s=secs%60;timerEl.textContent=m+':'+String(s).padStart(2,'0');},1000);}
 function stopTimer(){clearInterval(timer);timer=null;}
 function getCells(cl,dir){return Array.from({length:cl.len},(_,i)=>dir==='across'?[cl.row,cl.col+i]:[cl.row+i,cl.col]);}
 function findClue(r,c,dir){return(dir==='across'?puzzle.clues.across:puzzle.clues.down).find(cl=>getCells(cl,dir).some(([rr,cc])=>rr===r&&cc===c))||null;}
@@ -183,13 +145,81 @@ function advance(){const cl=findClue(sel.row,sel.col,sel.dir);if(!cl)return;cons
 function retreat(){const cl=findClue(sel.row,sel.col,sel.dir);if(!cl)return;const cells=getCells(cl,sel.dir);const idx=cells.findIndex(([r,c])=>r===sel.row&&c===sel.col);if(idx>0){const[r,c]=cells[idx-1];sel={...sel,row:r,col:c};render();}}
 function nextClue(){const all=[...puzzle.clues.across.map(c=>({...c,dir:'across'})),...puzzle.clues.down.map(c=>({...c,dir:'down'}))];const cur=all.findIndex(c=>c.dir===sel.dir&&c.num===(findClue(sel.row,sel.col,sel.dir)||{}).num);const next=all[(cur+1)%all.length];sel={row:next.row,col:next.col,dir:next.dir};render();}
 function checkWin(g){return g.every((row,r)=>row.every((cell,c)=>puzzle.solution[r][c]===null||cell===puzzle.solution[r][c]));}
-function resetGame(){userGrid=puzzle.solution.map(r=>r.map(c=>c===null?null:""));sel={row:0,col:0,dir:'across'};checked=false;solved=false;secs=0;stopTimer();document.getElementById('timer').textContent='0:00';document.getElementById('success-banner').classList.remove('visible');render();}
+function resetGame(){userGrid=puzzle.solution.map(r=>r.map(c=>c===null?null:''));sel={row:0,col:0,dir:'across'};checked=false;solved=false;secs=0;stopTimer();timerEl.textContent='0:00';successEl.classList.remove('visible');render();}
 function checkAnswers(){checked=true;render();}
-function revealAll(){userGrid=puzzle.solution.map(r=>r.map(c=>c));solved=true;stopTimer();document.getElementById('success-banner').classList.add('visible');render();}
-function handleCellClick(r,c){if(!puzzle.grid[r][c])return;if(!timer&&!solved)startTimer();if(sel.row===r&&sel.col===c){const nd=sel.dir==='across'?'down':'across';if(findClue(r,c,nd))sel={row:r,col:c,dir:nd};}else{if(findClue(r,c,sel.dir))sel={row:r,col:c,dir:sel.dir};else{const od=sel.dir==='across'?'down':'across';if(findClue(r,c,od))sel={row:r,col:c,dir:od};}}render();}
+function revealAll(){userGrid=puzzle.solution.map(r=>r.map(c=>c));solved=true;stopTimer();successEl.classList.add('visible');render();}
+
+function handleCellClick(r,c){
+  if(!puzzle.grid[r][c])return;
+  if(!timer&&!solved)startTimer();
+  if(sel.row===r&&sel.col===c){const nd=sel.dir==='across'?'down':'across';if(findClue(r,c,nd))sel={row:r,col:c,dir:nd};}
+  else{if(findClue(r,c,sel.dir))sel={row:r,col:c,dir:sel.dir};else{const od=sel.dir==='across'?'down':'across';if(findClue(r,c,od))sel={row:r,col:c,dir:od};}}
+  render();
+}
 function handleClueClick(num,dir){const list=dir==='across'?puzzle.clues.across:puzzle.clues.down;const cl=list.find(c=>c.num===num);if(cl){sel={row:cl.row,col:cl.col,dir};render();}}
-document.addEventListener('keydown',e=>{if(!sel)return;const{row:r,col:c,dir}=sel;if(e.key==='Tab'){e.preventDefault();nextClue();return;}if(e.key==='ArrowRight'){e.preventDefault();if(dir==='across')advance();else{sel={row:r,col:c,dir:'across'};render();}return;}if(e.key==='ArrowLeft'){e.preventDefault();if(dir==='across')retreat();else{sel={row:r,col:c,dir:'across'};render();}return;}if(e.key==='ArrowDown'){e.preventDefault();if(dir==='down')advance();else{sel={row:r,col:c,dir:'down'};render();}return;}if(e.key==='ArrowUp'){e.preventDefault();if(dir==='down')retreat();else{sel={row:r,col:c,dir:'down'};render();}return;}if(e.key==='Backspace'){e.preventDefault();if(userGrid[r][c]==='')retreat();else{userGrid[r][c]='';checked=false;}render();return;}if(/^[a-zA-Z]$/.test(e.key)){e.preventDefault();if(!timer&&!solved)startTimer();userGrid[r][c]=e.key.toUpperCase();checked=false;if(checkWin(userGrid)){solved=true;stopTimer();document.getElementById('success-banner').classList.add('visible');render();return;}render();advance();}});
-function render(){const hl=getHL();const ac=findClue(sel.row,sel.col,sel.dir);let gh='';for(let r=0;r<5;r++){for(let c=0;c<5;c++){const iw=puzzle.grid[r][c]===1;if(!iw){gh+=`<div class="cell black" role="gridcell"></div>`;continue;}const iS=sel.row===r&&sel.col===c;const isH=hl.some(([hr,hc])=>hr===r&&hc===c);const num=puzzle.cellNums[r][c];const letter=userGrid[r][c]||'';let cls='cell';if(iS)cls+=' selected';else if(isH)cls+=' highlighted';if(checked&&letter){if(letter===puzzle.solution[r][c])cls+=' correct';else cls+=' wrong';}gh+=`<div class="${cls}" role="gridcell" onclick="handleCellClick(${r},${c})">${num?`<span class="cn">${num}</span>`:''}<span class="cl">${letter}</span></div>`;}}document.getElementById('cw-grid').innerHTML=gh;const tag=document.getElementById('act-tag');const txt=document.getElementById('act-text');if(ac){tag.textContent=ac.num+(sel.dir==='across'?'A':'D');txt.textContent=ac.text;}else{tag.textContent='—';txt.textContent='Select a cell to begin';}'across,down'.split(',').forEach(dir=>{const cont=document.getElementById('clues-'+dir);cont.innerHTML=puzzle.clues[dir].map(cl=>{const isA=ac&&ac.num===cl.num&&sel.dir===dir;const done=isDone(cl,dir);return`<div class="cr${isA?' active':''}${done?' done':''}" onclick="handleClueClick(${cl.num},'${dir}')"><span class="cr-num">${cl.num}</span><span>${cl.text}</span></div>`;}).join('');});}
-render();
+
+// Key handler — stays under 50ms via minimal DOM work
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const{row:r,col:c,dir}=sel;
+  if(e.key==='Tab'){e.preventDefault();nextClue();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();if(dir==='across')advance();else{sel={row:r,col:c,dir:'across'};render();}return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();if(dir==='across')retreat();else{sel={row:r,col:c,dir:'across'};render();}return;}
+  if(e.key==='ArrowDown'){e.preventDefault();if(dir==='down')advance();else{sel={row:r,col:c,dir:'down'};render();}return;}
+  if(e.key==='ArrowUp'){e.preventDefault();if(dir==='down')retreat();else{sel={row:r,col:c,dir:'down'};render();}return;}
+  if(e.key==='Backspace'){e.preventDefault();if(userGrid[r][c]==='')retreat();else{userGrid[r][c]='';checked=false;}render();return;}
+  if(/^[a-zA-Z]$/.test(e.key)){e.preventDefault();if(!timer&&!solved)startTimer();userGrid[r][c]=e.key.toUpperCase();checked=false;if(checkWin(userGrid)){solved=true;stopTimer();successEl.classList.add('visible');render();return;}render();advance();}
+});
+
+function render(){
+  const hl=getHL();
+  const ac=findClue(sel.row,sel.col,sel.dir);
+  let gh='';
+  for(let r=0;r<5;r++){
+    for(let c=0;c<5;c++){
+      const iw=puzzle.grid[r][c]===1;
+      if(!iw){gh+=`<div class="cell black" role="gridcell"></div>`;continue;}
+      const iS=sel.row===r&&sel.col===c;
+      const isH=hl.some(([hr,hc])=>hr===r&&hc===c);
+      const num=puzzle.cellNums[r][c];
+      const letter=userGrid[r][c]||'';
+      let cls='cell';
+      if(iS)cls+=' selected';else if(isH)cls+=' highlighted';
+      if(checked&&letter){cls+=letter===puzzle.solution[r][c]?' correct':' wrong';}
+      gh+=`<div class="${cls}" role="gridcell" onclick="handleCellClick(${r},${c})">${num?`<span class="cn">${num}</span>`:''}<span class="cl">${letter}</span></div>`;
+    }
+  }
+  gridEl.innerHTML=gh;
+  if(ac){actTag.textContent=ac.num+(sel.dir==='across'?'A':'D');actText.textContent=ac.text;}
+  else{actTag.textContent='—';actText.textContent='Select a cell to begin';}
+  ['across','down'].forEach(dir=>{
+    const el=dir==='across'?acrossEl:downEl;
+    el.innerHTML=puzzle.clues[dir].map(cl=>{
+      const isA=ac&&ac.num===cl.num&&sel.dir===dir;
+      const done=isDone(cl,dir);
+      return`<div class="cr${isA?' active':''}${done?' done':''}" onclick="handleClueClick(${cl.num},'${dir}')"><span class="cr-num">${cl.num}</span><span>${cl.text}</span></div>`;
+    }).join('');
+  });
+}
+
+// Init — defer non-critical work
+document.addEventListener('DOMContentLoaded',()=>{
+  gridEl=document.getElementById('cw-grid');
+  acrossEl=document.getElementById('clues-across');
+  downEl=document.getElementById('clues-down');
+  actTag=document.getElementById('act-tag');
+  actText=document.getElementById('act-text');
+  timerEl=document.getElementById('timer');
+  successEl=document.getElementById('success-banner');
+  render();
+  // Defer stat bar updates
+  if('requestIdleCallback' in window){requestIdleCallback(()=>{/* future: load streak */});}
+});
+
+
+function toggleNav(){const nl=document.getElementById('nav-links'),hb=document.getElementById('hamburger');nl.classList.toggle('open');hb.setAttribute('aria-expanded',nl.classList.contains('open'));}
+document.getElementById('yr').textContent=new Date().getFullYear();
+(function(){const K='snappgrid_date',t=new Date().toDateString(),s=localStorage.getItem(K);if(s&&s!==t){localStorage.setItem(K,t);const el=document.getElementById('refresh-toast');if(el){el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),8000);}}else localStorage.setItem(K,t);setInterval(()=>{if(localStorage.getItem('snappgrid_date')!==new Date().toDateString()){localStorage.setItem('snappgrid_date',new Date().toDateString());const el=document.getElementById('refresh-toast');if(el){el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),8000);}}},60000);})();
+
 </script>
 </body></html>

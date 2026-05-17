@@ -2,44 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Free Daily Trivia Quiz — 10 Questions | SnappGrid</title>
-<meta name="description" content="Play today's free daily trivia quiz. 10 questions across history, science, geography and culture. New quiz every day, no login required.">
+<meta name="description" content="Play today's free daily trivia quiz. 10 questions across science, history, geography and culture. New quiz every day — no login.">
 <link rel="canonical" href="https://snappgrid.com/games/trivia/">
 <meta property="og:title" content="Free Daily Trivia Quiz — 10 Questions | SnappGrid">
-<meta property="og:description" content="Play today's free daily trivia quiz. 10 questions across history, science, geography and culture. New quiz every day, no login required.">
+<meta property="og:description" content="Play today's free daily trivia quiz. 10 questions across science, history, geography and culture. New quiz every day — no login.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snappgrid.com/games/trivia/">
-<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free Daily Trivia Quiz — 10 Questions | SnappGrid">
-<meta name="twitter:description" content="Play today's free daily trivia quiz. 10 questions across history, science, geography and culture. New quiz every day, no login required.">
-<meta name="robots" content="index, follow">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Trivia Quiz","applicationCategory":"GameApplication","operatingSystem":"Web Browser","url":"https://snappgrid.com/games/trivia/","description":"Free daily trivia quiz. 10 questions across history, science, geography and culture. New quiz every day.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
-</script>
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Trivia","applicationCategory":"GameApplication","url":"https://snappgrid.com/games/trivia/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="../../css/style.css">
 </head><style>
-.game-wrap{max-width:860px;margin:24px auto 0;padding:0 clamp(16px,4vw,60px) 48px;}
-.prog-section{margin-bottom:20px;}
-.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+
+/* INP Performance: contain layout/paint on game board */
+.board-contain{contain:layout style;will-change:auto;}
+.tile-anim{will-change:transform;}
+/* content-visibility for below-fold content */
+.next-section{content-visibility:auto;contain-intrinsic-size:0 300px;}
+footer{content-visibility:auto;contain-intrinsic-size:0 150px;}
+/* Prevent layout shifts */
+.ad-slot{aspect-ratio:unset;}
+.ad-top{height:90px;}
+.ad-bottom{height:250px;}
+
+.game-wrap{max-width:860px;margin:20px auto 0;padding:0 clamp(16px,4vw,60px) 48px;}
+.prog-section{margin-bottom:18px;}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .prog-lbl{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink-muted);}
 .prog-score{font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);font-weight:500;}
 .prog-bg{background:var(--border);border-radius:100px;height:5px;}
 .prog-fill{background:var(--gold);height:5px;border-radius:100px;transition:width .5s ease;}
-.q-dots{display:flex;gap:5px;margin-bottom:24px;flex-wrap:wrap;}
+.q-dots{display:flex;gap:5px;margin-bottom:22px;flex-wrap:wrap;}
 .qd{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;border:1.5px solid var(--border-strong);color:var(--ink-muted);background:var(--white);transition:all .2s;cursor:default;}
 .qd.current{background:var(--gold);border-color:var(--gold);color:var(--white);}
 .qd.correct{background:var(--green);border-color:var(--green);color:var(--white);}
 .qd.wrong{background:var(--red);border-color:var(--red);color:var(--white);}
 .qd.skipped{background:var(--ink-muted);border-color:var(--ink-muted);color:var(--white);}
-.q-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:clamp(20px,4vw,36px);margin-bottom:18px;box-shadow:3px 3px 0 rgba(26,23,20,.05);}
-.q-cat{display:inline-flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-pale);border:1px solid var(--gold-light);padding:3px 11px;border-radius:100px;margin-bottom:13px;}
-.q-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:9px;}
+.q-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:clamp(18px,4vw,34px);margin-bottom:16px;box-shadow:3px 3px 0 rgba(26,23,20,.05);contain:layout style;}
+.q-cat{display:inline-flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-pale);border:1px solid var(--gold-light);padding:3px 11px;border-radius:100px;margin-bottom:12px;}
+.q-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
 .q-text{font-family:'Playfair Display',serif;font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.3px;}
-.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px;}
-.opt-btn{padding:14px 18px;border-radius:var(--radius-lg);background:var(--cream);border:1.5px solid var(--border-strong);cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--ink);transition:all .15s;display:flex;align-items:flex-start;gap:11px;line-height:1.4;}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
+.opt-btn{padding:13px 16px;border-radius:var(--radius-lg);background:var(--cream);border:1.5px solid var(--border-strong);cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--ink);transition:all .15s;display:flex;align-items:flex-start;gap:10px;line-height:1.4;}
 .opt-btn:hover:not(:disabled){background:var(--gold-pale);border-color:var(--gold);}
 .opt-btn:disabled{cursor:default;}
 .opt-btn.correct{background:var(--green-pale);border-color:var(--green-light);color:var(--green);}
@@ -50,59 +57,47 @@
 .opt-btn.wrong .opt-ltr{background:var(--red);color:var(--white);}
 .opt-btn.reveal .opt-ltr{background:var(--green);color:var(--white);}
 .opt-btn:hover:not(:disabled) .opt-ltr{background:var(--gold);color:var(--white);}
-.fb-bar{border-radius:var(--radius);padding:11px 14px;font-size:13px;font-weight:500;margin-bottom:14px;display:none;align-items:center;gap:9px;}
+.fb-bar{border-radius:var(--radius);padding:10px 13px;font-size:13px;font-weight:500;margin-bottom:12px;display:none;align-items:center;gap:9px;}
 .fb-bar.visible{display:flex;}
 .fb-bar.correct{background:var(--green-pale);border:1.5px solid var(--green-light);color:var(--green);}
 .fb-bar.wrong{background:var(--red-pale);border:1.5px solid var(--red-light);color:var(--red);}
 .fb-fact{font-size:12px;color:var(--ink-soft);font-style:italic;margin-top:3px;font-weight:400;}
 .action-row{display:flex;gap:9px;}
-#next-btn{display:none;}
-#next-btn.visible{display:block;}
-#results-screen{display:none;}
-#results-screen.visible{display:block;}
+#next-btn{display:none;}#next-btn.visible{display:block;}
+#results-screen{display:none;}#results-screen.visible{display:block;}
 #question-screen.hidden{display:none;}
-.results-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:clamp(28px,5vw,52px);text-align:center;box-shadow:4px 4px 0 rgba(26,23,20,.05);margin-bottom:20px;}
-.res-emoji{font-size:52px;margin-bottom:14px;}
-.res-score{font-family:'Playfair Display',serif;font-size:clamp(44px,8vw,76px);font-weight:900;color:var(--ink);letter-spacing:-2px;line-height:1;margin-bottom:7px;}
+.results-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:clamp(24px,5vw,48px);text-align:center;box-shadow:4px 4px 0 rgba(26,23,20,.05);margin-bottom:18px;}
+.res-emoji{font-size:50px;margin-bottom:12px;}
+.res-score{font-family:'Playfair Display',serif;font-size:clamp(44px,8vw,76px);font-weight:900;color:var(--ink);letter-spacing:-2px;line-height:1;margin-bottom:6px;}
 .res-score span{color:var(--gold);}
-.res-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:20px;}
-.res-msg{font-size:clamp(16px,3vw,22px);font-family:'Playfair Display',serif;font-weight:700;color:var(--ink);margin-bottom:10px;}
-.res-sub{font-size:13px;color:var(--ink-soft);line-height:1.6;max-width:380px;margin:0 auto 28px;}
-.score-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 28px;text-align:left;}
+.res-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:18px;}
+.res-msg{font-size:clamp(15px,3vw,20px);font-family:'Playfair Display',serif;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.res-sub{font-size:13px;color:var(--ink-soft);line-height:1.6;max-width:380px;margin:0 auto 24px;}
+.score-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 24px;text-align:left;}
 .score-stat{background:var(--cream);border-radius:var(--radius-lg);padding:14px;}
 .ssn{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;line-height:1;margin-bottom:3px;}
 .ssn.green{color:var(--green);}.ssn.red{color:var(--red);}.ssn.gold{color:var(--gold);}
 .ssl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-muted);}
 .res-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-.review-section{margin-top:28px;}
-.review-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;border-bottom:1.5px solid var(--border);padding-bottom:7px;}
-.review-item{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;margin-bottom:9px;}
+.review-section{margin-top:26px;}
+.review-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px;border-bottom:1.5px solid var(--border);padding-bottom:7px;}
+.review-item{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:13px 16px;margin-bottom:8px;}
 .review-item.review-correct{border-left:3px solid var(--green);}
 .review-item.review-wrong{border-left:3px solid var(--red);}
 .review-item.review-skipped{border-left:3px solid var(--ink-muted);}
-.rev-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-.rev-q{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:5px;line-height:1.4;}
+.rev-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.rev-q{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.4;}
 .rev-a{font-size:12px;color:var(--ink-soft);}
 .rev-a strong{color:var(--green);}
-.book-promo{background:var(--ink);border-radius:var(--radius-xl);padding:24px 28px;margin-top:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
-.book-promo h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--cream);margin-bottom:5px;}
-.book-promo p{font-size:12px;color:rgba(247,243,236,.6);line-height:1.55;}
-.book-promo-btn{white-space:nowrap;padding:11px 20px;background:var(--gold);color:var(--white);border:none;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .15s;flex-shrink:0;}
-.book-promo-btn:hover{opacity:.85;}
-@media(max-width:600px){.options-grid{grid-template-columns:1fr;}.score-breakdown{grid-template-columns:1fr 1fr;}.book-promo{flex-direction:column;}.res-actions{flex-direction:column;align-items:center;}}
+.archive-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gold-light);padding-bottom:1px;}
+@media(max-width:600px){.options-grid{grid-template-columns:1fr;}.score-breakdown{grid-template-columns:1fr 1fr;}.res-actions{flex-direction:column;align-items:center;}}
 </style>
 <body>
-<nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
-  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/" class="active">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
-  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+<nav aria-label="Main navigation"><a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a><ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/" class="active">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul><button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" id="hamburger"><span></span><span></span><span></span></button></nav>
 <div class="ad-wrap"><div class="ad-slot ad-top" aria-label="Advertisement">Advertisement</div></div>
-<div class="page-header">
-  <div><div class="breadcrumb"><a href="/">SnappGrid</a> / Trivia</div><h1 class="page-title">Daily Trivia Quiz</h1></div>
-  <div class="puzzle-meta"><span class="meta-badge gold-badge" id="quiz-label">Quiz #001</span><span class="meta-badge" id="cat-badge">Mixed</span><span class="meta-badge">10 Questions</span><div id="timer">0:00</div></div>
+<div class="page-header" style="max-width:860px;">
+  <div><div class="breadcrumb"><a href="/">SnappGrid</a> / <a href="/games/trivia/archive/">Trivia</a></div><h1 class="page-title">Daily Trivia Quiz</h1></div>
+  <div class="puzzle-meta"><span class="meta-badge gold-badge" id="quiz-label">Quiz #001</span><span class="meta-badge" id="cat-badge">General</span><span class="meta-badge">10 Questions</span><a href="/games/trivia/archive/" class="archive-link">📚 Archive</a><div id="timer">0:00</div></div>
 </div>
 <div class="game-wrap">
   <div id="question-screen">
@@ -133,148 +128,112 @@
         <button class="btn btn-outline" onclick="document.getElementById('review-section').scrollIntoView({behavior:'smooth'})">Review answers</button>
       </div>
     </div>
-    <div class="book-promo">
-      <div><h3>Love trivia? Get the book.</h3><p>100 hand-crafted trivia questions across 10 themed rounds. Printable PDF, instant download.</p></div>
-      <a href="/books/" class="book-promo-btn">Browse puzzle books →</a>
-    </div>
     <div class="review-section" id="review-section"><div class="review-title">Answer review</div><div id="review-list"></div></div>
   </div>
   <div class="ad-wrap" style="margin-bottom:40px;"><div class="ad-slot ad-bottom" aria-label="Advertisement">Advertisement</div></div>
-  <div class="next-section"><a href="/games/crossword/" class="next-card">
-  <div class="next-card-label">Also today</div>
-  <div class="next-card-title">Crossword</div>
-  <div class="next-card-desc">Fill crossing words using across and down clues.</div>
-  <div class="next-card-arrow">→</div>
-</a><a href="/games/wordsearch/" class="next-card">
-  <div class="next-card-label">Also today</div>
-  <div class="next-card-title">Word Search</div>
-  <div class="next-card-desc">Find hidden words in all 8 directions.</div>
-  <div class="next-card-arrow">→</div>
-</a><a href="/games/sudoku/" class="next-card">
-  <div class="next-card-label">Also today</div>
-  <div class="next-card-title">Sudoku</div>
-  <div class="next-card-desc">Pure logic. Fill every row, column and 3×3 box.</div>
-  <div class="next-card-arrow">→</div>
-</a><a href="/#subscribe" class="next-card" style="border-color:var(--gold-light);background:var(--gold-pale);">
-  <div class="next-card-label">Never miss one</div>
-  <div class="next-card-title">Daily Reminder</div>
-  <div class="next-card-desc">All four puzzles to your inbox every morning.</div>
-  <div class="next-card-arrow" style="color:var(--gold);">→</div>
-</a></div>
-</div>
-<div class="refresh-toast" id="refresh-toast">
-  🎉 New puzzles are ready!
-  <button onclick="location.reload()">Refresh now</button>
-</div>
-<footer>
-  <div class="footer-inner">
-    <a href="/" class="footer-logo">SnappGrid</a>
-    <ul class="footer-links">
-      <li><a href="/games/crossword/">Crossword</a></li>
-      <li><a href="/games/wordsearch/">Word Search</a></li>
-      <li><a href="/games/sudoku/">Sudoku</a></li>
-      <li><a href="/games/trivia/">Trivia</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/privacy/">Privacy</a></li>
-    </ul>
-    <div class="footer-copy">© <span id="yr"></span> SnappGrid · Free daily puzzles · No account required</div>
+  <div class="next-section" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:60px;">
+    <a href="/games/connections/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Connections</div><div class="next-card-desc">Group 16 words into 4 hidden categories.</div><div class="next-card-arrow">→</div></a>
+    <a href="/games/wordle/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Wordle</div><div class="next-card-desc">Guess the 5-letter word in 6 tries.</div><div class="next-card-arrow">→</div></a>
+    <a href="/games/crossword/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Crossword</div><div class="next-card-desc">Fill the 5×5 grid with across and down clues.</div><div class="next-card-arrow">→</div></a>
   </div>
-</footer>
+</div>
+<div class="refresh-toast" id="refresh-toast">🎉 New puzzles ready!<button onclick="location.reload()">Refresh</button></div>
+<footer><div class="footer-inner"><a href="/" class="footer-logo">SnappGrid</a><ul class="footer-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul><div class="footer-copy">&copy; <span id="yr"></span> SnappGrid &middot; Free daily puzzles</div></div></footer>
+<script src="puzzles.js"></script>
 <script>
-function toggleNav(){
-  const nl=document.getElementById('nav-links');
-  const hb=document.getElementById('hamburger');
-  nl.classList.toggle('open');
-  hb.setAttribute('aria-expanded', nl.classList.contains('open'));
+
+function getDayIdx(){
+  const p=new URLSearchParams(location.search),d=p.get('day');
+  if(d!==null){const n=parseInt(d,10);if(!isNaN(n)&&n>=0&&n<QUIZZES.length)return n;}
+  const launch=new Date('2026-06-01'),today=new Date();today.setHours(0,0,0,0);
+  return Math.max(0,Math.floor((today-launch)/86400000))%QUIZZES.length;
 }
-document.getElementById('yr').textContent=new Date().getFullYear();
-// Daily auto-refresh
-(function(){
-  const KEY='snappgrid_date';
-  const today=new Date().toDateString();
-  const stored=localStorage.getItem(KEY);
-  if(stored && stored!==today){
-    localStorage.setItem(KEY,today);
-    const t=document.getElementById('refresh-toast');
-    if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
-  } else { localStorage.setItem(KEY,today); }
-  setInterval(()=>{
-    if(localStorage.getItem(KEY)!==new Date().toDateString()){
-      localStorage.setItem(KEY,new Date().toDateString());
-      const t=document.getElementById('refresh-toast');
-      if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
-    }
-  },60000);
-})();
-</script>
-<script>
-const QUIZZES=[
-  {id:"001",category:"Mixed",questions:[
-    {q:"Which planet has the most moons?",options:["Jupiter","Saturn","Uranus","Neptune"],correct:1,category:"Science",fact:"Saturn has 146 confirmed moons as of 2024, just overtaking Jupiter."},
-    {q:"In which year did the Berlin Wall fall?",options:["1987","1989","1991","1993"],correct:1,category:"History",fact:"The Berlin Wall fell on 9 November 1989, ending 28 years of division."},
-    {q:"What is the capital city of Australia?",options:["Sydney","Melbourne","Brisbane","Canberra"],correct:3,category:"Geography",fact:"Canberra was purpose-built as a compromise after Sydney and Melbourne both wanted to be capital."},
-    {q:"How many bones are in an adult human body?",options:["196","206","216","226"],correct:1,category:"Science",fact:"Babies are born with around 270 bones; many fuse together as they grow."},
-    {q:"Who wrote the novel '1984'?",options:["Aldous Huxley","Ray Bradbury","George Orwell","H.G. Wells"],correct:2,category:"Literature",fact:"Orwell wrote 1984 while seriously ill with tuberculosis on the Scottish island of Jura."},
-    {q:"What is the longest river in the world?",options:["Amazon","Congo","Mississippi","Nile"],correct:3,category:"Geography",fact:"The Nile is approximately 6,650 km long."},
-    {q:"What element has the chemical symbol 'Au'?",options:["Silver","Aluminium","Gold","Argon"],correct:2,category:"Science",fact:"Au comes from the Latin 'aurum'. Gold has been used as currency for over 5,000 years."},
-    {q:"Which country invented chess?",options:["China","Persia","India","Egypt"],correct:2,category:"History",fact:"Chess originated in India around the 6th century as a game called Chaturanga."},
-    {q:"How many strings does a standard violin have?",options:["3","4","5","6"],correct:1,category:"Arts",fact:"The four strings are tuned G, D, A, E from lowest to highest pitch."},
-    {q:"What is the smallest country in the world by area?",options:["Monaco","San Marino","Liechtenstein","Vatican City"],correct:3,category:"Geography",fact:"Vatican City covers just 0.44 km² and has approximately 800 residents."}
-  ]},
-  {id:"002",category:"Science & Nature",questions:[
-    {q:"What is the powerhouse of the cell?",options:["Nucleus","Ribosome","Mitochondria","Golgi body"],correct:2,category:"Biology",fact:"Mitochondria produce ATP, the molecule cells use as their main energy currency."},
-    {q:"At what temperature does water boil at sea level?",options:["90°C","95°C","100°C","105°C"],correct:2,category:"Physics",fact:"At higher altitudes, lower air pressure means water boils at lower temperatures."},
-    {q:"Which gas makes up 78% of Earth's atmosphere?",options:["Oxygen","Carbon dioxide","Nitrogen","Argon"],correct:2,category:"Science",fact:"Nitrogen is largely unreactive, making it safe to breathe in large quantities."},
-    {q:"How many chambers does a human heart have?",options:["2","3","4","5"],correct:2,category:"Biology",fact:"The four chambers are: left and right atria, and left and right ventricles."},
-    {q:"What is the speed of light in a vacuum?",options:["299,792 km/s","199,792 km/s","399,792 km/s","499,792 km/s"],correct:0,category:"Physics",fact:"Light can circle Earth about 7.5 times in one second."},
-    {q:"Which planet is known as the Red Planet?",options:["Venus","Mars","Mercury","Jupiter"],correct:1,category:"Astronomy",fact:"Mars appears red because its surface is rich in iron oxide — essentially rust."},
-    {q:"DNA stands for?",options:["Deoxyribonucleic Acid","Diribose Nucleic Acid","Deoxyribose Nitrogen Acid","None of these"],correct:0,category:"Biology",fact:"DNA's double helix structure was discovered in 1953 by Watson and Crick."},
-    {q:"What is the hardest natural substance on Earth?",options:["Gold","Iron","Diamond","Quartz"],correct:2,category:"Science",fact:"Diamond scores 10 on the Mohs hardness scale. It is pure carbon."},
-    {q:"How many teeth does an adult human have?",options:["28","30","32","34"],correct:2,category:"Biology",fact:"Not everyone develops all four wisdom teeth — some have fewer or none at all."},
-    {q:"Who developed the theory of general relativity?",options:["Isaac Newton","Niels Bohr","Albert Einstein","Stephen Hawking"],correct:2,category:"Science",fact:"Einstein published the theory of general relativity in 1915."}
-  ]},
-  {id:"003",category:"World History",questions:[
-    {q:"In which year did World War I begin?",options:["1912","1914","1916","1918"],correct:1,category:"History",fact:"WWI began on 28 July 1914 following the assassination of Archduke Franz Ferdinand."},
-    {q:"Who was the first person to walk on the Moon?",options:["Buzz Aldrin","Yuri Gagarin","Neil Armstrong","John Glenn"],correct:2,category:"History",fact:"Neil Armstrong stepped onto the Moon on 21 July 1969 at 02:56 UTC."},
-    {q:"Which ancient wonder was in Alexandria?",options:["Colossus of Rhodes","Hanging Gardens","Great Lighthouse","Statue of Zeus"],correct:2,category:"History",fact:"The Lighthouse of Alexandria stood approximately 100 metres tall."},
-    {q:"The Renaissance originated in which country?",options:["France","Greece","Spain","Italy"],correct:3,category:"History",fact:"The Renaissance began in Florence, Italy in the 14th century."},
-    {q:"Who forced King John to sign Magna Carta?",options:["King John","Archbishop","English Barons","Parliament"],correct:2,category:"History",fact:"English barons forced King John to seal the Magna Carta in 1215."},
-    {q:"Which empire was ruled by Genghis Khan?",options:["Ottoman","Mongol","Ming","Roman"],correct:1,category:"History",fact:"The Mongol Empire was the largest contiguous land empire in history."},
-    {q:"What ship sank in 1912?",options:["Britannic","Olympic","Titanic","Lusitania"],correct:2,category:"History",fact:"The Titanic sank on 15 April 1912, killing over 1,500 people."},
-    {q:"Which country was Nelson Mandela from?",options:["Zimbabwe","Kenya","Nigeria","South Africa"],correct:3,category:"History",fact:"Mandela served as South Africa's first Black president from 1994 to 1999."},
-    {q:"In which city is the Eiffel Tower?",options:["Lyon","Marseille","Paris","Bordeaux"],correct:2,category:"History",fact:"The Eiffel Tower was built for the 1889 World's Fair and was originally temporary."},
-    {q:"Which dynasty built most of the Great Wall?",options:["Tang","Song","Ming","Qing"],correct:2,category:"History",fact:"Most of the Great Wall visible today was built during the Ming Dynasty (1368–1644)."}
-  ]},
-  {id:"004",category:"Geography",questions:[
-    {q:"Which is the largest continent by area?",options:["Africa","North America","Asia","Europe"],correct:2,category:"Geography",fact:"Asia covers about 44.6 million km², roughly 30% of Earth's total land area."},
-    {q:"What is the capital of Canada?",options:["Toronto","Vancouver","Montreal","Ottawa"],correct:3,category:"Geography",fact:"Ottawa has been Canada's capital since 1857, chosen by Queen Victoria."},
-    {q:"Which country has the most natural lakes?",options:["Russia","USA","Brazil","Canada"],correct:3,category:"Geography",fact:"Canada has about 879,800 lakes, more than any other country in the world."},
-    {q:"What is the tallest mountain in the world?",options:["K2","Kangchenjunga","Everest","Lhotse"],correct:2,category:"Geography",fact:"Mount Everest stands at 8,849 metres above sea level."},
-    {q:"Which ocean is the largest?",options:["Atlantic","Indian","Arctic","Pacific"],correct:3,category:"Geography",fact:"The Pacific Ocean covers about 165 million km², larger than all landmasses combined."},
-    {q:"How many countries are in Africa?",options:["44","54","64","74"],correct:1,category:"Geography",fact:"Africa has 54 recognised sovereign states, more than any other continent."},
-    {q:"Which is the longest mountain range?",options:["Himalayas","Rockies","Alps","Andes"],correct:3,category:"Geography",fact:"The Andes stretch 7,000 km along South America's western coast."},
-    {q:"What is the smallest ocean?",options:["Southern","Arctic","Indian","Atlantic"],correct:1,category:"Geography",fact:"The Arctic Ocean covers about 14 million km², roughly 4% of the world's ocean surface."},
-    {q:"In which country is the Amazon rainforest mostly located?",options:["Colombia","Peru","Venezuela","Brazil"],correct:3,category:"Geography",fact:"About 60% of the Amazon rainforest is in Brazil."},
-    {q:"Which city is known as the City of Canals?",options:["Amsterdam","Bangkok","Venice","Copenhagen"],correct:2,category:"Geography",fact:"Venice is built on 118 small islands separated by canals and linked by bridges."}
-  ]}
-];
-function getDayIdx(){const n=new Date(),s=new Date(n.getFullYear(),0,0);return Math.floor((n-s)/86400000)%QUIZZES.length;}
+
+
 const quiz=QUIZZES[getDayIdx()];
 document.getElementById('quiz-label').textContent='Quiz #'+quiz.id;
 document.getElementById('cat-badge').textContent=quiz.category;
+
 let currentQ=0,score=0,answers=Array(quiz.questions.length).fill(null),answered=false,secs=0,timer=null;
-function startTimer(){if(timer)return;timer=setInterval(()=>{secs++;const m=Math.floor(secs/60),s=secs%60;document.getElementById('timer').textContent=m+':'+String(s).padStart(2,'0');},1000);}
+let timerEl,progLbl,progScore,progFill,qDots,qCat,qNum,qText,optGrid,fbBar,fbIcon,fbText,fbFact,nextBtn;
+
+function startTimer(){if(timer)return;timer=setInterval(()=>{secs++;const m=Math.floor(secs/60),s=secs%60;timerEl.textContent=m+':'+String(s).padStart(2,'0');},1000);}
 function stopTimer(){clearInterval(timer);timer=null;}
-function formatTime(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
-function renderDots(){document.getElementById('q-dots').innerHTML=quiz.questions.map((_,i)=>{let c='qd';if(i===currentQ)c+=' current';else if(answers[i]==='correct')c+=' correct';else if(answers[i]==='wrong')c+=' wrong';else if(answers[i]==='skipped')c+=' skipped';return`<div class="${c}">${i+1}</div>`;}).join('');}
-function renderQuestion(){const q=quiz.questions[currentQ];answered=false;document.getElementById('prog-lbl').textContent=`Question ${currentQ+1} of ${quiz.questions.length}`;document.getElementById('prog-score').textContent=`Score: ${score}`;document.getElementById('prog-fill').style.width=(currentQ/quiz.questions.length*100)+'%';document.getElementById('q-cat').textContent='◆ '+q.category;document.getElementById('q-num').textContent=`Question ${currentQ+1} / ${quiz.questions.length}`;document.getElementById('q-text').textContent=q.q;const ltr=['A','B','C','D'];document.getElementById('options-grid').innerHTML=q.options.map((opt,i)=>`<button class="opt-btn" onclick="selectAnswer(${i})" id="opt-${i}"><span class="opt-ltr">${ltr[i]}</span><span>${opt}</span></button>`).join('');const fb=document.getElementById('fb-bar');fb.className='fb-bar';fb.style.display='none';document.getElementById('next-btn').className='btn btn-primary-fill';renderDots();}
-function selectAnswer(idx){if(answered)return;answered=true;startTimer();const q=quiz.questions[currentQ];const correct=idx===q.correct;if(correct){score++;answers[currentQ]='correct';}else{answers[currentQ]='wrong';}q.options.forEach((_,i)=>{const btn=document.getElementById('opt-'+i);btn.disabled=true;if(i===q.correct)btn.classList.add('correct');else if(i===idx&&!correct)btn.classList.add('wrong');});const fb=document.getElementById('fb-bar');fb.style.display='flex';if(correct){fb.className='fb-bar correct visible';document.getElementById('fb-icon').textContent='✓';document.getElementById('fb-text').textContent='Correct!';}else{fb.className='fb-bar wrong visible';document.getElementById('fb-icon').textContent='✗';document.getElementById('fb-text').textContent=`Wrong — the answer is "${q.options[q.correct]}"`;}document.getElementById('fb-fact').textContent=q.fact;document.getElementById('prog-score').textContent=`Score: ${score}`;document.getElementById('next-btn').classList.add('visible');renderDots();}
-function skipQuestion(){if(answered)return;startTimer();answers[currentQ]='skipped';const q=quiz.questions[currentQ];const btn=document.getElementById('opt-'+q.correct);if(btn)btn.classList.add('reveal');q.options.forEach((_,i)=>{const b=document.getElementById('opt-'+i);if(b)b.disabled=true;});answered=true;const fb=document.getElementById('fb-bar');fb.style.display='flex';fb.className='fb-bar wrong visible';document.getElementById('fb-icon').textContent='→';document.getElementById('fb-text').textContent=`Skipped — the answer was "${q.options[q.correct]}"`;document.getElementById('fb-fact').textContent=q.fact;document.getElementById('next-btn').classList.add('visible');renderDots();}
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+
+function renderDots(){qDots.innerHTML=quiz.questions.map((_,i)=>{let c='qd';if(i===currentQ)c+=' current';else if(answers[i]==='correct')c+=' correct';else if(answers[i]==='wrong')c+=' wrong';else if(answers[i]==='skipped')c+=' skipped';return`<div class="${c}">${i+1}</div>`;}).join('');}
+
+function renderQuestion(){
+  const q=quiz.questions[currentQ];answered=false;
+  progLbl.textContent=`Question ${currentQ+1} of ${quiz.questions.length}`;
+  progScore.textContent=`Score: ${score}`;
+  progFill.style.width=(currentQ/quiz.questions.length*100)+'%';
+  qCat.textContent='◆ '+q.cat;qNum.textContent=`Question ${currentQ+1} / ${quiz.questions.length}`;qText.textContent=q.q;
+  const ltrs=['A','B','C','D'];
+  optGrid.innerHTML=q.o.map((opt,i)=>`<button class="opt-btn" onclick="selectAnswer(${i})" id="opt-${i}"><span class="opt-ltr">${ltrs[i]}</span><span>${opt}</span></button>`).join('');
+  fbBar.className='fb-bar';fbBar.style.display='none';
+  nextBtn.className='btn btn-fill';
+  renderDots();
+}
+
+function selectAnswer(idx){
+  if(answered)return;answered=true;startTimer();
+  const q=quiz.questions[currentQ];const correct=idx===q.c;
+  if(correct){score++;answers[currentQ]='correct';}else{answers[currentQ]='wrong';}
+  q.o.forEach((_,i)=>{const btn=document.getElementById('opt-'+i);if(!btn)return;btn.disabled=true;if(i===q.c)btn.classList.add('correct');else if(i===idx&&!correct)btn.classList.add('wrong');});
+  fbBar.style.display='flex';
+  if(correct){fbBar.className='fb-bar correct visible';fbIcon.textContent='✓';fbText.textContent='Correct!';}
+  else{fbBar.className='fb-bar wrong visible';fbIcon.textContent='✗';fbText.textContent=`Wrong — the answer is "${q.o[q.c]}"`;}
+  fbFact.textContent=q.f;
+  progScore.textContent=`Score: ${score}`;
+  nextBtn.classList.add('visible');
+  renderDots();
+}
+
+function skipQuestion(){
+  if(answered)return;startTimer();answers[currentQ]='skipped';
+  const q=quiz.questions[currentQ];const btn=document.getElementById('opt-'+q.c);if(btn)btn.classList.add('reveal');
+  q.o.forEach((_,i)=>{const b=document.getElementById('opt-'+i);if(b)b.disabled=true;});
+  answered=true;
+  fbBar.style.display='flex';fbBar.className='fb-bar wrong visible';
+  fbIcon.textContent='→';fbText.textContent=`Skipped — the answer was "${q.o[q.c]}"`;fbFact.textContent=q.f;
+  nextBtn.classList.add('visible');renderDots();
+}
+
 function nextQuestion(){currentQ++;if(currentQ>=quiz.questions.length)showResults();else renderQuestion();}
-function showResults(){stopTimer();document.getElementById('question-screen').classList.add('hidden');const rs=document.getElementById('results-screen');rs.classList.add('visible');const total=quiz.questions.length,pct=score/total;const wrongCount=answers.filter(a=>a==='wrong').length;let emoji,msg,sub;if(pct===1){emoji='🏆';msg='Perfect score!';sub='Every question correct. Outstanding!';}else if(pct>=.8){emoji='🎉';msg='Excellent work!';sub='You really know your stuff!';}else if(pct>=.6){emoji='😊';msg='Good job!';sub='Solid effort — keep it up!';}else if(pct>=.4){emoji='🤔';msg='Not bad!';sub='Room to grow — come back tomorrow!';}else{emoji='📚';msg='Keep learning!';sub='Every expert started somewhere!';}document.getElementById('res-emoji').textContent=emoji;document.getElementById('res-score').innerHTML=score+'<span>/'+total+'</span>';document.getElementById('res-msg').textContent=msg;document.getElementById('res-sub').textContent=sub;document.getElementById('stat-correct').textContent=score;document.getElementById('stat-wrong').textContent=wrongCount;document.getElementById('stat-time').textContent=formatTime(secs);document.getElementById('review-list').innerHTML=quiz.questions.map((q,i)=>{const status=answers[i]||'skipped';const ca=q.options[q.correct];return`<div class="review-item review-${status}"><div class="rev-num">${status==='correct'?'✓':status==='wrong'?'✗':'→'} Q${i+1} · ${q.category}</div><div class="rev-q">${q.q}</div><div class="rev-a">Correct: <strong>${ca}</strong> · 💡 ${q.fact}</div></div>`;}).join('');document.getElementById('prog-fill').style.width='100%';document.getElementById('prog-lbl').textContent='Quiz complete!';}
-function resetGame(){currentQ=0;score=0;answers=Array(quiz.questions.length).fill(null);answered=false;secs=0;stopTimer();document.getElementById('timer').textContent='0:00';document.getElementById('question-screen').classList.remove('hidden');document.getElementById('results-screen').classList.remove('visible');document.getElementById('prog-fill').style.width='0%';renderQuestion();}
-renderQuestion();
+
+function showResults(){
+  stopTimer();document.getElementById('question-screen').classList.add('hidden');
+  const rs=document.getElementById('results-screen');rs.classList.add('visible');
+  const total=quiz.questions.length,pct=score/total;
+  const wrongCount=answers.filter(a=>a==='wrong').length;
+  let emoji,msg,sub;
+  if(pct===1){emoji='🏆';msg='Perfect score!';sub='Every question correct. Outstanding!';}
+  else if(pct>=.8){emoji='🎉';msg='Excellent work!';sub='You really know your stuff!';}
+  else if(pct>=.6){emoji='😊';msg='Good job!';sub='Solid effort — keep it up!';}
+  else if(pct>=.4){emoji='🤔';msg='Not bad!';sub='Room to grow — come back tomorrow!';}
+  else{emoji='📚';msg='Keep learning!';sub='Every expert started somewhere!';}
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-score').innerHTML=score+'<span>/'+total+'</span>';
+  document.getElementById('res-msg').textContent=msg;document.getElementById('res-sub').textContent=sub;
+  document.getElementById('stat-correct').textContent=score;document.getElementById('stat-wrong').textContent=wrongCount;document.getElementById('stat-time').textContent=fmt(secs);
+  document.getElementById('review-list').innerHTML=quiz.questions.map((q,i)=>{
+    const status=answers[i]||'skipped',ca=q.o[q.c];
+    return`<div class="review-item review-${status}"><div class="rev-num">${status==='correct'?'✓':status==='wrong'?'✗':'→'} Q${i+1} · ${q.cat}</div><div class="rev-q">${q.q}</div><div class="rev-a">Correct: <strong>${ca}</strong> — ${q.f}</div></div>`;
+  }).join('');
+  progFill.style.width='100%';progLbl.textContent='Quiz complete!';
+}
+
+function resetGame(){currentQ=0;score=0;answers=Array(quiz.questions.length).fill(null);answered=false;secs=0;stopTimer();timerEl.textContent='0:00';document.getElementById('question-screen').classList.remove('hidden');document.getElementById('results-screen').classList.remove('visible');progFill.style.width='0%';renderQuestion();}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  timerEl=document.getElementById('timer');progLbl=document.getElementById('prog-lbl');progScore=document.getElementById('prog-score');progFill=document.getElementById('prog-fill');qDots=document.getElementById('q-dots');qCat=document.getElementById('q-cat');qNum=document.getElementById('q-num');qText=document.getElementById('q-text');optGrid=document.getElementById('options-grid');fbBar=document.getElementById('fb-bar');fbIcon=document.getElementById('fb-icon');fbText=document.getElementById('fb-text');fbFact=document.getElementById('fb-fact');nextBtn=document.getElementById('next-btn');
+  renderQuestion();
+});
+
+function toggleNav(){const nl=document.getElementById('nav-links'),hb=document.getElementById('hamburger');nl.classList.toggle('open');hb.setAttribute('aria-expanded',nl.classList.contains('open'));}
+document.getElementById('yr').textContent=new Date().getFullYear();
+(function(){const K='snappgrid_date',t=new Date().toDateString(),s=localStorage.getItem(K);if(s&&s!==t){localStorage.setItem(K,t);const el=document.getElementById('refresh-toast');if(el){el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),8000);}}else localStorage.setItem(K,t);setInterval(()=>{if(localStorage.getItem('snappgrid_date')!==new Date().toDateString()){localStorage.setItem('snappgrid_date',new Date().toDateString());const el=document.getElementById('refresh-toast');if(el){el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),8000);}}},60000);})();
+
 </script>
 </body></html>
