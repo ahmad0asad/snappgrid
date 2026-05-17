@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Free Daily Word Search Puzzle — SnappGrid</title>
+<meta name="description" content="Find hidden words in 8 directions. New themed word search every day, no login needed. Works on mobile.">
+<link rel="canonical" href="https://snappgrid.com/games/wordsearch/">
+<meta property="og:title" content="Free Daily Word Search Puzzle — SnappGrid">
+<meta property="og:description" content="Find hidden words in 8 directions. New themed word search every day, no login needed. Works on mobile.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://snappgrid.com/games/wordsearch/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Word Search","applicationCategory":"GameApplication","url":"https://snappgrid.com/games/wordsearch/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="../../css/style.css">
+</head><style>
+
+/* INP Performance: contain layout/paint on game board */
+.board-contain{contain:layout style;will-change:auto;}
+.tile-anim{will-change:transform;}
+/* content-visibility for below-fold content */
+.next-section{content-visibility:auto;contain-intrinsic-size:0 300px;}
+footer{content-visibility:auto;contain-intrinsic-size:0 150px;}
+/* Prevent layout shifts */
+.ad-slot{aspect-ratio:unset;}
+.ad-top{height:90px;}
+.ad-bottom{height:250px;}
+
+:root{--wsc:44px;}
+.page-header{max-width:1100px;margin:0 auto;padding:20px clamp(16px,4vw,60px) 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.game-layout{max-width:1100px;margin:20px auto 0;padding:0 clamp(16px,4vw,60px) 48px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;}
+.ws-grid{display:inline-grid;grid-template-columns:repeat(10,var(--wsc));grid-template-rows:repeat(10,var(--wsc));gap:2px;background:var(--border);border:2px solid var(--ink);border-radius:3px;box-shadow:5px 5px 0 rgba(26,23,20,.12);cursor:crosshair;user-select:none;-webkit-user-select:none;contain:layout style;}
+.wc{width:var(--wsc);height:var(--wsc);display:flex;align-items:center;justify-content:center;background:var(--white);font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:var(--ink);transition:background .06s;cursor:crosshair;}
+.wc.selecting{background:#FFE08A;}
+.wc.found-0{background:#FFE066;color:#7A5800;}
+.wc.found-1{background:#A8E6CF;color:#1A5C3A;}
+.wc.found-2{background:#FFB3B3;color:#7A1A1A;}
+.wc.found-3{background:#B3D9FF;color:#1A4A7A;}
+.wc.found-4{background:#D9B3FF;color:#4A1A7A;}
+.wc.found-5{background:#B3FFB3;color:#1A7A2A;}
+.wc.found-6{background:#FFD9B3;color:#7A3A1A;}
+.wc.found-7{background:#FFB3E6;color:#7A1A5A;}
+.status-bar{background:var(--ink);color:var(--cream);padding:10px 14px;border-radius:var(--radius);display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;}
+.words-panel{display:flex;flex-direction:column;gap:20px;}
+.theme-tag{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-pale);border:1px solid var(--gold-light);padding:4px 12px;border-radius:100px;margin-bottom:4px;width:fit-content;}
+.words-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.word-list{display:flex;flex-direction:column;gap:5px;}
+.word-item{display:flex;align-items:center;gap:9px;padding:7px 11px;border-radius:var(--radius);background:var(--white);border:1.5px solid var(--border);font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ink);transition:all .2s;}
+.word-item.found{text-decoration:line-through;opacity:.5;}
+.word-dot{width:9px;height:9px;border-radius:50%;background:var(--border-strong);flex-shrink:0;transition:background .2s;}
+.word-dot.found-0{background:#C8A020;}.word-dot.found-1{background:#2E9E6E;}.word-dot.found-2{background:#C83030;}.word-dot.found-3{background:#2060C0;}.word-dot.found-4{background:#6030A0;}.word-dot.found-5{background:#208020;}.word-dot.found-6{background:#B05020;}.word-dot.found-7{background:#A020A0;}
+.prog-bg{background:var(--border);border-radius:100px;height:5px;}
+.prog-fill{background:var(--gold);height:5px;border-radius:100px;transition:width .4s ease;}
+.archive-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gold-light);padding-bottom:1px;}
+@media(max-width:760px){:root{--wsc:34px;}.game-layout{grid-template-columns:1fr;gap:20px;}.ws-grid{margin:0 auto;}.wc{font-size:13px;}}
+@media(max-width:420px){:root{--wsc:28px;}.wc{font-size:11px;}}
+</style>
+<body>
+<nav aria-label="Main navigation"><a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a><ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/" class="active">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul><button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" id="hamburger"><span></span><span></span><span></span></button></nav>
+<div class="ad-wrap"><div class="ad-slot ad-top" aria-label="Advertisement">Advertisement</div></div>
+<div class="page-header">
+  <div><div class="breadcrumb"><a href="/">SnappGrid</a> / <a href="/games/wordsearch/archive/">Word Search</a></div><h1 class="page-title">Daily Word Search</h1></div>
+  <div class="puzzle-meta"><span class="meta-badge gold-badge" id="puzzle-label">Puzzle #001</span><span class="meta-badge" id="theme-badge">Nature</span><span class="meta-badge">10×10</span><a href="/games/wordsearch/archive/" class="archive-link">📚 Archive</a></div>
+</div>
+<div class="game-layout">
+  <div style="display:flex;flex-direction:column;gap:12px;contain:layout style;">
+    <div class="success-banner" id="success-banner">✓ All words found! Well done.</div>
+    <div class="ws-grid" id="ws-grid" role="grid" aria-label="Word search grid"></div>
+    <div class="status-bar"><span id="status-icon">◎</span><span id="status-text">Click and drag to find a word</span></div>
+    <div style="display:flex;gap:6px;">
+      <button class="btn btn-outline" onclick="resetWS()" style="flex:1;">Reset</button>
+      <button class="btn btn-gold" onclick="revealAll()" style="flex:1;">Reveal All</button>
+    </div>
+  </div>
+  <div class="words-panel">
+    <div>
+      <div class="theme-tag" id="theme-tag">◆ Nature</div>
+      <div class="words-title">Find these words</div>
+      <div class="word-list" id="word-list"></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);">Progress</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted);" id="prog-count">0 / 8</span>
+      </div>
+      <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:9px;">Directions</div>
+      <div style="display:grid;grid-template-columns:repeat(3,26px);gap:3px;margin:0 auto;width:fit-content;">
+        <div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">↖</div><div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">↑</div><div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">↗</div>
+        <div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">←</div><div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;background:var(--gold-pale);border:1px solid var(--gold-light);font-size:9px;font-family:'DM Mono',monospace;font-weight:500;">W</div><div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">→</div>
+        <div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">↙</div><div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">↓</div><div style="width:26px;height:26px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--cream);border:1px solid var(--border-strong);">↘</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ad-wrap" style="margin-bottom:40px;"><div class="ad-slot ad-bottom" aria-label="Advertisement">Advertisement</div></div>
+<div class="next-section" style="max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,60px) 60px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+  <a href="/games/crossword/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Crossword</div><div class="next-card-desc">Fill the 5×5 grid with across and down clues.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/sudoku/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Sudoku</div><div class="next-card-desc">Fill every row, column, and 3×3 box.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/trivia/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Trivia</div><div class="next-card-desc">10 daily questions across mixed topics.</div><div class="next-card-arrow">→</div></a>
+</div>
+<div class="refresh-toast" id="refresh-toast">🎉 New puzzles ready!<button onclick="location.reload()">Refresh</button></div>
+<footer><div class="footer-inner"><a href="/" class="footer-logo">SnappGrid</a><ul class="footer-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul><div class="footer-copy">&copy; <span id="yr"></span> SnappGrid &middot; Free daily puzzles</div></div></footer>
+<script src="puzzles.js"></script>
+<script>
+
+function getDayIdx(){
+  const p=new URLSearchParams(location.search),d=p.get('day');
+  if(d!==null){const n=parseInt(d,10);if(!isNaN(n)&&n>=0&&n<PUZZLES.length)return n;}
+  const launch=new Date('2026-06-01'),today=new Date();today.setHours(0,0,0,0);
+  return Math.max(0,Math.floor((today-launch)/86400000))%PUZZLES.length;
+}
+
+function resetWS(){foundCells={};foundWords=[];dragging=false;dragStart=null;dragCells=[];solved=false;document.getElementById('success-banner').classList.remove('visible');updateWordList();updateProgress();renderGrid();setStatus('◎','Click and drag to find a word');}
+
+const puzzle=PUZZLES[getDayIdx()];
+document.getElementById('puzzle-label').textContent='Puzzle #'+puzzle.id;
+document.getElementById('theme-badge').textContent=puzzle.theme;
+document.getElementById('theme-tag').textContent='◆ '+puzzle.theme;
+
+let dragging=false,dragStart=null,dragCells=[],foundCells={},foundWords=[],solved=false;
+let gridEl,wordListEl,progFill,statusIcon,statusText;
+
+function getCellFromPoint(x,y){const el=document.elementFromPoint(x,y);if(!el)return null;const c=el.closest('.wc');if(!c)return null;return[+c.dataset.row,+c.dataset.col];}
+function getDragCells(r1,c1,r2,c2){const dr=r2-r1,dc=c2-c1;if(!dr&&!dc)return[[r1,c1]];if(dr&&dc&&Math.abs(dr)!==Math.abs(dc))return[[r1,c1]];const len=Math.max(Math.abs(dr),Math.abs(dc))+1;const sr=dr===0?0:dr/Math.abs(dr),sc=dc===0?0:dc/Math.abs(dc);return Array.from({length:len},(_,i)=>[r1+i*sr,c1+i*sc]);}
+function cellsToWord(cells){return cells.map(([r,c])=>puzzle.grid[r][c]).join('');}
+function setStatus(icon,text){statusIcon.textContent=icon;statusText.textContent=text;}
+
+function startDrag(r,c){dragging=true;dragStart=[r,c];dragCells=[[r,c]];setStatus('◎','Selecting...');renderGrid();}
+function updateDrag(r,c){if(!dragging)return;dragCells=getDragCells(dragStart[0],dragStart[1],r,c);renderGrid();}
+function endDrag(){if(!dragging)return;dragging=false;if(dragCells.length>1)checkSel();else dragCells=[];renderGrid();}
+
+function checkSel(){
+  const word=cellsToWord(dragCells),wordR=word.split('').reverse().join('');
+  const target=puzzle.words.find(w=>!foundWords.find(f=>f.word===w)&&(w===word||w===wordR));
+  if(target){
+    const ci=foundWords.length;
+    foundWords.push({word:target,colorIdx:ci});
+    dragCells.forEach(([r,c])=>{foundCells[r+','+c]=ci;});
+    setStatus('✓','"'+target+'" found!');dragCells=[];
+    updateWordList();updateProgress();
+    if(foundWords.length===puzzle.words.length){solved=true;document.getElementById('success-banner').classList.add('visible');setStatus('★','All words found!');}
+  }else{setStatus('✗','Not a word — try again');setTimeout(()=>{dragCells=[];setStatus('◎','Click and drag to find a word');renderGrid();},500);}
+  renderGrid();
+}
+
+function updateWordList(){
+  wordListEl.innerHTML=puzzle.words.map(word=>{
+    const fe=foundWords.find(f=>f.word===word);const ci=fe?fe.colorIdx:-1;
+    return`<div class="word-item${fe?' found':''}"><div class="word-dot${fe?' found-'+ci:''}"></div><span>${word}</span></div>`;
+  }).join('');
+}
+function updateProgress(){
+  document.getElementById('prog-count').textContent=foundWords.length+' / '+puzzle.words.length;
+  progFill.style.width=(foundWords.length/puzzle.words.length*100)+'%';
+}
+
+function findWordInGrid(word){
+  const dirs=[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+  for(let r=0;r<10;r++)for(let c=0;c<10;c++)for(const[dr,dc]of dirs){
+    const cells=Array.from({length:word.length},(_,i)=>[r+i*dr,c+i*dc]);
+    if(cells.some(([cr,cc])=>cr<0||cr>=10||cc<0||cc>=10))continue;
+    if(cells.map(([cr,cc])=>puzzle.grid[cr][cc]).join('')===word)return cells;
+  }return null;
+}
+
+function revealAll(){puzzle.words.forEach(word=>{if(!foundWords.find(f=>f.word===word)){const ci=foundWords.length;foundWords.push({word,colorIdx:ci});const cells=findWordInGrid(word);if(cells)cells.forEach(([r,c])=>{foundCells[r+','+c]=ci;});}});solved=true;document.getElementById('success-banner').classList.add('visible');setStatus('★','All words revealed!');updateWordList();updateProgress();renderGrid();}
+
+function renderGrid(){
+  const sel=new Set(dragCells.map(([r,c])=>r+','+c));
+  let html='';
+  for(let r=0;r<10;r++)for(let c=0;c<10;c++){
+    const key=r+','+c,ltr=puzzle.grid[r][c];
+    let cls='wc';if(sel.has(key))cls+=' selecting';else if(foundCells[key]!==undefined)cls+=' found-'+foundCells[key];
+    html+=`<div class="${cls}" data-row="${r}" data-col="${c}">${ltr}</div>`;
+  }
+  gridEl.innerHTML=html;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  gridEl=document.getElementById('ws-grid');
+  wordListEl=document.getElementById('word-list');
+  progFill=document.getElementById('prog-fill');
+  statusIcon=document.getElementById('status-icon');
+  statusText=document.getElementById('status-text');
+  updateWordList();updateProgress();renderGrid();
+
+  // Event delegation — one listener on grid
+  gridEl.addEventListener('mousedown',e=>{const c=e.target.closest('.wc');if(!c)return;e.preventDefault();startDrag(+c.dataset.row,+c.dataset.col);});
+  gridEl.addEventListener('mouseover',e=>{if(!dragging)return;const c=e.target.closest('.wc');if(!c)return;updateDrag(+c.dataset.row,+c.dataset.col);});
+  document.addEventListener('mouseup',()=>{if(dragging)endDrag();});
+  gridEl.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0];const coords=getCellFromPoint(t.clientX,t.clientY);if(coords)startDrag(coords[0],coords[1]);},{passive:false});
+  gridEl.addEventListener('touchmove',e=>{e.preventDefault();if(!dragging)return;const t=e.touches[0];const coords=getCellFromPoint(t.clientX,t.clientY);if(coords)updateDrag(coords[0],coords[1]);},{passive:false});
+  gridEl.addEventListener('touchend',e=>{e.preventDefault();endDrag();},{passive:false});
+});
+
+function toggleNav(){const nl=document.getElementById('nav-links'),hb=document.getElementById('hamburger');nl.classList.toggle('open');hb.setAttribute('aria-expanded',nl.classList.contains('open'));}
+document.getElementById('yr').textContent=new Date().getFullYear();
+(function(){const K='snappgrid_date',t=new Date().toDateString(),s=localStorage.getItem(K);if(s&&s!==t){localStorage.setItem(K,t);const el=document.getElementById('refresh-toast');if(el){el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),8000);}}else localStorage.setItem(K,t);setInterval(()=>{if(localStorage.getItem('snappgrid_date')!==new Date().toDateString()){localStorage.setItem('snappgrid_date',new Date().toDateString());const el=document.getElementById('refresh-toast');if(el){el.classList.add('visible');setTimeout(()=>el.classList.remove('visible'),8000);}}},60000);})();
+
+</script>
+</body></html>

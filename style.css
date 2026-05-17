@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Tips & Guides — SnappGrid Blog</title>
+<meta name="description" content="Crossword tips, sudoku strategies, brain health benefits of puzzles and more. The SnappGrid blog — coming soon.">
+<link rel="canonical" href="https://snappgrid.com/blog/">
+<meta property="og:title" content="Puzzle Tips & Guides — SnappGrid Blog">
+<meta property="og:description" content="Crossword tips, sudoku strategies, brain health benefits of puzzles and more. The SnappGrid blog — coming soon.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://snappgrid.com/blog/">
+<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Puzzle Tips & Guides — SnappGrid Blog">
+<meta name="twitter:description" content="Crossword tips, sudoku strategies, brain health benefits of puzzles and more. The SnappGrid blog — coming soon.">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Blog","name":"SnappGrid Blog","url":"https://snappgrid.com/blog/","description":"Puzzle tips, brain health, crossword guides and more from SnappGrid."}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="css/style.css">
+</head><style>
+.blog-hero{max-width:760px;margin:0 auto;padding:clamp(60px,10vw,120px) clamp(20px,5vw,40px);text-align:center;}
+.blog-tag{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-pale);border:1px solid var(--gold-light);padding:5px 12px;border-radius:100px;margin-bottom:20px;}
+.blog-hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,68px);font-weight:900;color:var(--ink);letter-spacing:-1.5px;line-height:1.05;margin-bottom:16px;}
+.blog-hero h1 em{font-style:normal;color:var(--gold);}
+.blog-sub{font-size:clamp(15px,2vw,18px);color:var(--ink-soft);line-height:1.7;max-width:480px;margin:0 auto 40px;}
+.coming-topics{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 80px;}
+.topics-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:20px;}
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.topic-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;}
+.topic-icon{font-size:20px;margin-bottom:9px;}
+.topic-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.topic-desc{font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.notify-block{max-width:500px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 80px;text-align:center;}
+.notify-block h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.notify-block p{font-size:14px;color:var(--ink-soft);margin-bottom:20px;}
+.email-form-sm{display:flex;border:1.5px solid var(--border-strong);border-radius:var(--radius);overflow:hidden;background:var(--white);box-shadow:3px 3px 0 rgba(26,23,20,.08);}
+.email-form-sm input{flex:1;padding:12px 14px;border:none;outline:none;font-size:13px;font-family:'DM Sans',sans-serif;background:transparent;color:var(--ink);}
+.email-form-sm input::placeholder{color:var(--ink-muted);}
+.email-form-sm button{padding:12px 18px;background:var(--ink);color:var(--cream);border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.email-form-sm button:hover{opacity:.85;}
+.play-now{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,40px) 80px;}
+.play-now h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--ink);margin-bottom:20px;}
+.play-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
+.play-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column;gap:4px;}
+.play-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,23,20,.08);}
+.play-card-icon{font-size:20px;margin-bottom:6px;}
+.play-card-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);}
+.play-card-lbl{font-size:11px;color:var(--ink-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1px;}
+</style>
+<body><nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
+  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="blog-hero">
+  <div class="blog-tag">🚧 Coming soon</div>
+  <h1>The SnappGrid <em>Blog</em></h1>
+  <p class="blog-sub">Puzzle tips, brain health benefits, crossword solving strategies, sudoku guides and more. Launching soon.</p>
+</div>
+<div class="coming-topics">
+  <div class="topics-label">Topics we'll cover</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">✏️</div><div class="topic-title">Crossword tips</div><div class="topic-desc">How to crack tricky clues and improve your solving speed.</div></div>
+    <div class="topic-card"><div class="topic-icon">🧮</div><div class="topic-title">Sudoku strategies</div><div class="topic-desc">Step-by-step techniques from beginner to advanced.</div></div>
+    <div class="topic-card"><div class="topic-icon">🧠</div><div class="topic-title">Brain health</div><div class="topic-desc">The science behind puzzles and cognitive fitness.</div></div>
+    <div class="topic-card"><div class="topic-icon">🏆</div><div class="topic-title">Trivia guides</div><div class="topic-desc">How to build your general knowledge systematically.</div></div>
+    <div class="topic-card"><div class="topic-icon">📖</div><div class="topic-title">Puzzle history</div><div class="topic-desc">Where crosswords, sudoku and word search came from.</div></div>
+    <div class="topic-card"><div class="topic-icon">🎯</div><div class="topic-title">Daily habits</div><div class="topic-desc">How a daily puzzle habit sharpens your mind over time.</div></div>
+  </div>
+</div>
+<div class="notify-block">
+  <h2>Get notified when we launch</h2>
+  <p>Subscribe for daily puzzles and you'll be the first to know when the blog goes live.</p>
+  <form class="email-form-sm" onsubmit="handleSub(event)">
+    <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+    <button type="submit">Notify me</button>
+  </form>
+</div>
+<div class="play-now">
+  <h2>While you wait — play today's puzzles</h2>
+  <div class="play-grid">
+    <a href="/games/crossword/" class="play-card"><div class="play-card-icon">⊞</div><div class="play-card-lbl">Daily</div><div class="play-card-title">Crossword</div></a>
+    <a href="/games/wordsearch/" class="play-card"><div class="play-card-icon">🔍</div><div class="play-card-lbl">Daily</div><div class="play-card-title">Word Search</div></a>
+    <a href="/games/sudoku/" class="play-card"><div class="play-card-icon">⊟</div><div class="play-card-lbl">Daily</div><div class="play-card-title">Sudoku</div></a>
+    <a href="/games/trivia/" class="play-card"><div class="play-card-icon">❓</div><div class="play-card-lbl">Daily</div><div class="play-card-title">Trivia Quiz</div></a>
+  </div>
+</div>
+<div class="refresh-toast" id="refresh-toast">
+  🎉 New puzzles are ready!
+  <button onclick="location.reload()">Refresh now</button>
+</div><footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">SnappGrid</a>
+    <ul class="footer-links">
+      <li><a href="/games/crossword/">Crossword</a></li>
+      <li><a href="/games/wordsearch/">Word Search</a></li>
+      <li><a href="/games/sudoku/">Sudoku</a></li>
+      <li><a href="/games/trivia/">Trivia</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+    </ul>
+    <div class="footer-copy">© <span id="yr"></span> SnappGrid · Free daily puzzles · No account required</div>
+  </div>
+</footer><script>
+function toggleNav(){
+  const nl=document.getElementById('nav-links');
+  const hb=document.getElementById('hamburger');
+  nl.classList.toggle('open');
+  hb.setAttribute('aria-expanded', nl.classList.contains('open'));
+}
+document.getElementById('yr').textContent=new Date().getFullYear();
+// Daily auto-refresh
+(function(){
+  const KEY='snappgrid_date';
+  const today=new Date().toDateString();
+  const stored=localStorage.getItem(KEY);
+  if(stored && stored!==today){
+    localStorage.setItem(KEY,today);
+    const t=document.getElementById('refresh-toast');
+    if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
+  } else { localStorage.setItem(KEY,today); }
+  setInterval(()=>{
+    if(localStorage.getItem(KEY)!==new Date().toDateString()){
+      localStorage.setItem(KEY,new Date().toDateString());
+      const t=document.getElementById('refresh-toast');
+      if(t){t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),8000);}
+    }
+  },60000);
+})();
+</script>
+<script>function handleSub(e){e.preventDefault();const btn=e.target.querySelector('button');btn.textContent='Subscribed ✓';btn.style.background='#3B6D11';e.target.email.value='';e.target.email.disabled=true;btn.disabled=true;}</script>
+</body></html>
