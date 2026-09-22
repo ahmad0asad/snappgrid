@@ -3,3 +3,6 @@
 /game/wordsearch /games/wordsearch/ 301
 /game/sudoku     /games/sudoku/     301
 /game/trivia     /games/trivia/     301
+/lexigrid        /games/lexigrid/index.html  200
+/play            /games/lexigrid/index.html  200
+/books           /books/index.html           200

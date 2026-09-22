@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>Logic Grid Puzzles: The Detective's Grid Method — No Guessing</title>
+    <meta name="description" content="Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now.">
+    <link rel="canonical" href="https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/">
+    <meta property="og:title" content="Logic Grid Puzzles: The Detective's Grid Method — No Guessing">
+    <meta property="og:description" content="Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now.">
+    <meta property="og:image" content="https://snappgrid.com/assets/og-blog-logic.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/">
+    <meta property="twitter:title" content="Logic Grid Puzzles: The Detective's Grid Method — No Guessing">
+    <meta property="twitter:description" content="Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now.">
+    <meta property="twitter:image" content="https://snappgrid.com/assets/og-blog-logic.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "The Detective's Grid: How to Solve Any Logic Puzzle Without Guessing (A Masterclass)",
+          "author": { "@type": "Person", "name": "Ahmad Asad" },
+          "publisher": { 
+            "@type": "Organization", 
+            "name": "SnappGrid", 
+            "logo": { "@type": "ImageObject", "url": "https://snappgrid.com/assets/logo.png" } 
+          },
+          "datePublished": "2026-09-22",
+          "dateModified": "2026-09-22",
+          "url": "https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/",
+          "image": "https://snappgrid.com/assets/og-blog-logic.png",
+          "description": "Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is a logic grid puzzle?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A logic grid puzzle is a deductive reasoning game where you use a series of text clues to determine the relationships between different categories (like suspects, weapons, and rooms) by systematically marking a grid."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do you start a logic grid puzzle?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You start by reading the clues and looking for negative constraints (what is definitely NOT true) and marking those with an 'X'. Then, look for definitive positive statements to mark with a checkmark."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the elimination method in logic puzzles?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The elimination method relies on the rule of mutual exclusivity: once you find a true pairing in a row or column, every other option in that same row or column must be mathematically false."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are logic grid puzzles good for your brain?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, logic puzzles train working memory, fluid intelligence, and pattern recognition by forcing the brain to hold multiple constraints and process transitive properties."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Where can I find true crime logic grid puzzles?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The 10-Minute Detective book by SnappGrid features 15 true crime-inspired logic puzzles with escalating difficulty and an evidence board layout."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --cream: #FAF8F5;
+            --ink: #1A1714;
+            --ink-light: #3D3935;
+            --gold: #B8860B;
+            --gold-light: #D4AF37;
+            --red: #C0392B;
+            --green: #2D8A55;
+            --gray: #D1CDDA;
+            --radius-xl: 16px;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --font-head: 'Playfair Display', serif;
+            --font-mono: 'DM Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--cream);
+            color: var(--ink);
+            font-family: var(--font-body);
+            line-height: 1.8;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gold-light);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        /* Nav */
+        header.site-nav {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: var(--cream);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .logo span { color: var(--gold); }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+        .subscribe-btn {
+            background: var(--ink);
+            color: var(--cream) !important;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        /* Layout */
+        .layout-container {
+            display: flex;
+            max-width: 1100px;
+            margin: 4rem auto;
+            gap: 4rem;
+            padding: 0 2rem;
+        }
+
+        /* TOC Sidebar */
+        .toc-sidebar {
+            width: 250px;
+            position: sticky;
+            top: 6rem;
+            height: max-content;
+            max-height: calc(100vh - 8rem);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-left: 2px solid rgba(0,0,0,0.05);
+            padding-left: 1.5rem;
+        }
+        .toc-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: var(--ink-light);
+        }
+        .toc-sidebar a {
+            text-decoration: none;
+            color: var(--ink-light);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            transition: all 0.2s;
+        }
+        .toc-sidebar a:hover, .toc-sidebar a.active {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .article-content {
+            max-width: 720px;
+            flex: 1;
+        }
+
+        .article-meta {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .article-meta span.author { font-weight: 600; color: var(--ink); }
+
+        h1 {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-family: var(--font-head);
+            font-size: 1.75rem;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gold);
+            color: var(--ink);
+        }
+
+        h3 {
+            font-family: var(--font-head);
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+        }
+
+        p { margin-bottom: 1.5rem; }
+        
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        li { margin-bottom: 0.5rem; }
+        
+        a.internal-link {
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gold-light);
+            font-weight: 500;
+        }
+        a.internal-link:hover { border-bottom-width: 2px; }
+
+        /* Logic Grid Tables */
+        .grid-wrapper {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        table.logic-grid {
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin: 0 auto;
+        }
+        .logic-grid th, .logic-grid td {
+            border: 1px solid var(--gray);
+            padding: 0.5rem 0.75rem;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+        }
+        .logic-grid th {
+            background: #F4F2EE;
+            font-weight: 600;
+            font-family: var(--font-body);
+            text-align: left;
+            font-size: 0.8rem;
+        }
+        .logic-grid th.header-top { writing-mode: vertical-rl; transform: rotate(180deg); text-align: left; padding: 0.5rem; height: 100px; }
+        
+        .cell-o { color: #A0A0A0; font-size: 1.1rem; }
+        .cell-x { color: var(--red); font-weight: bold; font-size: 1.2rem; }
+        .cell-v { color: var(--green); font-weight: bold; font-size: 1.2rem; }
+
+        /* Interactive Puzzle */
+        .puzzle-cell { cursor: pointer; user-select: none; transition: background 0.1s; }
+        .puzzle-cell:hover { background: #F8F9FA; }
+        .btn-solution {
+            background: var(--ink); color: white; border: none; padding: 0.75rem 1.5rem;
+            font-family: var(--font-mono); font-size: 0.9rem; border-radius: 4px;
+            cursor: pointer; display: block; margin: 1rem auto;
+        }
+
+        /* Glassmorphism CTA */
+        .glass-cta {
+            background: rgba(26,23,20,0.95);
+            border: 1px solid var(--gold-light);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--cream);
+            text-align: center;
+        }
+        .glass-cta h3 { color: var(--gold-light); margin-top: 0; font-size: 1.6rem; border: none; }
+        .glass-cta p { color: #E0DFDD; margin-bottom: 2rem; font-size: 1.05rem; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-outline {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: var(--gold); color: var(--ink); }
+        .btn-solid {
+            background: var(--gold);
+            color: var(--ink);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-solid:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+        /* Footer */
+        footer {
+            background: var(--ink);
+            color: var(--cream);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 1100px) {
+            .toc-sidebar { display: none; }
+            .layout-container { justify-content: center; padding: 0 1rem; margin-top: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="progress-bar"></div>
+
+    <header class="site-nav">
+        <a href="/" class="logo">Snapp<span>Grid</span></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/play">Games</a>
+            <a href="/lexigrid">LexiGrid</a>
+            <a href="/books/">Books</a>
+            <a href="/blog/" class="active">Blog</a>
+            <a href="#subscribe" class="subscribe-btn">Subscribe</a>
+        </div>
+    </header>
+
+    <div class="layout-container">
+        <aside class="toc-sidebar">
+            <div class="toc-title">On this page</div>
+            <a href="#intro">The Detective's Grid</a>
+            <a href="#what-makes-it-tick">What Makes a Logic Grid Tick</a>
+            <a href="#anatomy">The Anatomy of the Elimination Matrix</a>
+            <a href="#rules-of-deduction">The 5 Golden Rules of Deduction</a>
+            <a href="#walkthrough">Case Walkthrough: The Gallery Heist</a>
+            <a href="#bonus-puzzle">Bonus Puzzle: Try It Yourself</a>
+            <a href="#building-speed">Building Speed: From 40 Minutes to 12</a>
+            <a href="#more-cases">Why This Book Has 15 More Cases</a>
+        </aside>
+
+        <main class="article-content">
+            <div class="article-meta">
+                <span class="author">By Ahmad Asad</span>
+                <span>•</span>
+                <span>Sep 22, 2026</span>
+                <span>•</span>
+                <span>12 min read</span>
+            </div>
+
+            <h1 id="intro">The Detective's Grid: How to Solve Any Logic Puzzle Without Guessing (A Masterclass)</h1>
+
+            <p>You stare at the grid. The grid stares back.</p>
+            
+            <p>It is a standard four-by-four logic puzzle. Four suspects, four weapons, four locations. You have read the first three clues. You managed to plot exactly one positive checkmark and two negative crosses. Now, you are reading Clue 4 for the fifth consecutive time: <em>"The person with the candlestick was not in the library, nor were they the one wearing the red coat."</em></p>
+
+            <p>Your brain attempts to hold all these variables simultaneously. You think: "Okay, if Professor Plum has the candlestick, he isn't in the library... but wait, maybe Miss Scarlett has the candlestick?" At this exact moment, cognitive overload sets in. You make an assumption. You place a tentative checkmark in a box. You guess.</p>
+
+            <p>Guessing destroys the grid. The moment you place an unverified mark on a logic puzzle, you poison the entire matrix. Twenty minutes later, you will encounter a fatal contradiction—two people assigned to the same room—and you will have to erase the entire board.</p>
+
+            <p>Stop doing this. Stop holding variables in your working memory. The grid is not merely a piece of paper to record answers after you solve them in your head. The grid is the deduction engine itself. By applying a strict, mathematical sequence of rules, you can solve any logic grid puzzle deterministically. No leaps of faith required.</p>
+
+            <h2 id="what-makes-it-tick">What Makes a Logic Grid Tick</h2>
+
+            <p>To master the grid, you must understand what it actually is from a mathematical perspective. A logic grid puzzle is a binary constraint satisfaction problem in disguise. It is a closed universe governed by absolute rules.</p>
+
+            <p>Every single cell in that matrix possesses exactly two possible states: TRUE or FALSE. There is no quantum superposition. There is no "maybe." Once you establish enough constraints, every cell resolves itself through pure elimination.</p>
+
+            <p>Consider a simple setup: 3 suspects × 3 weapons × 3 rooms. This creates a matrix of 27 intersection cells. Within those 27 cells, there are exactly 9 TRUE states and 18 FALSE states. The mathematics dictate exactly how many marks you need to finish the puzzle.</p>
+
+            <p>If you have spent any time <a href="/blog/crossword-puzzle-solving-strategies-guide/" class="internal-link">optimizing your crossword puzzle solving strategies</a>, you know that intersecting letters provide instant feedback. Logic grids work on a similar axis, but instead of letters, you are intersecting attributes. The structure forces mutual exclusivity. If Suspect A has Weapon B, Suspect A cannot have Weapon C, and Suspect B cannot have Weapon B. One positive discovery automatically triggers a cascade of negative eliminations.</p>
+
+            <h2 id="anatomy">The Anatomy of the Elimination Matrix</h2>
+
+            <p>Before applying the advanced rules, look at the architecture of the board. You are not looking at one massive table; you are looking at interconnected sub-grids.</p>
+
+            <p>Let's map a 3×3 scenario. We have three suspects: Marcus, Diana, Elena. We have three locations: Rooftop, Storage, Entrance.</p>
+
+            <div class="grid-wrapper">
+                <table class="logic-grid">
+                    <tr>
+                        <th style="background:white; border:none;"></th>
+                        <th class="header-top">Rooftop</th>
+                        <th class="header-top">Storage</th>
+                        <th class="header-top">Entrance</th>
+                    </tr>
+                    <tr>
+                        <th>Marcus</th>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                    <tr>
+                        <th>Diana</th>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                    <tr>
+                        <th>Elena</th>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>The rows represent one category (Suspects). The columns represent another (Locations). The 9 cells in the middle are the intersection points.</p>
+            
+            <p>The cardinal rule of the elimination matrix is the <strong>transitive property of mutual exclusivity</strong>. Because this is a 1-to-1 matching puzzle, each row can contain exactly one checkmark (TRUE), and each column can contain exactly one checkmark (TRUE). All other cells in that row and column must be an 'X' (FALSE).</p>
+
+            <p>If you prove that Marcus was on the Rooftop, you do not just get one piece of data. You instantly acquire five pieces of data. You mark Marcus/Rooftop as TRUE (✓). Then, you systematically cross out Marcus/Storage (✗) and Marcus/Entrance (✗). Next, you cross out Diana/Rooftop (✗) and Elena/Rooftop (✗).</p>
+
+            <p>One checkmark generates four crosses. The matrix fills itself. Your job is simply to find the domino that starts the cascade.</p>
+
+            <h2 id="rules-of-deduction">The 5 Golden Rules of Deduction</h2>
+
+            <p>To stop guessing, you need a protocol. Apply these five rules sequentially every time you read a clue.</p>
+
+            <ol>
+                <li>
+                    <p><strong>Negative Constraints First.</strong> When you read a clue, scan immediately for the word "not" or exclusionary language. "Elena was not in the storage room." This is the cheapest, easiest mark you can make. Put an 'X' in the Elena/Storage cell immediately. Do not try to hold this fact in your mind. The human brain is terrible at holding negative constraints in working memory. Offload it to the grid immediately.</p>
+                </li>
+                <li>
+                    <p><strong>Transitive Links.</strong> This is where amateur solvers stall out. If Clue 1 says "The person in the green shirt ate the pizza" and Clue 2 says "David wore the green shirt," you must actively combine them. A = B, and B = C, therefore A = C. David ate the pizza. As soon as you confirm a positive match (✓), scan your grid for every other sub-grid attached to those two entities. If you know David is Green, whatever is true for Green is now true for David. Whatever is false for Green is false for David. Copy the checkmarks and crosses exactly.</p>
+                </li>
+                <li>
+                    <p><strong>Mutually Exclusive Pairings (The 'Last Man Standing').</strong> Never wait to fill out your crosses. If a row has three 'X's and only one open cell left, that remaining cell is mathematically forced to be a checkmark (✓). The instant you place that forced checkmark, apply the rule again: cross out everything else in that new checkmark's column. This chain reaction frequently solves half the puzzle without requiring you to read a new clue.</p>
+                </li>
+                <li>
+                    <p><strong>Either/Or Branches.</strong> Complex puzzles will throw disjunctive clues at you. "The stolen artifact is either the diamond or the ruby, but the thief is not Marcus." This tells you Marcus does not have the diamond, AND Marcus does not have the ruby. Mark both with an 'X'. Alternatively, if a clue says "The person who arrived at 8:00 PM is either Sarah or the person who stole the painting," you instantly know that Sarah did NOT arrive at 8:00 PM (because she is listed as a separate entity from the 8:00 PM arrival). You also know Sarah did not steal the painting.</p>
+                </li>
+                <li>
+                    <p><strong>Temporal/Sequential Order Clues.</strong> These are the most mathematically dense clues. "The security guard arrived after the person who stole the painting, but before Diana." Grab a scratchpad and draw a number line: 1, 2, 3. The person who stole the painting is before the guard. The guard is before Diana. Therefore, the order is: Painting -> Guard -> Diana. This eliminates massive chunks of the grid. The Painting cannot be 3rd or 2nd. The Guard cannot be 1st or 3rd. Diana cannot be 1st or 2nd. The grid collapses under the weight of the constraints.</p>
+                </li>
+            </ol>
+
+            <p>By relying strictly on these five rules, you bypass the cognitive bottlenecks that cause guessing. For a deep dive on how this specific type of reasoning physically alters your neural pathways, check out our report on <a href="/blog/brain-training-neuroplasticity-puzzle-science/" class="internal-link">the neuroscience of puzzle solving</a>.</p>
+
+            <h2 id="walkthrough">Case Walkthrough: The Gallery Heist (Step-by-Step)</h2>
+
+            <p>Let's apply the five rules to a controlled scenario. This is an introductory case featuring three suspects, three motives, and three locations within an art gallery.</p>
+            
+            <ul>
+                <li><strong>Suspects:</strong> Marcus (Guard), Diana (Curator), Elena (Restorer)</li>
+                <li><strong>Motives:</strong> Debt, Vendetta, Fraud</li>
+                <li><strong>Locations:</strong> Rooftop, Storage, Entrance</li>
+            </ul>
+
+            <p><strong>Clue 1: "The security guard (Marcus) was not on the rooftop."</strong><br>
+            Rule 1 applied. We place a negative constraint. Marcus / Rooftop = ✗.</p>
+
+            <div class="grid-wrapper">
+                <table class="logic-grid">
+                    <tr>
+                        <th style="background:white; border:none;"></th>
+                        <th class="header-top">Rooftop</th>
+                        <th class="header-top">Storage</th>
+                        <th class="header-top">Entrance</th>
+                    </tr>
+                    <tr>
+                        <th>Marcus</th>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                    <tr>
+                        <th>Diana</th>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                    <tr>
+                        <th>Elena</th>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p><strong>Clue 2: "Diana, who does not need money, was found at the front entrance."</strong><br>
+            This clue contains two data points. First, "does not need money" eliminates the 'Debt' and 'Fraud' motives for Diana. Using Rule 3 (Last Man Standing), Diana's motive must be Vendetta. Second, Diana is at the Entrance. We place a ✓ at Diana/Entrance, and fill the rest of her row and column with ✗.</p>
+
+            <div class="grid-wrapper">
+                <table class="logic-grid">
+                    <tr>
+                        <th style="background:white; border:none;"></th>
+                        <th class="header-top">Rooftop</th>
+                        <th class="header-top">Storage</th>
+                        <th class="header-top">Entrance</th>
+                        <th class="header-top" style="border-left: 3px solid var(--ink)">Debt</th>
+                        <th class="header-top">Vendetta</th>
+                        <th class="header-top">Fraud</th>
+                    </tr>
+                    <tr>
+                        <th>Marcus</th>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-x">✗</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-o">○</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                    <tr>
+                        <th>Diana</th>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
+                        <td class="cell-x">✗</td>
+                    </tr>
+                    <tr>
+                        <th>Elena</th>
+                        <td class="cell-o">○</td>
+                        <td class="cell-o">○</td>
+                        <td class="cell-x">✗</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-o">○</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-o">○</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>Look at Marcus's location row. Rooftop is ✗. Entrance is ✗. By Rule 3, Marcus MUST be in Storage (✓). Consequently, Elena MUST be on the Rooftop (✓).</p>
+
+            <p><strong>Clue 3: "The person in the storage room committed insurance fraud."</strong><br>
+            We already proved Marcus is in the Storage room. Therefore, applying Rule 2 (Transitive Links), Marcus is the one who committed Fraud. We check Marcus/Fraud. This means Elena must be the one with Debt.</p>
+
+            <div class="grid-wrapper">
+                <table class="logic-grid">
+                    <tr>
+                        <th style="background:white; border:none;"></th>
+                        <th class="header-top">Rooftop</th>
+                        <th class="header-top">Storage</th>
+                        <th class="header-top">Entrance</th>
+                        <th class="header-top" style="border-left: 3px solid var(--ink)">Debt</th>
+                        <th class="header-top">Vendetta</th>
+                        <th class="header-top">Fraud</th>
+                    </tr>
+                    <tr>
+                        <th>Marcus</th>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
+                        <td class="cell-x">✗</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
+                    </tr>
+                    <tr>
+                        <th>Diana</th>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
+                        <td class="cell-x">✗</td>
+                    </tr>
+                    <tr>
+                        <th>Elena</th>
+                        <td class="cell-v">✓</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-v">✓</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>The matrix is fully solved. We never guessed. We never assumed. We simply mapped the constraints mechanically until the only remaining possibilities were the objective truth. If you try to jump ahead of the logic, you invite error. The grid is infallible; the solver is not.</p>
+
+            <h2 id="bonus-puzzle">Bonus Puzzle: Try It Yourself</h2>
+
+            <p>Now it is your turn to apply the five rules. Here is a fresh, unsolved case. Three suspects (Victor, Rosa, Nadia) are tied to three stolen items (Painting, Necklace, Manuscript) across three timeframes (Morning, Afternoon, Evening).</p>
+            
+            <p><strong>The Clues:</strong></p>
+            <ol>
+                <li>The Necklace was stolen before Victor made his move, but after the Morning.</li>
+                <li>Rosa did not steal the Manuscript, and she did not strike in the Evening.</li>
+                <li>The person who stole the Painting acted exactly one timeframe after Rosa.</li>
+            </ol>
+
+            <p>Use the interactive grid below. Click the cells to cycle between blank (○), false (✗), and true (✓). Remember: offload the negative constraints first, process the temporal number lines, and watch the matrix collapse.</p>
+
+            <div class="grid-wrapper">
+                <table class="logic-grid" id="interactive-grid">
+                    <tr>
+                        <th style="background:white; border:none;"></th>
+                        <th class="header-top">Painting</th>
+                        <th class="header-top">Necklace</th>
+                        <th class="header-top">Manuscript</th>
+                        <th class="header-top" style="border-left: 3px solid var(--ink)">Morning</th>
+                        <th class="header-top">Afternoon</th>
+                        <th class="header-top">Evening</th>
+                    </tr>
+                    <!-- Victor -->
+                    <tr>
+                        <th>Victor</th>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td style="border-left: 3px solid var(--ink)" class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                    </tr>
+                    <!-- Rosa -->
+                    <tr>
+                        <th>Rosa</th>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td style="border-left: 3px solid var(--ink)" class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                    </tr>
+                    <!-- Nadia -->
+                    <tr>
+                        <th>Nadia</th>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td style="border-left: 3px solid var(--ink)" class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                        <td class="puzzle-cell cell-o" onclick="toggleCell(this)">○</td>
+                    </tr>
+                </table>
+            </div>
+
+            <button class="btn-solution" id="reveal-btn" onclick="revealSolution()">Show Solution</button>
+            <div id="solution-text" style="display:none; text-align:center; margin-top:1rem; font-weight:500; color:var(--green);">
+                Victor: Manuscript (Evening)<br>
+                Rosa: Necklace (Afternoon)<br>
+                Nadia: Painting (Morning)<br>
+                <em>(Note: Did you catch that Clue 1 placed the Necklace exactly in the Afternoon?)</em>
+            </div>
+
+            <script>
+                function toggleCell(el) {
+                    if(el.innerText === '○') {
+                        el.innerText = '✗';
+                        el.className = 'puzzle-cell cell-x';
+                    } else if(el.innerText === '✗') {
+                        el.innerText = '✓';
+                        el.className = 'puzzle-cell cell-v';
+                    } else {
+                        el.innerText = '○';
+                        el.className = 'puzzle-cell cell-o';
+                    }
+                }
+                function revealSolution() {
+                    document.getElementById('solution-text').style.display = 'block';
+                    document.getElementById('reveal-btn').style.display = 'none';
+                }
+            </script>
+
+            <h2 id="building-speed">Building Speed: Going from 40 Minutes to 12</h2>
+
+            <p>Once you internalize the five rules, solving logic grids becomes an exercise in visual processing speed. Your goal is to shift from serial processing (reading a clue and thinking about it) to chunking (recognizing structural patterns instantly).</p>
+
+            <p>Expert constructors execute three distinct visual scan passes over a puzzle.</p>
+            
+            <p><strong>Pass 1: The Negative Sweep.</strong> Read every clue rapidly, hunting only for names and the word "not." Drop every single 'X' onto the board in under sixty seconds. Ignore the complex temporal clues for now. Secure the baseline.</p>
+            
+            <p><strong>Pass 2: The Transitive Lock.</strong> Read the clues again, looking only for positive correlations ("was the one who..."). Plot the checkmarks. Immediately trace the rows and columns to fill the mutually exclusive 'X's. Do not read the next clue until the cascading crosses are fully drawn.</p>
+            
+            <p><strong>Pass 3: The Temporal Crunch.</strong> Now you engage with the heavy logic. Map out the "before/after" sequences on a scratchpad. The board is already populated with dozens of 'X's from the first two passes, meaning the temporal possibilities are radically constrained. The sequence practically builds itself.</p>
+
+            <p>If you practice this exact cadence—one puzzle per day for fourteen days—your completion time will plummet. The cognitive friction disappears. You stop translating the words into concepts and start translating the words directly into geometry. If you want to warm up your raw pattern-recognition speed before hitting a massive grid, spend ten minutes on <a href="/lexigrid" class="internal-link">LexiGrid</a> to get your neural pathways firing.</p>
+
+            <h2 id="more-cases">Why This Book Has 15 More Cases Like It</h2>
+
+            <p>The Gallery Heist is Case File #1. It teaches you the mechanics. But the real satisfaction comes from encountering a massive five-by-five grid layered with alibis, motives, hidden weapons, and deceptive timestamps.</p>
+
+            <p>If you enjoy breaking down evidence systematically, you need proper material. You need grids that fight back.</p>
+
+            <div class="glass-cta">
+                <h3>📖 The 10-Minute Detective</h3>
+                <p>True Crime Logic Puzzles for Adults<br>
+                15 Case Files · Escalating Difficulty · Full Solution Key<br>
+                ★ Instant PDF Download — Read on any device</p>
+                <div class="cta-buttons">
+                    <a href="/books/#true-crime-logic" class="btn-outline">Preview Free Sample →</a>
+                    <button class="btn-solid" onclick="window.dispatchEvent(new CustomEvent('openBookModal', {detail:{bookId:'true-crime-logic'}}))">Buy Digital Edition ($9.99) →</button>
+                </div>
+            </div>
+
+            <p>This collection strips away the childish themes common in puzzle books and replaces them with cold, analytical case files. You will track financial embezzlers, map out the timeline of a jewel theft, and deduce the murder weapon using nothing but cross-referenced alibis.</p>
+            
+            <p>Stop guessing. Start solving. Your matrix is waiting.</p>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2026 SnappGrid. Train your brain.</p>
+        <div style="margin-top: 1rem;">
+            <a href="/" style="color:var(--gold); text-decoration:none; margin: 0 0.5rem;">Home</a>
+            <a href="/books/" style="color:var(--gold); text-decoration:none; margin: 0 0.5rem;">Books</a>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Sticky TOC Highlighting
+        const tocLinks = document.querySelectorAll('.toc-sidebar a');
+        const headings = Array.from(tocLinks).map(link => {
+            return document.getElementById(link.getAttribute('href').substring(1));
+        }).filter(h => h);
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -60% 0px',
+            threshold: 0.1
+        };
+
+        const headingObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(link => link.classList.remove('active'));
+                    const id = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.toc-sidebar a[href="#${id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        headings.forEach(heading => headingObserver.observe(heading));
+    </script>
+</body>
+</html>

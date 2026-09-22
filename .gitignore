@@ -1,0 +1,16 @@
+# Private manuscript source files — never commit raw docx
+books/manuscripts/*.docx
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Node (if build tools added later)
+node_modules/
+npm-debug.log*
+
+# Build outputs
+dist/
+.cache/

@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Block raw manuscript directory — private source files
+Disallow: /books/manuscripts/
+
 Sitemap: https://snappgrid.com/sitemap.xml
