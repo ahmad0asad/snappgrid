@@ -119,7 +119,7 @@
 <body>
 <nav aria-label="Main navigation">
   <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
-  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/lexigrid">LexiGrid</a></li><li><a href="/books/">Books</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
+  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/lexigrid">LexiGrid</a></li><li><a href="/books/">Books</a></li><li><a href="/printables/">Printables</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
     <span></span><span></span><span></span>
   </button>
@@ -237,6 +237,103 @@
   </div>
 </section>
 
+<!-- Blog Section -->
+<section class="blog-section" style="padding:64px 20px;background:var(--white);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;">
+      <div>
+        <div class="section-label" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px;">From the Puzzle Master's Desk</div>
+        <h2 class="section-title" style="font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,34px);font-weight:700;color:var(--ink);margin:0;">Strategy Guides & Brain Science</h2>
+      </div>
+      <a href="/blog/" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);text-decoration:none;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:2px;">All Articles &rarr;</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
+      <a href="/blog/how-to-solve-logic-grid-puzzles/" style="text-decoration:none;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--white);transition:box-shadow .2s,transform .2s;display:block;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,23,20,.10)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform='';">
+        <div style="height:6px;background:linear-gradient(90deg,#4f46e5,#818cf8);"></div>
+        <div style="padding:22px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Logic Puzzles &bull; 12 min read</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin:0 0 10px;line-height:1.35;">The Detective's Grid: Solve Any Logic Puzzle Without Guessing</h3>
+          <p style="font-size:14px;color:var(--ink-muted);line-height:1.7;margin:0 0 14px;">The elimination matrix has exactly two states per cell. Master this rule and you'll never stall on a logic grid again.</p>
+          <span style="font-size:13px;color:var(--gold);font-weight:600;">Read the masterclass &rarr;</span>
+        </div>
+      </a>
+      <a href="/blog/crossword-puzzle-solving-strategies-guide/" style="text-decoration:none;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--white);transition:box-shadow .2s,transform .2s;display:block;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,23,20,.10)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform='';">
+        <div style="height:6px;background:linear-gradient(90deg,#2A6EA6,#60a5fa);"></div>
+        <div style="padding:22px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Crosswords &bull; 14 min read</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin:0 0 10px;line-height:1.35;">9 Veteran Crossword Strategies That Turn Stalled Solvers into Speedrunners</h3>
+          <p style="font-size:14px;color:var(--ink-muted);line-height:1.7;margin:0 0 14px;">Strategy 3 alone cuts your average solve time by a third. Constructor trickery decoded.</p>
+          <span style="font-size:13px;color:var(--gold);font-weight:600;">Read the guide &rarr;</span>
+        </div>
+      </a>
+      <a href="/blog/brain-training-neuroplasticity-puzzle-science/" style="text-decoration:none;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--white);transition:box-shadow .2s,transform .2s;display:block;" onmouseover="this.style.boxShadow='0 8px 32px rgba(26,23,20,.10)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform='';">
+        <div style="height:6px;background:linear-gradient(90deg,#5A3A8A,#a78bfa);"></div>
+        <div style="padding:22px;">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Brain Health &bull; 15 min read</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--ink);margin:0 0 10px;line-height:1.35;">Beyond the Lumosity Hype: Puzzles Proven to Sharpen Fluid Intelligence</h3>
+          <p style="font-size:14px;color:var(--ink-muted);line-height:1.7;margin:0 0 14px;">Lumosity settled a $2M FTC lawsuit. What actually works &mdash; and the research is specific.</p>
+          <span style="font-size:13px;color:var(--gold);font-weight:600;">Read the science &rarr;</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Books -->
+<section style="padding:64px 20px;background:var(--gold-pale);border-top:1px solid var(--border);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;">
+      <div>
+        <div class="section-label" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px;">Instant Digital Download</div>
+        <h2 class="section-title" style="font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,34px);font-weight:700;color:var(--ink);margin:0;">Featured Digital Editions</h2>
+      </div>
+      <a href="/books/" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);text-decoration:none;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:2px;">Browse All 8 Books &rarr;</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:28px;">&#128373;&#65039;</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#8A2A5A;">Logic Grid</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin:0;line-height:1.3;">The 10-Minute Detective</h3>
+        <p style="font-size:13px;color:var(--ink-muted);margin:0;flex:1;">15 true crime case files. Evidence boards, suspect charts, logic grids. Can you crack it?</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong style="font-size:17px;color:var(--ink);">$9.99</strong>
+          <a href="/books/#true-crime-logic" style="background:var(--gold);color:white;padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;">Preview &rarr;</a>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:28px;">&#129504;</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#2A6EA6;">Brain Training</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin:0;line-height:1.3;">Brain Boost Challenge</h3>
+        <p style="font-size:13px;color:var(--ink-muted);margin:0;flex:1;">30-day cognitive workout plan. Memory, logic, pattern recognition &mdash; one session per day.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong style="font-size:17px;color:var(--ink);">$8.99</strong>
+          <a href="/books/#brain-boost" style="background:var(--gold);color:white;padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;">Preview &rarr;</a>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:28px;">&#128214;</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#C8922A;">Crossword</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin:0;line-height:1.3;">Crossword Puzzles for Adults</h3>
+        <p style="font-size:13px;color:var(--ink-muted);margin:0;flex:1;">30 original large-print crosswords. Medium-to-hard, hand-crafted clues, complete answer key.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong style="font-size:17px;color:var(--ink);">$7.99</strong>
+          <a href="/books/#crossword-adults" style="background:var(--gold);color:white;padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;">Preview &rarr;</a>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:28px;">&#129300;</div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#8A2A2A;">Trivia</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin:0;line-height:1.3;">Forbidden History</h3>
+        <p style="font-size:13px;color:var(--ink-muted);margin:0;flex:1;">630 questions on suppressed stories, cover-ups, and the history books got wrong.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong style="font-size:17px;color:var(--ink);">$6.99</strong>
+          <a href="/books/#forbidden-history" style="background:var(--gold);color:white;padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;">Preview &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="email-section" id="subscribe" aria-label="Email subscription">
   <div class="email-inner">
     <div class="section-label">Never miss a puzzle</div>
@@ -264,6 +361,7 @@
       <li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li>
       <li><a href="/lexigrid">LexiGrid</a></li>
       <li><a href="/books/">Books</a></li>
+      <li><a href="/printables/">Printables</a></li>
       <li><a href="/blog/">Blog</a></li>
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>

@@ -23,7 +23,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -89,6 +89,16 @@
               }
             }
           ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem","position": 1,"name": "Home","item": "https://snappgrid.com/"},
+            {"@type": "ListItem","position": 2,"name": "Blog","item": "https://snappgrid.com/blog/"},
+            {"@type": "ListItem","position": 3,"name": "Logic Puzzles","item": "https://snappgrid.com/blog/"},
+            {"@type": "ListItem","position": 4,"name": "Solve Any Logic Puzzle","item": "https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/"}
+          ]
         }
       ]
     }
@@ -96,16 +106,24 @@
 
     <style>
         :root {
-            --cream: #FAF8F5;
             --ink: #1A1714;
+            --ink-soft: #3D3832;
+            --ink-muted: #7A7570;
             --ink-light: #3D3935;
-            --gold: #B8860B;
-            --gold-light: #D4AF37;
+            --cream: #F7F3EC;
+            --white: #FDFAF5;
+            --gold: #C8930A;
+            --gold-pale: #FFF8E7;
+            --gold-light: #E8C86E;
+            --border: #E0DAD0;
+            --border-strong: #C8C0B0;
+            --radius: 6px;
+            --radius-lg: 10px;
+            --radius-xl: 16px;
             --red: #C0392B;
             --green: #2D8A55;
             --gray: #D1CDDA;
-            --radius-xl: 16px;
-            --font-body: 'Inter', system-ui, sans-serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
             --font-head: 'Playfair Display', serif;
             --font-mono: 'DM Mono', monospace;
         }
@@ -310,43 +328,6 @@
             cursor: pointer; display: block; margin: 1rem auto;
         }
 
-        /* Glassmorphism CTA */
-        .glass-cta {
-            background: rgba(26,23,20,0.95);
-            border: 1px solid var(--gold-light);
-            border-radius: var(--radius-xl);
-            padding: 2.5rem;
-            margin: 3rem 0;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: var(--cream);
-            text-align: center;
-        }
-        .glass-cta h3 { color: var(--gold-light); margin-top: 0; font-size: 1.6rem; border: none; }
-        .glass-cta p { color: #E0DFDD; margin-bottom: 2rem; font-size: 1.05rem; }
-        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn-outline {
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .btn-outline:hover { background: var(--gold); color: var(--ink); }
-        .btn-solid {
-            background: var(--gold);
-            color: var(--ink);
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-solid:hover { background: var(--gold-light); transform: translateY(-2px); }
-
         /* Footer */
         footer {
             background: var(--ink);
@@ -391,6 +372,18 @@
         </aside>
 
         <main class="article-content">
+            <nav class="breadcrumb" aria-label="Breadcrumb" style="padding:12px 0;margin-bottom:20px;">
+              <ol style="list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px;">
+                <li><a href="/" style="color:var(--gold);text-decoration:none;">Home</a></li>
+                <li style="color:var(--border-strong);">&nbsp;/&nbsp;</li>
+                <li><a href="/blog/" style="color:var(--gold);text-decoration:none;">Blog</a></li>
+                <li style="color:var(--border-strong);">&nbsp;/&nbsp;</li>
+                <li style="color:var(--ink-muted);">Logic Puzzles</li>
+                <li style="color:var(--border-strong);">&nbsp;/&nbsp;</li>
+                <li style="color:var(--ink-soft);font-weight:600;">Solve Any Logic Puzzle</li>
+              </ol>
+            </nav>
+
             <div class="article-meta">
                 <span class="author">By Ahmad Asad</span>
                 <span>•</span>
@@ -487,6 +480,16 @@
             </ol>
 
             <p>By relying strictly on these five rules, you bypass the cognitive bottlenecks that cause guessing. For a deep dive on how this specific type of reasoning physically alters your neural pathways, check out our report on <a href="/blog/brain-training-neuroplasticity-puzzle-science/" class="internal-link">the neuroscience of puzzle solving</a>.</p>
+
+            <aside class="game-callout" style="margin:36px 0;padding:24px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:var(--radius-xl);border:1px solid rgba(129,140,248,.3);display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+              <div style="font-size:40px;">&#9889;</div>
+              <div style="flex:1;min-width:200px;">
+                <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#818cf8;margin-bottom:6px;">Put Theory Into Practice</div>
+                <h4 style="font-family:'Playfair Display',serif;font-size:18px;color:white;margin:0 0 6px;">Test Your Deduction Speed in LexiGrid</h4>
+                <p style="font-size:13px;color:rgba(255,255,255,.65);margin:0;">Free browser game &mdash; swipe letters, build words, beat the clock. No download, no login.</p>
+              </div>
+              <a href="/lexigrid" style="background:#4f46e5;color:white;padding:10px 20px;border-radius:var(--radius-lg);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;">Play LexiGrid &rarr;</a>
+            </aside>
 
             <h2 id="walkthrough">Case Walkthrough: The Gallery Heist (Step-by-Step)</h2>
 
@@ -622,6 +625,16 @@
 
             <p>The matrix is fully solved. We never guessed. We never assumed. We simply mapped the constraints mechanically until the only remaining possibilities were the objective truth. If you try to jump ahead of the logic, you invite error. The grid is infallible; the solver is not.</p>
 
+            <figure style="margin:36px 0;">
+              <img src="/assets/images/blog/logic-grid-3x3-solved.svg" 
+                   alt="Solved 3x3 logic deduction grid showing The Gallery Heist case file solution with checkmarks and eliminations" 
+                   width="560" 
+                   height="310" 
+                   loading="lazy"
+                   style="width:100%;height:auto;border-radius:var(--radius-lg);">
+              <figcaption style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted);text-align:center;margin-top:10px;letter-spacing:.3px;">The Gallery Heist Solved Logic Grid</figcaption>
+            </figure>
+
             <h2 id="bonus-puzzle">Bonus Puzzle: Try It Yourself</h2>
 
             <p>Now it is your turn to apply the five rules. Here is a fresh, unsolved case. Three suspects (Victor, Rosa, Nadia) are tied to three stolen items (Painting, Necklace, Manuscript) across three timeframes (Morning, Afternoon, Evening).</p>
@@ -726,20 +739,52 @@
 
             <p>If you enjoy breaking down evidence systematically, you need proper material. You need grids that fight back.</p>
 
-            <div class="glass-cta">
-                <h3>📖 The 10-Minute Detective</h3>
-                <p>True Crime Logic Puzzles for Adults<br>
-                15 Case Files · Escalating Difficulty · Full Solution Key<br>
-                ★ Instant PDF Download — Read on any device</p>
-                <div class="cta-buttons">
-                    <a href="/books/#true-crime-logic" class="btn-outline">Preview Free Sample →</a>
-                    <button class="btn-solid" onclick="window.dispatchEvent(new CustomEvent('openBookModal', {detail:{bookId:'true-crime-logic'}}))">Buy Digital Edition ($9.99) →</button>
-                </div>
-            </div>
-
             <p>This collection strips away the childish themes common in puzzle books and replaces them with cold, analytical case files. You will track financial embezzlers, map out the timeline of a jewel theft, and deduce the murder weapon using nothing but cross-referenced alibis.</p>
             
             <p>Stop guessing. Start solving. Your matrix is waiting.</p>
+
+            <h2>Solving Speed: The Three Scan Passes</h2>
+            <p>Pattern recognition outperforms brute-force processing by a factor of three to one on timed puzzles. Expert solvers run exactly three structured passes over the grid before considering either/or branching.</p>
+            <p><strong>Pass 1 — Harvest the negatives.</strong> Read every clue and immediately mark every "X is not Y" constraint. These are free marks. No inference required. A 3×3 grid with 4 clues typically yields 6–8 negative marks on Pass 1 alone.</p>
+            <p><strong>Pass 2 — Propagate confirmed positives.</strong> Every ✓ you place eliminates an entire row AND column in the sub-grid. The moment Marcus is confirmed at the Entrance, you mark ✗ for Entrance against Diana and Elena, and ✗ for Rooftop and Storage against Marcus. That's 4 marks from 1 confirmation.</p>
+            <p><strong>Pass 3 — Branch test either/or clues.</strong> Take any remaining ambiguous clue that offers exactly two options. Assume Option A and run forward two steps. If you hit a contradiction — two ✓ marks in the same row — Option A is false. Mark ✗ and confirm Option B. This is structured hypothesis testing, not guessing.</p>
+            <p>Most 3×3 grids resolve entirely within Pass 1 and Pass 2. Pass 3 is reserved for 5×5 and above. Practicing this cadence for 14 days changes the underlying cognitive process from serial search to parallel pattern matching — the same shift expert chess players experience after 100+ hours of deliberate study.</p>
+
+            <aside class="book-cta" style="margin:40px 0;padding:28px;background:rgba(26,23,20,.96);border:1px solid var(--gold-light);border-radius:var(--radius-xl);backdrop-filter:blur(12px);">
+              <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
+                <img src="/assets/images/books/book-true-crime-logic.svg" alt="The 10-Minute Detective cover" width="100" height="130" style="border-radius:6px;flex-shrink:0;" loading="lazy">
+                <div style="flex:1;min-width:200px;">
+                  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;">Logic Grid &bull; Digital Edition (PDF)</div>
+                  <h4 style="font-family:'Playfair Display',serif;font-size:20px;color:white;margin:0 0 8px;">The 10-Minute Detective</h4>
+                  <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 16px;line-height:1.7;">15 true crime case files — evidence boards, suspect charts, and full logic grids. The Gallery Heist is Case File #1.</p>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <a href="/books/#true-crime-logic" style="background:var(--gold);color:var(--ink);padding:9px 18px;border-radius:var(--radius);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;">Buy Digital Edition ($9.99) &rarr;</a>
+                    <a href="/books/#true-crime-logic" style="color:var(--gold-light);font-family:'DM Mono',monospace;font-size:12px;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--gold-light);">Preview Sample &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <section class="related-articles" style="margin-top:56px;padding-top:40px;border-top:2px solid var(--border);">
+              <h3 style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Related Guides</h3>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
+                <a href="/blog/crossword-puzzle-solving-strategies-guide/" style="display:block;text-decoration:none;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;background:var(--white);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">  
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Crosswords & Word Games &bull; 14 min read</div>
+                  <h4 style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);margin:0 0 8px;line-height:1.35;">9 Veteran Crossword Strategies</h4>
+                  <p style="font-size:12px;color:var(--ink-muted);margin:0;">If you enjoy timed puzzle-solving, these constructor tricks transfer directly.</p>
+                </a>
+                <a href="/blog/brain-training-neuroplasticity-puzzle-science/" style="display:block;text-decoration:none;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;background:var(--white);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">  
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Brain Health &bull; 15 min read</div>
+                  <h4 style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);margin:0 0 8px;line-height:1.35;">Beyond the Lumosity Hype</h4>
+                  <p style="font-size:12px;color:var(--ink-muted);margin:0;">The neuroscience of why logic deduction specifically builds fluid intelligence.</p>
+                </a>
+                <a href="/blog/advanced-logic-grid-deduction-techniques/" style="display:block;text-decoration:none;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;background:var(--white);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">  
+                  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Logic Puzzles &bull; 18 min read</div>
+                  <h4 style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);margin:0 0 8px;line-height:1.35;">Advanced 3D Logic Grid Techniques</h4>
+                  <p style="font-size:12px;color:var(--ink-muted);margin:0;">Three-tier matrices, circular logic pitfalls, and conditional branching without guessing.</p>
+                </a>
+              </div>
+            </section>
 
         </main>
     </div>

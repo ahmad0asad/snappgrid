@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420" width="620" height="420" role="img" aria-label="3-Tier Advanced Logic Grid Matrix">
+  <title>3-Tier Advanced Logic Grid Matrix</title>
+  <defs>
+    <linearGradient id="hdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="620" height="420" rx="12" fill="#0f172a"/>
+<rect width="620" height="420" rx="12" fill="#0f172a"/>
+<rect width="620" height="38" rx="0" fill="url(#hdr)"/>
+<text x="310" y="24" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13" font-weight="700" fill="white">3-Tier Logic Matrix — Advanced Deduction Structure</text>
+<text x="16" y="58" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#818cf8">Tier A: Suspects × Locations</text>
+<text x="163" y="64" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Rooftop</text>
+<text x="258" y="64" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Storage</text>
+<text x="353" y="64" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Entrance</text>
+<text x="112" y="87" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Marcus</text>
+<rect x="116" y="66" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="163" y="89" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="211" y="66" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="258" y="89" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="306" y="66" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="353" y="89" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<text x="112" y="123" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Diana</text>
+<rect x="116" y="102" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="163" y="125" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="211" y="102" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="258" y="125" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<rect x="306" y="102" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="353" y="125" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<text x="112" y="159" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Elena</text>
+<rect x="116" y="138" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="163" y="161" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<rect x="211" y="138" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="258" y="161" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="306" y="138" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="353" y="161" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<line x1="16" y1="186" x2="604" y2="186" stroke="#1e293b" stroke-width="1.5"/>
+<text x="16" y="198" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#818cf8">Tier B: Suspects × Motives</text>
+<text x="163" y="204" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Debt</text>
+<text x="258" y="204" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Vendetta</text>
+<text x="353" y="204" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Fraud</text>
+<text x="112" y="227" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Marcus</text>
+<rect x="116" y="206" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="163" y="229" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="211" y="206" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="258" y="229" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<rect x="306" y="206" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="353" y="229" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<text x="112" y="263" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Diana</text>
+<rect x="116" y="242" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="163" y="265" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="211" y="242" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="258" y="265" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="306" y="242" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="353" y="265" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<text x="112" y="299" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Elena</text>
+<rect x="116" y="278" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="163" y="301" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<rect x="211" y="278" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="258" y="301" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="306" y="278" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="353" y="301" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<line x1="16" y1="326" x2="604" y2="326" stroke="#1e293b" stroke-width="1.5"/>
+<text x="16" y="338" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#818cf8">Tier C: Locations × Motives</text>
+<text x="163" y="344" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Debt</text>
+<text x="258" y="344" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Vendetta</text>
+<text x="353" y="344" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Fraud</text>
+<text x="112" y="367" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Rooftop</text>
+<rect x="116" y="346" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="163" y="369" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<rect x="211" y="346" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="258" y="369" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="306" y="346" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="353" y="369" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<text x="112" y="403" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Storage</text>
+<rect x="116" y="382" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="163" y="405" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="211" y="382" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="258" y="405" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="306" y="382" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="353" y="405" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<text x="112" y="439" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">Entrance</text>
+<rect x="116" y="418" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="163" y="441" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<rect x="211" y="418" width="92" height="33" rx="4" fill="#14532d" opacity="0.9"/>
+<text x="258" y="441" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#86efac">✓</text>
+<rect x="306" y="418" width="92" height="33" rx="4" fill="#1e293b" opacity="0.9"/>
+<text x="353" y="441" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="16" font-weight="900" fill="#334155">·</text>
+<text x="16" y="412" font-family="Segoe UI,sans-serif" font-size="9" fill="#475569">SnappGrid · snappgrid.com · Advanced Logic Deduction Technique</text>
+</svg>

@@ -1,214 +1,266 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="slate">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LexiGrid — Free Word Puzzle Game | SnappGrid</title>
-    <link rel="canonical" href="https://snappgrid.com/lexigrid">
-    <style>
-        :root {
-            --bg: #0f172a; --tile-bg: #1e293b; --tile-active: #4f46e5; --trail: #f59e0b; --text: #f1f5f9; --accent: #818cf8;
-            --cols: 4; --rows: 4;
-        }
-        [data-theme="cyber"] { --bg: #05050a; --tile-bg: #0c1220; --tile-active: #06b6d4; --trail: #ec4899; --text: #e0f2fe; --accent: #22d3ee; }
-        [data-theme="amber"] { --bg: #18181b; --tile-bg: #27272a; --tile-active: #ea580c; --trail: #eab308; --text: #fafaf9; --accent: #fb923c; }
-        [data-theme="emerald"] { --bg: #022c22; --tile-bg: #064e3b; --tile-active: #059669; --trail: #34d399; --text: #ecfdf5; --accent: #6ee7b7; }
-        [data-theme="cosmic"] { --bg: #1e1b4b; --tile-bg: #2e2663; --tile-active: #9333ea; --trail: #a855f7; --text: #f5f3ff; --accent: #c084fc; }
-        
-        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; user-select: none; }
-        body { margin: 0; padding: 0; background: var(--bg); color: var(--text); overflow: hidden; display: flex; flex-direction: column; height: 100vh; font-variant-numeric: tabular-nums; }
-        
-        #fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
-        #loadingScreen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s; }
-        
-        #back-link { position: absolute; top: 10px; left: 10px; color: var(--text); text-decoration: none; font-weight: bold; opacity: 0.7; z-index: 100; }
-        
-        header { padding: 40px 10px 10px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); z-index: 50; }
-        .hud-stat { display: flex; flex-direction: column; align-items: center; font-size: 14px; font-weight: bold; }
-        .hud-val { font-size: 20px; color: var(--accent); }
-        
-        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        
-        #board-container { position: relative; width: min(82vw, 68vh, 440px); height: min(82vw, 68vh, 440px); touch-action: none; margin: 0 auto; }
-        #board-grid { position: absolute; inset: 0; }
-        #trace-svg { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; overflow: visible; z-index: 10; }
-        #trace-glow { fill: none; stroke: var(--trail); stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; opacity: 0.3; }
-        #trace-core { fill: none; stroke: var(--trail); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-        .trace-valid #trace-glow { stroke: #4ade80; }
-        .trace-valid #trace-core { stroke: #4ade80; }
-        .trace-invalid #trace-glow { stroke: #f87171; }
-        .trace-invalid #trace-core { stroke: #f87171; }
-        
-        .tile {
-            background: var(--tile-bg); border-radius: 12px; border: 2px solid rgba(255,255,255,0.08);
-            display: flex; align-items: center; justify-content: center;
-            font-size: clamp(24px, 6vw, 36px); font-weight: 700; color: var(--text);
-            cursor: pointer; position: absolute;
-            transition: top 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.1s, box-shadow 0.1s;
-            left: calc((100% / var(--cols)) * var(--c) + 4px);
-            top: calc((100% / var(--rows)) * var(--r) + 4px);
-            width: calc(100% / var(--cols) - 8px);
-            height: calc(100% / var(--rows) - 8px);
-            z-index: 5;
-        }
-        .tile.selected { background: var(--tile-active); transform: scale(0.92); box-shadow: 0 0 16px var(--accent); z-index: 6; }
-        .tile.mult2 { border-color: #f59e0b; box-shadow: inset 0 0 10px #f59e0b44; }
-        .tile.mult3 { border-color: #ef4444; box-shadow: inset 0 0 10px #ef444444; }
-        .tile.frozen { background: linear-gradient(135deg, #bfdbfe88, #93c5fd44); border-color: #93c5fd; backdrop-filter: blur(2px); }
-        .tile.frozen.cracked { background: linear-gradient(135deg, #bfdbfe44, #93c5fd22); }
-        .tile.bomb::after { content: attr(data-countdown); position: absolute; top: 4px; right: 6px; font-size: 14px; color: #ef4444; font-weight: 900; background: rgba(0,0,0,0.5); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
-        .tile.wild { color: var(--trail); }
-        .tile.keyboard-focus { outline: 3px solid var(--trail); outline-offset: 3px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LexiGrid — Free Word Puzzle Game | SnappGrid</title>
+  <link rel="canonical" href="https://snappgrid.com/lexigrid">
+  <meta property="og:title" content="LexiGrid — Free Word Puzzle Game | SnappGrid">
+  <meta property="og:description" content="Swipe adjacent letters to build words on a live grid. Play free — 3 game modes, no download needed.">
+  <meta property="og:url" content="https://snappgrid.com/lexigrid">
+  <script src="https://cdn.jsdelivr.net/npm/pixi.js@8.6.1/dist/pixi.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><!-- gsap@3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/EasePack.min.js"></script>
+  <style>
+    /* 5 biome CSS variables */
+    :root { --bg:#0f172a; --tile-active:#4f46e5; --trail-color:#f59e0b; --text:#f1f5f9; --accent:#818cf8; --board-glow:rgba(79,70,229,.35); --ambient1:rgba(79,70,229,.15); --ambient2:rgba(129,140,248,.10); --scanline:transparent; }
+    [data-theme="cyber"]   { --bg:#05050a; --tile-active:#06b6d4; --trail-color:#ec4899; --text:#e0f2fe; --accent:#22d3ee; --board-glow:rgba(6,182,212,.42); --ambient1:rgba(6,182,212,.13); --ambient2:rgba(236,72,153,.09); --scanline:rgba(0,255,255,.025); }
+    [data-theme="amber"]   { --bg:#18181b; --tile-active:#ea580c; --trail-color:#eab308; --text:#fafaf9; --accent:#fb923c; --board-glow:rgba(234,88,12,.50); --ambient1:rgba(234,88,12,.18); --ambient2:rgba(234,179,8,.12); --scanline:transparent; }
+    [data-theme="emerald"] { --bg:#022c22; --tile-active:#059669; --trail-color:#34d399; --text:#ecfdf5; --accent:#6ee7b7; --board-glow:rgba(5,150,105,.45); --ambient1:rgba(5,150,105,.16); --ambient2:rgba(52,211,153,.10); --scanline:transparent; }
+    [data-theme="cosmic"]  { --bg:#1e1b4b; --tile-active:#9333ea; --trail-color:#a855f7; --text:#f5f3ff; --accent:#c084fc; --board-glow:rgba(147,51,234,.45); --ambient1:rgba(147,51,234,.18); --ambient2:rgba(168,85,247,.12); --scanline:transparent; }
 
-        #word-display { height: 50px; font-size: 32px; font-weight: bold; letter-spacing: 2px; margin-top: 20px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
-        
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; flex-direction: column; padding: 20px; }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--tile-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--accent); max-width: 400px; width: 100%; text-align: center; max-height: 80vh; overflow-y: auto; position:relative; }
-        
-        .btn { background: var(--tile-active); color: #fff; border: none; padding: 12px 24px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 5px; transition: transform 0.1s; }
-        .btn:active { transform: scale(0.95); }
-        
-        #achievement-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid var(--accent); padding: 15px 25px; border-radius: 30px; color: white; display: flex; align-items: center; gap: 10px; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 9999; }
-        #achievement-toast.show { bottom: 30px; }
-        
-        .stage-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
-        .stage-btn { background: rgba(0,0,0,0.3); border: 2px solid #333; border-radius: 8px; padding: 15px 0; font-weight: bold; cursor: pointer; color: #fff; position: relative; display:flex; flex-direction:column; align-items:center; }
-        .stage-btn.unlocked { border-color: var(--accent); background: var(--tile-bg); }
-        .stars { display: flex; gap: 2px; margin-top: 4px; font-size: 10px; color: #444; }
-        .stars .on { color: gold; }
-        
-        #float-container { position: fixed; inset: 0; pointer-events: none; z-index: 500; }
-        .float-score { position: absolute; color: var(--trail); font-weight: bold; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); animation: floatUp 1s forwards; }
-        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.5); } }
-        
-        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 15px; }
-        .cal-day { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border-radius: 4px; font-size: 12px; }
-        .cal-day.done { background: #059669; color: white; box-shadow: 0 0 8px #059669; }
-    </style>
+    /* Reset */
+    * { box-sizing:border-box; user-select:none; touch-action:none; -webkit-tap-highlight-color:transparent; margin:0; padding:0; }
+    html,body { width:100%; height:100%; overflow:hidden; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
+
+    /* Ambient bg mesh */
+    body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background: radial-gradient(ellipse 65% 55% at 15% 25%, var(--ambient1) 0%, transparent 70%),
+                  radial-gradient(ellipse 55% 65% at 85% 75%, var(--ambient2) 0%, transparent 70%);
+      animation:ambientShift 14s ease-in-out infinite alternate; }
+    @keyframes ambientShift { 0%{opacity:1;transform:scale(1)} 50%{opacity:.7;transform:scale(1.04)} 100%{opacity:1;transform:scale(1)} }
+    body::after { content:''; position:fixed; inset:0; z-index:1; pointer-events:none;
+      background:repeating-linear-gradient(0deg,var(--scanline) 0px,transparent 1px,transparent 3px); }
+
+    /* Loading screen */
+    #loadingScreen { position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition:opacity .5s; }
+    #loadingScreen h2 { font-size:36px; font-weight:900; color:var(--accent); text-shadow:0 0 30px var(--accent); margin:8px 0 4px; letter-spacing:2px; }
+    #loadingScreen p { color:rgba(255,255,255,.4); font-size:13px; }
+
+    /* Back link */
+    #back-link { position:fixed; top:10px; left:10px; color:var(--text); text-decoration:none; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; z-index:100; padding:4px 8px; border:1px solid rgba(255,255,255,.12); border-radius:6px; transition:opacity .2s; }
+    #back-link:hover { opacity:.9; }
+
+    /* HUD */
+    #hud { position:relative; z-index:50; padding:8px 14px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,.40); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.07); flex-shrink:0; }
+    .hud-stat { display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:10px; padding:3px 9px; min-width:46px; font-size:9px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:rgba(255,255,255,.45); gap:1px; }
+    .hud-val { font-size:17px; font-weight:800; color:var(--accent); font-variant-numeric:tabular-nums; }
+    .hud-val.pop { animation:hudPop .35s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes hudPop { 0%{transform:scale(1)} 50%{transform:scale(1.45);color:var(--trail-color)} 100%{transform:scale(1)} }
+
+    /* Game area */
+    #game-area { flex:1; position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+
+    /* PixiJS board mount */
+    #pixi-mount { position:relative; line-height:0; }
+    #pixi-mount::before { content:''; position:absolute; inset:-20px; z-index:-1; border-radius:50%;
+      background:radial-gradient(ellipse 88% 38% at 50% 115%, var(--board-glow) 0%, transparent 70%);
+      filter:blur(20px); animation:floorPulse 4s ease-in-out infinite alternate; pointer-events:none; }
+    @keyframes floorPulse { from{opacity:.5} to{opacity:1} }
+
+    /* Word display */
+    #word-display { height:50px; font-size:28px; font-weight:900; letter-spacing:3px; display:flex; align-items:center; justify-content:center; text-transform:uppercase; color:var(--trail-color); text-shadow:0 0 20px var(--trail-color); transition:color .15s,text-shadow .15s; }
+
+    /* Objective */
+    #objective-text { font-size:12px; color:rgba(255,255,255,.4); text-align:center; }
+
+    /* Floating score tags */
+    #float-container { position:fixed; inset:0; pointer-events:none; z-index:500; }
+    .float-tag { position:absolute; font-weight:900; pointer-events:none; }
+
+    /* Modals */
+    .modal { position:fixed; inset:0; background:rgba(0,0,0,.72); backdrop-filter:blur(14px); display:none; align-items:center; justify-content:center; z-index:1000; flex-direction:column; padding:20px; }
+    .modal.active { display:flex; }
+    .modal-content { background:rgba(12,20,40,.92); backdrop-filter:blur(22px); padding:28px; border-radius:20px; border:1px solid rgba(255,255,255,.12); box-shadow:0 30px 80px rgba(0,0,0,.60),inset 0 1px 0 rgba(255,255,255,.08); max-width:420px; width:100%; text-align:center; max-height:85vh; overflow-y:auto; }
+    .btn { background:var(--tile-active); color:#fff; border:none; padding:11px 22px; font-size:14px; border-radius:10px; cursor:pointer; font-weight:700; margin:5px; box-shadow:0 4px 0 rgba(0,0,0,.35); transition:transform .08s,filter .1s,box-shadow .08s; }
+    .btn:hover { filter:brightness(1.12); }
+    .btn:active { transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.35); }
+
+    /* Achievement toast */
+    #achievement-toast { position:fixed; bottom:-120px; left:50%; transform:translateX(-50%); background:rgba(12,20,40,.92); backdrop-filter:blur(18px); border:1px solid var(--accent); box-shadow:0 0 30px rgba(129,140,248,.25); padding:13px 24px; border-radius:40px; color:white; display:flex; align-items:center; gap:12px; transition:bottom .45s cubic-bezier(.175,.885,.32,1.275); z-index:9999; white-space:nowrap; }
+    #achievement-toast.show { bottom:36px; }
+
+    /* Stage grid */
+    .stage-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:18px; }
+    .stage-btn { background:rgba(0,0,0,.3); border:2px solid #333; border-radius:8px; padding:12px 0; font-weight:bold; cursor:default; color:#555; display:flex; flex-direction:column; align-items:center; font-size:13px; }
+    .stage-btn.unlocked { border-color:var(--accent); color:#fff; cursor:pointer; background:rgba(255,255,255,.05); }
+    .stars-row { font-size:9px; margin-top:3px; color:#555; }
+    .stars-row.lit { color:gold; }
+
+    /* Calendar */
+    .calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:12px; }
+    .cal-day { width:30px; height:30px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); border-radius:6px; font-size:11px; border:1px solid rgba(255,255,255,.07); }
+    .cal-day.done { background:#059669; color:white; border-color:#34d399; }
+  </style>
 </head>
 <body>
-    <canvas id="fx-canvas"></canvas>
-    <div id="loadingScreen">
-        <div style="font-size:48px">🔤</div>
-        <h2>LexiGrid</h2>
-        <p style="color:rgba(255,255,255,0.5)">Loading dictionary...</p>
+  <div id="loadingScreen">
+    <div style="font-size:52px">🔤</div>
+    <h2>LexiGrid</h2>
+    <p>Preparing dictionary…</p>
+  </div>
+
+  <a href="/" id="back-link">← SnappGrid</a>
+
+  <header id="hud">
+    <div class="hud-stat"><span>Score</span><span id="ui-score" class="hud-val">0</span></div>
+    <div class="hud-stat" id="ui-moves-box"><span>Moves</span><span id="ui-moves" class="hud-val">20</span></div>
+    <div class="hud-stat" id="ui-time-box" style="display:none"><span>Time</span><span id="ui-time" class="hud-val">120</span></div>
+    <div class="hud-stat"><span>Combo</span><span id="ui-combo" class="hud-val">1x</span></div>
+    <div class="hud-stat"><span>💎</span><span id="ui-shards" class="hud-val">0</span></div>
+    <div style="display:flex;gap:5px">
+      <button class="btn" style="padding:5px 9px;font-size:13px;margin:0" onclick="toggleMute()" id="btn-mute">🔊</button>
+      <button class="btn" style="padding:5px 9px;font-size:13px;margin:0" onclick="showModal('vault-modal')">🎨</button>
+      <button class="btn" style="padding:5px 9px;font-size:13px;margin:0" onclick="showModal('menu-modal')">☰</button>
     </div>
-    
-    <a href="/" id="back-link">← SnappGrid</a>
-    
-    <header id="hud">
-        <div class="hud-stat"><span>Score</span><span id="ui-score" class="hud-val">0</span></div>
-        <div class="hud-stat" id="ui-moves-box"><span>Moves</span><span id="ui-moves" class="hud-val">20</span></div>
-        <div class="hud-stat" id="ui-time-box" style="display:none"><span>Time</span><span id="ui-time" class="hud-val">120</span></div>
-        <div class="hud-stat"><span>Combo</span><span id="ui-combo" class="hud-val">1x</span></div>
-        <div class="hud-stat"><span>💎</span><span id="ui-shards" class="hud-val">0</span></div>
-        <div style="display:flex;gap:5px;">
-            <button class="btn" style="padding:4px 8px;font-size:12px;margin:0" onclick="toggleMute()" id="btn-mute">🔊</button>
-            <button class="btn" style="padding:4px 8px;font-size:12px;margin:0" onclick="showModal('vault-modal')">🎨</button>
-            <button class="btn" style="padding:4px 8px;font-size:12px;margin:0" onclick="showModal('menu-modal')">☰</button>
-        </div>
-    </header>
-    
-    <main id="game-area">
-        <div id="board-container">
-            <svg id="trace-svg" aria-hidden="true">
-                <path id="trace-glow" d=""></path>
-                <path id="trace-core" d=""></path>
-            </svg>
-            <div id="board-grid"></div>
-        </div>
-        <div id="word-display"></div>
-        <div id="action-bar" style="margin-top:20px;">
-            <div style="font-size: 14px; color: #888; text-align: center; max-width: 300px;" id="objective-text"></div>
-        </div>
-    </main>
-    
-    <!-- Modals -->
-    <div id="menu-modal" class="modal active">
-        <div class="modal-content">
-            <h1 style="color:var(--accent); margin-bottom:5px; font-size:40px;">LexiGrid</h1>
-            <p style="margin-top:0; color:#aaa; margin-bottom: 30px;">SnappGrid Originals</p>
-            <button class="btn" style="width:100%" onclick="openStageSelect()">Adventure Mode</button>
-            <button class="btn" style="width:100%" onclick="startGame('collapse')">Collapse Mode</button>
-            <button class="btn" style="width:100%" onclick="startGame('blitz')">Blitz (120s)</button>
-            <button class="btn" style="width:100%" onclick="startGame('daily')">Daily Challenge</button>
-            <div style="margin-top: 20px; display:flex; justify-content:center; gap: 10px;">
-                <button class="btn" onclick="showStatsModal()">📊 Stats</button>
-                <button class="btn" onclick="populateAchvModal(); showModal('achievements-modal')">🏆 Achvs</button>
+  </header>
+
+  <main id="game-area">
+    <div id="pixi-mount"></div>
+    <div id="word-display"></div>
+    <div id="objective-text"></div>
+  </main>
+
+  <!-- Menu Modal -->
+  <div id="menu-modal" class="modal active">
+    <div class="modal-content">
+      <h1 style="color:var(--accent);margin-bottom:4px;font-size:38px">LexiGrid</h1>
+      <p style="color:#888;margin-bottom:24px;font-size:13px">SnappGrid Originals</p>
+      <button class="btn" style="width:100%" onclick="openStageSelect()">🗺 Adventure Mode</button>
+      <button class="btn" style="width:100%" onclick="startGame('collapse')">💥 Collapse Mode</button>
+      <button class="btn" style="width:100%" onclick="startGame('blitz')">⚡ Blitz (120s)</button>
+      <button class="btn" style="width:100%" onclick="startGame('daily')">📅 Daily Challenge</button>
+      <div style="margin-top:18px;display:flex;justify-content:center;gap:8px">
+        <button class="btn" onclick="showStatsModal()">📊 Stats</button>
+        <button class="btn" onclick="populateAchvModal();showModal('achievements-modal')">🏆 Achvs</button>
+      </div>
+      <div style="margin-top:20px;border-top:1px solid rgba(255,255,255,.1);padding-top:16px;display:flex;flex-direction:column;gap:8px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:4px;">Explore SnappGrid</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+    <a href="/" style="color:rgba(255,255,255,.55);text-decoration:none;font-size:11px;padding:5px 10px;border:1px solid rgba(255,255,255,.12);border-radius:6px;font-family:'DM Mono',monospace;transition:all .2s;" onmouseover="this.style.color='rgba(255,255,255,.9)';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.12)'">Home</a>
+    <a href="/books/" style="color:rgba(255,255,255,.55);text-decoration:none;font-size:11px;padding:5px 10px;border:1px solid rgba(255,255,255,.12);border-radius:6px;font-family:'DM Mono',monospace;transition:all .2s;" onmouseover="this.style.color='rgba(255,255,255,.9)';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.12)'">All Books</a>
+    <a href="/blog/how-to-solve-logic-grid-puzzles/" style="color:rgba(255,255,255,.55);text-decoration:none;font-size:11px;padding:5px 10px;border:1px solid rgba(255,255,255,.12);border-radius:6px;font-family:'DM Mono',monospace;transition:all .2s;" onmouseover="this.style.color='rgba(255,255,255,.9)';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.12)'">Logic Guide</a>
+    <a href="/blog/crossword-puzzle-solving-strategies-guide/" style="color:rgba(255,255,255,.55);text-decoration:none;font-size:11px;padding:5px 10px;border:1px solid rgba(255,255,255,.12);border-radius:6px;font-family:'DM Mono',monospace;transition:all .2s;" onmouseover="this.style.color='rgba(255,255,255,.9)';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.55)';this.style.borderColor='rgba(255,255,255,.12)'">Word Guide</a>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <!-- Stage Modal -->
+  <div id="stage-modal" class="modal">
+    <div class="modal-content" style="max-width:500px">
+      <h2>Adventure Stages</h2>
+      <div id="stage-grid" class="stage-grid"></div>
+      <button class="btn" style="margin-top:18px" onclick="showModal('menu-modal')">← Back</button>
+    </div>
+  </div>
+
+  <!-- End Modal -->
+  <div id="end-modal" class="modal">
+    <div class="modal-content">
+      <h2 id="end-title">Stage Clear!</h2>
+      <p id="end-desc" style="color:#aaa;margin:8px 0"></p>
+      <div id="end-stars" style="font-size:28px;letter-spacing:8px;margin:12px 0"></div>
+      <button class="btn" onclick="shareResult()">📤 Share</button>
+      <button class="btn" id="end-next-btn" onclick="showModal('menu-modal')">Continue</button>
+      <!-- Dynamic Book Recommendation Card -->
+      <div id="book-rec-card" style="margin:16px 0;padding:16px;background:linear-gradient(135deg,rgba(79,70,229,.18),rgba(200,147,10,.12));border:1px solid rgba(200,147,10,.35);border-radius:12px;text-align:left;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#f59e0b;margin-bottom:10px;">&#128218; Craving More Puzzles?</div>
+        <!-- CSS 3D Book mockup -->
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="flex-shrink:0;width:52px;height:70px;position:relative;perspective:200px;">
+            <div id="book-rec-spine" style="position:absolute;left:0;top:0;width:10px;height:70px;border-radius:2px 0 0 2px;background:#8A2A5A;"></div>
+            <div id="book-rec-cover" style="position:absolute;left:10px;top:0;width:42px;height:70px;border-radius:0 3px 3px 0;background:linear-gradient(145deg,#2d1b3d,#4a1942);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:3px 3px 10px rgba(0,0,0,.5);">
+              <div style="font-size:7px;font-weight:900;color:#c084fc;text-align:center;line-height:1.2;padding:4px;">SNAPP<br>GRID</div>
+              <div style="width:28px;height:1px;background:rgba(192,132,252,.4);margin:3px 0;"></div>
+              <div style="font-size:5.5px;color:rgba(255,255,255,.7);text-align:center;padding:0 3px;line-height:1.3;">PUZZLE<br>COLLECTION</div>
             </div>
+            <div style="position:absolute;top:4px;right:-6px;background:#f59e0b;color:#1a1714;font-size:6px;font-weight:900;padding:2px 5px;border-radius:8px;white-space:nowrap;transform:rotate(12deg);box-shadow:0 2px 6px rgba(0,0,0,.4);">PDF</div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div id="book-rec-title" style="font-size:13px;font-weight:700;color:white;line-height:1.3;margin-bottom:4px;">Complete Brain Training &amp; Logic Workout Collection</div>
+            <div id="book-rec-subtitle" style="font-size:11px;color:rgba(255,255,255,.55);margin-bottom:10px;line-height:1.4;">Logic grids, deduction puzzles &amp; 30-day brain training &mdash; instant PDF download.</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a id="book-rec-cta" href="/books/" class="lemonsqueezy-button" data-checkout="#" data-product="brain-training-collection" style="background:#f59e0b;color:#1a1714;padding:7px 12px;border-radius:8px;font-size:11px;font-weight:900;text-decoration:none;font-family:'DM Mono',monospace;white-space:nowrap;">Get PDF Access ($4.99) &rarr;</a>
+              <a href="/printables/" style="color:rgba(255,255,255,.6);font-size:11px;text-decoration:none;padding:7px 0;font-family:'DM Mono',monospace;border-bottom:1px solid rgba(255,255,255,.2);">Free Sampler &rarr;</a>
+            </div>
+          </div>
         </div>
+      </div>
+      <div style="margin-top:20px;border-top:1px solid rgba(255,255,255,.1);padding-top:16px;">
+  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;">Sharpen Your Skills</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <a href="/blog/crossword-puzzle-solving-strategies-guide/" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='rgba(255,255,255,.05)'">
+      <span style="font-size:18px;">&#128214;</span>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:white;margin-bottom:2px;">Word Strategy Guide</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);">9 techniques to build your vocabulary speed</div>
+      </div>
+    </a>
+    <a href="/books/" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(200,147,10,.1);border:1px solid rgba(200,147,10,.3);border-radius:8px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='rgba(200,147,10,.18)'" onmouseout="this.style.background='rgba(200,147,10,.1)'">
+      <span style="font-size:18px;">&#128218;</span>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#f59e0b;margin-bottom:2px;">Puzzle Book Collection</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);">Logic grids, crosswords, trivia &mdash; 8 digital editions</div>
+      </div>
+    </a>
+  </div>
+</div>
     </div>
-    
-    <div id="stage-modal" class="modal">
-        <div class="modal-content" style="max-width:500px">
-            <h2>Adventure Stages</h2>
-            <div id="stage-grid" class="stage-grid"></div>
-            <button class="btn" style="margin-top:20px" onclick="showModal('menu-modal')">Back</button>
-        </div>
+  </div>
+
+  <!-- Vault Modal -->
+  <div id="vault-modal" class="modal">
+    <div class="modal-content">
+      <h2>🎨 Theme Vault</h2>
+      <p style="color:#888;font-size:13px;margin-bottom:16px">Spend 💎 LexiShards to unlock themes.</p>
+      <div id="themes-list" style="display:flex;flex-direction:column;gap:10px"></div>
+      <button class="btn" style="margin-top:18px" onclick="hideModal()">Close</button>
     </div>
-    
-    <div id="end-modal" class="modal">
-        <div class="modal-content">
-            <h2 id="end-title">Stage Clear!</h2>
-            <p id="end-desc"></p>
-            <div id="end-stars" style="font-size:30px; letter-spacing:10px; margin: 10px 0;">⭐⭐⭐</div>
-            <div id="end-stats" style="margin-bottom: 20px;"></div>
-            <button class="btn" onclick="shareResult()">Share Result</button>
-            <button class="btn" id="end-next-btn" onclick="showModal('menu-modal')">Continue</button>
-        </div>
+  </div>
+
+  <!-- Stats Modal -->
+  <div id="stats-modal" class="modal">
+    <div class="modal-content">
+      <h2>📊 Daily Streak</h2>
+      <p id="streak-text" style="color:#aaa"></p>
+      <div class="calendar" id="calendar-grid"></div>
+      <button class="btn" style="margin-top:18px" onclick="hideModal()">Close</button>
     </div>
-    
-    <div id="vault-modal" class="modal">
-        <div class="modal-content">
-            <h2>Vault (Themes)</h2>
-            <p>Spend LexiShards to unlock themes.</p>
-            <div id="themes-list" style="display:flex; flex-direction:column; gap:10px; text-align:left;"></div>
-            <button class="btn" style="margin-top:20px" onclick="hideModal()">Close</button>
-        </div>
+  </div>
+
+  <!-- Achievements Modal -->
+  <div id="achievements-modal" class="modal">
+    <div class="modal-content">
+      <h2>🏆 Achievements</h2>
+      <div id="achievements-list" style="max-height:300px;overflow-y:auto;text-align:left;display:flex;flex-direction:column;gap:10px;margin-top:14px"></div>
+      <button class="btn" style="margin-top:18px" onclick="hideModal()">Close</button>
     </div>
-    
-    <div id="stats-modal" class="modal">
-        <div class="modal-content">
-            <h2>Daily Streak</h2>
-            <p id="streak-text"></p>
-            <div class="calendar" id="calendar-grid"></div>
-            <button class="btn" style="margin-top:20px" onclick="hideModal()">Close</button>
-        </div>
+  </div>
+
+  <!-- Achievement Toast -->
+  <div id="achievement-toast">
+    <div style="font-size:22px">🏆</div>
+    <div>
+      <div id="toast-title" style="font-weight:bold;font-size:15px"></div>
+      <div id="toast-desc" style="font-size:12px;opacity:.75"></div>
     </div>
-    
-    <div id="achievements-modal" class="modal">
-        <div class="modal-content">
-            <h2>Achievements</h2>
-            <div id="achievements-list" style="max-height:300px; overflow-y:auto; text-align:left; display:flex; flex-direction:column; gap:10px;"></div>
-            <button class="btn" style="margin-top:20px" onclick="hideModal()">Close</button>
-        </div>
-    </div>
-    
-    <div id="achievement-toast">
-        <div style="font-size:24px">🏆</div>
-        <div>
-            <div id="toast-title" style="font-weight:bold; font-size:16px;"></div>
-            <div id="toast-desc" style="font-size:12px; opacity:0.8;"></div>
-        </div>
-    </div>
-    
-    <div id="float-container"></div>
-    
-    <script>
-        const RAW_DICTIONARY = "the and for that this with you not are from your all have new more was will home can about page has search free but our one other time they site may what which their news out use any there see only his when contact here business who web also now help get view online first been would how were services some these click its like service than find price date back top people had list name just over state year day into email two health world next used work last most products music buy data make them should product system post her city add policy number such please support message after best software then jan good video well where info rights public books high school through each links she review years order very privacy book items company read group need many user said does set under general research january mail full map reviews program life know games way days part could great united hotel real item center ebay must store travel comments made report off member details line terms before hotels did send right type because local those using results office national car design take posted internet address within states area want phone dvd shipping reserved subject between forum family long based code show even black check special prices website index being women much sign file link open today south case project same pages version section own found sports house related security both county american photo game members power while care network down computer systems three total place end download him without per access think north current posts big media law control water history pictures size art personal since guide shop board location change white text small rating rate children during usa return students shopping account times sites level digital profile previous form events love old john main call hours image title non another why shall property class still money quality every listing content country private little visit save tools low reply customer december compare movies include college value article york man card jobs provide food source author press learn sale around print course job canada process teen room stock training too credit point join science men advanced west sales look english left team estate box select windows photos gay thread week category note live large gallery table register however june october november market library really action start series model features air industry plan human provided yes required second hot cost movie forums march better say july yahoo going medical test friend come dec server study cart staff articles san feedback again play looking issues april never users complete street topic comment things working against standard tax person below mobile less got blog party payment login student let programs offers legal above recent park stores side act problem red give memory social august quote language story sell options rates create key body young america field few east paper single age club example girls password latest road gift question changes night hard texas oct pay four poker status browse issue range building seller court february always result audio light write war nov offer blue groups easy given files event release analysis request fax china making picture needs possible might yet month major star areas future space hand sun cards problems london meeting rss become interest child keep enter share similar garden schools million added listed baby learning energy run delivery net popular term film stories put journal reports try welcome central images notice original head radio until cell color self council away includes track archive once others format least society months log safety friends sure faq trade edition cars messages tell further updated able having provides david fun already green studies close common drive specific several gold feb living sep called short arts lot ask display limited powered means director daily beach past natural whether due five upon period planning database says official weather mar land average done window france pro region island record direct records district calendar costs style url front update parts aug ever early miles sound resource present either ago document word works material bill apr written talk federal hosting rules final adult tickets thing centre via cheap kids finance true minutes else mark third rock gifts europe reading topics bad tips plus auto cover usually edit together videos percent fast function fact unit getting global tech meet far economic player projects lyrics often submit germany amount watch included feel though bank risk thanks deals various words linux jul james weight town heart received choose archives points magazine error camera jun girl toys clear golf receive domain methods chapter makes policies loan wide beauty manager india position taken sort listings models michael known half cases step florida simple quick none wireless license paul friday lake whole annual later basic sony shows google church method purchase active response practice hardware figure fire holiday chat enough designed along among death writing speed html loss face brand discount higher effects created remember oil bit yellow increase kingdom base near thought stuff french storage japan doing loans shoes entry stay nature orders africa summary turn mean growth notes agency king monday european activity copy although drug pics western income force cash overall bay river package contents seen players engine port album regional stop supplies started bar views plans double dog build screen exchange types soon lines continue across benefits needed season apply someone held anything printer believe effect asked eur mind sunday casino pdf lost tour menu volume cross anyone mortgage hope silver wish inside solution mature role rather weeks addition came supply nothing certain usr running lower union jewelry clothing mon com fine names robert homepage hour gas skills six bush islands advice career military rental decision leave british teens pre huge sat woman zip bid kind sellers middle move cable taking values division coming tuesday object lesbian machine logo length actually nice score client returns capital follow sample sent shown saturday england culture band flash lead george choice went starting fri thursday courses consumer airport foreign artist outside levels channel letter mode phones ideas fund summer allow degree contract button releases wed homes super male matter custom virginia almost took located multiple asian editor inn cause song cnet ltd los focus late fall featured idea rooms female inc win thomas primary cancer numbers reason tool browser spring answer voice friendly schedule purpose feature bed comes police everyone approach cameras brown physical hill maps medicine deal hold ratings chicago forms glass happy tue smith wanted thank safe unique survey prior sport ready feed animal sources mexico regular secure simply evidence station round paypal favorite option master valley recently probably thu rentals sea built blood cut improve hall larger anti networks earth parents nokia impact transfer kitchen strong tel carolina wedding hospital ground overview ship owners disease paid italy perfect hair kit classic basis command cities william express award distance tree peter ensure thus wall involved extra partners budget rated guides success maximum existing quite selected boy amazon patients warning wine horse vote forward flowers stars lists owner retail animals useful directly ways est son rule mac housing takes iii gmt bring catalog searches max trying mother told xml traffic joined input strategy feet agent valid bin modern senior ireland teaching door grand testing trial charge units instead canadian cool normal wrote ships entire leading metal positive fitness chinese opinion asia football abstract uses output funds greater likely develop artists java guest seems pass trust van contains session multi republic fees vacation century academic skin graphics indian prev ads mary expected ring grade dating pacific mountain pop filter mailing vehicle longer consider int northern behind panel floor german buying match proposed default require iraq boys outdoor deep morning allows rest protein plant reported hit pool mini politics partner authors boards faculty parties fish mission eye string sense modified pack released stage internal goods born unless richard detailed japanese race approved target except usb ability maybe moving brands places php pretty spain southern yourself etc winter battery youth pressure boston debt keywords medium core break purposes sets dance wood msn itself defined papers playing awards fee studio reader virtual device answers rent las remote dark external apple min offered theory enjoy remove aid surface minimum visual host variety teachers isbn martin manual block subjects agents repair fair civil steel songs fixed wrong hands finally updates desktop classes paris ohio gets sector capacity requires jersey fat fully father electric saw quotes officer driver dead respect unknown mike trip pst worth poor teacher eyes workers farm georgia peace campus tom showing creative coast benefit progress funding devices lord grant sub agree fiction hear watches careers beyond goes families led museum fan blogs wife accepted former ten hits zone complex cat die jack flat flow agencies parent spanish michigan columbia setting scale stand economy highest helpful monthly critical frame musical angeles path employee chief gives bottom packages detail laws changed pet heard begin colorado royal clean switch russian largest african guy titles relevant justice connect bible dev cup basket applied weekly vol demand suite vegas square chris advance skip diet army auction gear lee allowed correct charles nation selling lots piece sheet firm seven older illinois elements species jump cells module resort facility random pricing dvds minister motion looks fashion visitors monitor trading forest calls whose coverage couple giving chance vision ball ending clients actions listen discuss accept naked goal sold wind clinical sciences markets lowest highly appear lives currency leather palm patient actual stone bob commerce perhaps persons fit tests village accounts amateur met pain xbox factors coffee www settings buyer cultural steve easily oral ford poster edge root closed holidays ice pink zealand balance graduate replies shot initial label thinking scott llc sec canon league waste minute bus provider optional cold sections chair fishing effort phase fields bag fantasy letters motor context install shirt apparel foot mass crime count breast ibm johnson quickly dollars websites religion claim driving surgery patch heat wild measures kansas miss chemical doctor task reduce brought himself nor enable exercise bug santa mid leader diamond israel soft servers alone meetings seconds jones arizona keyword flight congress fuel username walk produced italian wait pocket saint rose freedom argument creating jim drugs joint premium fresh attorney upgrade factor growing stream pick hearing eastern auctions therapy entries dates signed upper serious prime samsung limit began louis steps errors shops del efforts informed thoughts creek worked quantity urban sorted myself tours platform load labor admin nursing defense machines tags heavy covered recovery joe guys merchant expert protect drop solid cds became orange vehicles prevent theme rich campaign marine guitar finding examples ipod saying spirit claims motorola seem affairs touch intended towards goals hire election suggest branch charges serve reasons magic mount smart talking gave ones latin avoid manage corner rank oregon element birth virus abuse requests separate quarter tables define racing facts kong column plants faith chain identify avenue missing died domestic sitemap moved houston reach mental viewed moment extended sequence inch attack sorry centers opening damage lab reserve recipes cvs gamma plastic produce snow placed truth counter failure follows weekend dollar camp ontario des films bridge native fill williams movement printing baseball owned approval draft chart played contacts jesus readers clubs lcd jackson equal matching offering shirts profit leaders posters variable ave expect parking compared workshop russia gone codes kinds seattle golden teams fort lighting senate forces funny brother gene turned portable tried disc returned pattern boat named theatre laser earlier sponsor icon warranty indiana harry objects ends delete evening assembly nuclear taxes mouse signal criminal issued brain sexual powerful dream obtained false cast flower felt passed supplied falls pic soul aids opinions promote stated stats hawaii appears carry flag decided covers hello designs maintain tourism priority adults clips savings graphic atom payments binding brief ended winning eight iron straight script served wants prepared void dining alert atlanta dakota tag mix disk queen vhs credits clearly fix handle sweet desk criteria pubmed dave diego hong vice truck behavior enlarge ray revenue measure changing votes duty looked bear gain festival ocean flights experts signs lack depth iowa whatever logged laptop vintage train exactly dry explore maryland spa concept nearly eligible checkout reality forgot handling origin knew gaming feeds billion scotland faster dallas bought con ups nations route followed broken frank alaska zoom blow battle anime speak protocol query clip equity speech wire rural shared sounds tape judge spam acid bytes cent forced fight height null zero speaker filed obtain offices designer remain managed failed marriage roll korea banks secret bath kelly leads negative austin toronto theater springs missouri andrew var perform healthy font assets injury joseph ministry drivers lawyer figures married proposal sharing portal waiting birthday beta fail gratis banking brian toward won slightly assist conduct lingerie calling jazz serving bags profiles miami comics matters houses doc postal wear controls breaking combined ultimate wales minor finish noted mom reduced physics rare spent extreme samples davis daniel bars reviewed row forecast removed helps singles cycle amounts contain accuracy dual rise usd sleep bird pharmacy brazil creation static scene hunter lady crystal famous writer chairman violence fans oklahoma speakers drink academy dynamic gender eat dell cleaning seat concerns colour vendor intel officers aim bids referred supports regions junior toll les cape ann rings meaning tip mine ladies henry ticket guess agreed whom ski soccer math import posting presence instant viewing majority christ dan dogs aspects austria ahead moon scheme utility preview fly manner matrix devel despite strength turkey proper degrees delta fear seeking inches phoenix shares daughter standing comfort colors wars cisco ordering kept alpha appeal cruise bonus hey bookmark specials beat disney adobe smoking bbc becomes drives arms alabama tea improved trees avg achieve dress dealer sky utah nearby rom carried happen exposure hide gambling refer miller outdoors clothes caused luxury babes frames indeed toy circuit layer printed slow removal easier src hip printers faqs nine adding kentucky mostly eric spot taylor prints spend factory interior revised grow optical relative amazing clock dot hiv identity suites feeling hidden victoria serial relief revision ratio pda rain onto dsl planet copies recipe zum permit seeing proof dna diff tennis bass bedroom empty instance hole pets ride licensed orlando tim bureau maine sql pair ideal specs recorded don pieces finished parks dinner lawyers sydney stress cream runs trends yeah discover patterns boxes hills fourth advisor evil aware wilson shape irish stations gps remains acc greatest firms euro operator generic usage cap ink charts mixed census peak exist wheel transit salt compact poetry lights tracking angel bell keeping attempt matches width noise engines forget array accurate stephen climate pin alcohol greek managing sister raw walking explain smaller newest gnu happened jeff extent sharp lesbians ben lane kill aol export managers aircraft modules sweden conflict versions employer occur knows describe concern backup citizens heritage holding trouble spread coach kevin expand audience assigned jordan ages plug cook affect virgin raised hat directed dealers sporting helping perl affected lib bike totally plate expenses indicate blonde anderson utc der lose organic seek albums cheats guests hosted diseases tony nevada kits thailand agenda anyway tracks advisory cam logic template prince circle soil grants anywhere atlantic wet edward investor ram leaving wildlife matt cooking speaking sponsors fox respond sizes plain exit entered iran arm keys launch wave checking costa belgium holy acts guidance mesh trail symbol crafts highway buddy observed dean setup poll booking glossary fiscal styles denver unix filled bond channels ericsson appendix notify blues pub portion scope supplier cables cotton biology dental killed border ancient debate starts causes arkansas leisure learned notebook explorer historic attached opened husband disabled crazy upcoming britain concert scores comedy adopted weblog linear bears jean hop carrier edited constant visa mouth jewish meter linked portland concepts gun reflect pure deliver wonder lessons fruit begins reform lens alerts treated draw mysql relating assume alliance confirm warm neither lewis howard offline leaves engineer replace babe checks reached becoming safari sugar crew legs sam stick allen pdt relation enabled genre slide montana tested rear enhance exact bound adapter node formal lock hockey storm micro colleges laptops mile showed editors mens threads bowl supreme brothers presents ref tank dolls estimate navy kid cancel limits weapons paint delay pilot outlet czech novel pan ultra winner idaho episode potter dish plays bulletin modify oxford adam truly epinions painting universe patent slot psp eating planned watching lodge mirror sterling sessions kernel stocks buyers journals gray jennifer antonio charged broad taiwan und chosen demo greece swiss sarah clark labour hate terminal nights behalf liquid rice nebraska loop salary foods gourmet guard properly orleans saving nfl empire resume twenty newly raise prepare avatar gary illegal vary hundreds rome arab lincoln helped premier tomorrow milk decide consent drama visiting downtown keyboard contest bands boot suitable millions lunch audit push chamber guinea findings muscle iso clicking polls typical tower yours sum misc chicken attend shower alan sending jason tonight dear holdem shell province catholic oak vat governor beer seemed swimming spyware formula solar jose catch jane pakistan reliable sir doubt earn finder unable periods tasks attacks kim const doors symptoms resorts biggest memorial visitor twin forth insert gateway dont alumni drawing ordered fighting happens spy romance bruce split themes powers heaven bits pregnant twice focused egypt bargain cellular norway vermont asking blocks normally hunting diabetes suit shift chip res sit bodies cutting wow simon writers marks flexible loved mapping numerous birds char indexed superior saved paying cartoon shots moore granted choices carbon spending magnetic registry crisis outlook massive denmark employed bright treat header poverty formed piano echo que grid sheets patrick puerto displays plasma allowing earnings voip mystery journey delaware bidding risks banner charter fig barbara counties ports dreams blogger stands teach occurred rapid pull hairy reverse deposit seminar latina nasa wheels specify dutch formats tab depends boots holds router concrete editing poland folder womens css upload pulse voting courts notices detroit metro toshiba strip pearl accident nick resident plot qty possibly airline regard pump exists smooth strike flashing narrow threat surveys sitting putting vietnam trailer anne castle gardens missed malaysia antique labels willing bio acting heads stored exam logos antiques density hundred ryan strange beds mention pcs grey parallel honda amended operate bills bold bathroom stable opera von doctors lesson cinema asset scan drinking reaction blank enhanced entitled severe generate deluxe humor aged monitors lived duration bulk pursuant sci fabric edt visits tight domains pmid contrast flying sin berlin cute para siemens adoption meant capture pounds buffalo plane seed desire camping meets welfare peer caught marked driven measured medline bottle marshall massage rubber closing tampa thousand meat legend grace susan ing adams python monster alex bang villa bone columns bugs hamilton ftp cookies inner tutorial med entity cruises gate holder portugal lawrence roman duties valuable tone ethics forever dragon busy captain imagine brings heating leg neck wing scripts abc stereo taste dealing commit tiny rail airlines liberal livecam jay trips gap sides tube turns cache belt jacket oracle matthew lease aviation hobbies proud excess disaster console commands giant achieved injuries shipped seats biz alarm voltage anthony nintendo usual loading stamps appeared franklin angle rob vinyl mining ongoing worst imaging betting liberty wyoming era convert analyst garage exciting thongs gcc ringtone finland morgan derived pleasure honor asp oriented eagle desktops pants columbus nurse prayer quiet luck postage producer dial cheese comic jet crown par maker crack picks gang semester fetish applies casinos smoke apache filters craft cake apart fellow blind lounge mad semi coins andy gross strongly cafe hilton ken proteins horror exp familiar capable douglas debian till pen epson shoe elected carrying victory sand madison joy editions cpu mainly ethnic ran actor finds seal fifth citizen vertical prize occurs jon absolute consists anytime lies pipe soldiers guardian lecture layout ill classics lbs lay horses lol dirty deck wayne donate taught worker alive temple prove wings breaks genetic waters promise thin prefer ridge cabinet modem harris mph bringing sick dose evaluate tiffany tropical collect bet toyota streets vector shaved turning buffer purple larry def lets mutual pipeline syntax prison skill chairs everyday moves inquiry ethernet checked exhibit throw trend sierra visible cats desert oldest rhode nba mercury steven handbook greg navigate worse summit victims epa spaces burning escape coupons somewhat receiver cialis boats glance scottish arcade richmond ron russell tells obvious fiber graph covering platinum judgment bedrooms talks filing foster modeling passing awarded trials tissue clinton masters bonds alberta folk org commons fraud spectrum arrival okay pottery emphasis roger aspect awesome mexican counts priced hist crash lift desired inter closer assumes heights shadow riding firefox lisa expense grove venture clinic korean healing princess mall entering packet spray studios dad buttons funded thompson winners extend roads pat dublin rolling fell yard memories nelson arrived creates faces tourist mayor murder sean adequate senator yield grades cartoons pour digest reg lodging tion dust hence wiki entirely replaced radar rescue losses combat reducing stopped lakes closely diary kings shooting kent adds nsw ear flags pci baker launched shock walls abroad ebony tie ward drawn arthur ian visited roof walker suggests kiss beast operated targets overseas dodge counsel pizza invited yards gordon mod farmers queries bmw rush ukraine absence nearest cluster vendors mpeg whereas yoga serves woods surprise lamp rico partial shoppers phil couples ranking jokes cst http ceo simpson twiki sublime palace glad wins verify globe trusted copper rack rep dicke kerry receipt supposed ordinary nobody ghost mit applying boss pride knowing reporter keith champion cloudy linda ross chile anna plenty solo sentence throat ignore maria uniform wealth tall vacuum dancing brass writes plaza pdas outcomes survival quest publish sri toe trans jonathan whenever nova lifetime api pioneer booty acrobat plates acres venue athletic thermal essays vital telling fairly coastal config charity excel modes campbell wake stupid harbor hungary traveler urw segment realize lan enemy puzzle rising aluminum wells wishlist opens insight sms secrets lucky latter thick trailers repeat syndrome philips penalty drum glasses enables nec iraqi builder vista jessica chips terry flood foto ease arena pupils stewart tabs outcome expanded casual grown polish lovely extras centres jerry clause smile lands troops indoor bulgaria armed broker charger believed pine cooling tend gulf rick trucks divorce laura shopper tokyo partly nikon candy pills tiger donald folks sensor exposed telecom hunt angels deputy sealed thai loaded fred scenes boost spanking mill founded chronic icons moral den catering aud finger keeps pound locate trained burn roses labs bread tobacco wooden motors tough roberts incident gonna dynamics lie crm decrease chest pension billy revenues emerging worship craig herself churches damages reserves solve shorts minority diverse amp johnny sole recorder facing nancy tones passion sight laid clay defence patches weak refund usc towns trembl divided blvd amd wise emails cyprus odds insider seminars makers hearts worry eve carter legacy marc pleased danger vitamin widely phrase genuine raising paradise hybrid reads roles sons leaf pad glory bigger billing diesel versus combine exceed rod saudi fault cuba hrs silk kate babies karen compiled romantic revealed albert examine jimmy graham bristol margaret compaq sad wolf slowly rugby cal portions infant sectors samuel fluid grounds fits kick regards meal hurt unlike equation baskets pot wright img barry proven cached warren slip studied reviewer involves rpm profits devil grass comply marie florist cherry deutsch kenya webcam cuts funeral nutten earrings enjoyed chapters pee charlie quebec dennis mars francis tvs sized manga noticed socket silent literary egg mhz signals caps pill theft swing symbols lat meta humans analog facial choosing talent dated seeker wisdom shoot boundary mint packard offset payday philip elite spin holders believes swedish poems deadline robot witness collins equipped stages sur winds powder broadway acquired assess wash stones entrance gnome roots losing attempts gadgets noble glasgow impacts rev gospel shore loves induced knight loose aims linking appeals earned illness islamic ieee pending parker lebanon corp kennedy teenage soap triple cooper nyc vincent jam secured unusual answered slots disorder routine toolbar rocks titans wearing axis sought genes mounted habitat firewall median guns scanner herein animated judicial rio hero integer bachelor attitude engaged falling basics montreal carpet struct lenses binary genetics attended punk dropped duke walter pace besides wage arc hosts moments atlas strings dawn feels torture carl deleted coat mitchell mrs rica ralph warner app embedded inkjet wizard corps actors liver liable brochure morris petition eminem recall antenna picked assumed belief killing bikini memphis shoulder decor lookup texts harvard brokers roy ion diameter ottawa doll podcast seasons peru refine bidder singer evans herald literacy fails aging nike fed plugin diving invite alice latinas suppose reed involve moderate terror younger thirty mice opposite rapidly dealtime ban temp intro mercedes zus clerk vast mills outline tramadol holland receives jeans fonts ent odd wrap refers mood favor veterans quiz sigma xhtml occasion victim demands sleeping careful ext beam arrive sunset tracked moreover minimal lottery tops framed aside licence michelle essay amy dialogue camps declared aaron handheld trace disposal shut florists packs switches romania ncaa thou consult phd greatly blogging mask cycling midnight commonly inform turkish coal cry pentium quantum murray intent zoo largely pleasant announce spoke aka arrow sampling rough weird tee lion inspired holes weddings blade suddenly oxygen cookie meals canyon goto meters merely passes pointer stretch durham permits muslim neil sleeve netscape cleaner cricket beef feeding stroke township rankings cad hats robin robinson strap sharon crowd tcp surf olympic remained dir entities customs rainbow hook roulette decline gloves israeli medicare cord skiing cloud valve val hewlett explains proceed flickr feelings knife jamaica shelf timing liked adopt denied fotos britney freeware donation outer crop deaths rivers tales katrina islam nodes thumbs seeds cited lite ghz hub targeted skype realized twelve founder decade gamecube dispute tired titten adverse excerpt eng steam drinks ace voices acute climbing stood sing tons perfume carol honest albany restore stack somebody sue hang gbp curve creator amber museums coding tracker passage trunk hiking pierre jelsoft headset oakland colombia waves camel lamps hood suicide archived chi arabia juice chase logical sauce fame extract panama payable courtesy rfc athens judges seo retired isp remarks detected decades walked arising nissan bracelet ins eggs juvenile afraid acoustic railway cassette pointed jpg causing mistake norton locked fusion mineral ruby steering beads fortune canvas parish claimed screens cemetery planner croatia flows stadium mins fewer coupon nurses ssl stem proxy lanka opt edwards drew contests flu mlb costume tagged berkeley voted killer bikes gates adjusted rap tune bishop pulled corn shaped seasonal farmer counters puts grew tin slave cultures norfolk coaching examined trek encoding oem heroes painted lycos zdnet artwork cosmetic resulted portrait ethical carriers mobility floral builders ties struggle schemes neutral fisher rat spears bedding joining heading equally bearing brad combo seniors worlds guilty haven tablet jury dos tail charm lawn violent basin soup ranch crossing cottage drunk crimes resolved mozilla byte toner nose latex branches anymore oclc delhi holdings alien locator plc broke nepal zimbabwe juan msg browsing resolve cod melissa moscow thesis thru jews nylon discs rocky bargains frequent trim nigeria ceiling pixels ensuring hispanic gen anybody diamonds espn fleet untitled bunch totals marriott singing afford starring referral nhl optimal quit distinct lung turner";
-        
-        // 1. Trie
-        class TrieNode { constructor() { this.c = {}; this.e = false; } }
-        class Trie {
-            constructor() { this.root = new TrieNode(); }
-            insert(word) { let n = this.root; for(let ch of word) { if(!n.c[ch]) n.c[ch] = new TrieNode(); n = n.c[ch]; } n.e = true; }
-            check(word) { let n = this.root; for(let ch of word) { if(!n.c[ch]) return 0; n = n.c[ch]; } return n.e ? 2 : 1; }
-        }
-        const dictTrie = new Trie();
-        
-        // 2. Configs
-        const STAGES = [];
+  </div>
+
+  <div id="float-container"></div>
+
+  <script>
+    const RAW_DICTIONARY = "the and for that this with you not are from your all have new more was will home can about page has search free but our one other time they site may what which their news out use any there see only his when contact here business who web also now help get view online first been would how were services some these click its like service than find price date back top people had list name just over state year day into email two health world next used work last most products music buy data make them should product system post her city add policy number such please support message after best software then jan good video well where info rights public books high school through each links she review years order very privacy book items company read group need many user said does set under general research january mail full map reviews program life know games way days part could great united hotel real item center ebay must store travel comments made report off member details line terms before hotels did send right type because local those using results office national car design take posted internet address within states area want phone dvd shipping reserved subject between forum family long based code show even black check special prices website index being women much sign file link open today south case project same pages version section own found sports house related security both county american photo game members power while care network down computer systems three total place end download him without per access think north current posts big media law control water history pictures size art personal since guide shop board location change white text small rating rate children during usa return students shopping account times sites level digital profile previous form events love old john main call hours image title non another why shall property class still money quality every listing content country private little visit save tools low reply customer december compare movies include college value article york man card jobs provide food source author press learn sale around print course job canada process teen room stock training too credit point join science men advanced west sales look english left team estate box select windows photos gay thread week category note live large gallery table register however june october november market library really action start series model features air industry plan human provided yes required second hot cost movie forums march better say july yahoo going medical test friend come dec server study cart staff articles san feedback again play looking issues april never users complete street topic comment things working against standard tax person below mobile less got blog party payment login student let programs offers legal above recent park stores side act problem red give memory social august quote language story sell options rates create key body young america field few east paper single age club example girls password latest road gift question changes night hard texas oct pay four poker status browse issue range building seller court february always result audio light write war nov offer blue groups easy given files event release analysis request fax china making picture needs possible might yet month major star areas future space hand sun cards problems london meeting rss become interest child keep enter share similar garden schools million added listed baby learning energy run delivery net popular term film stories put journal reports try welcome central images notice original head radio until cell color self council away includes track archive once others format least society months log safety friends sure faq trade edition cars messages tell further updated able having provides david fun already green studies close common drive specific several gold feb living sep called short arts lot ask display limited powered means director daily beach past natural whether due five upon period planning database says official weather mar land average done window france pro region island record direct records district calendar costs style url front update parts aug ever early miles sound resource present either ago document word works material bill apr written talk federal hosting rules final adult tickets thing centre via cheap kids finance true minutes else mark third rock gifts europe reading topics bad tips plus auto cover usually edit together videos percent fast function fact unit getting global tech meet far economic player projects lyrics often submit germany amount watch included feel though bank risk thanks deals various words linux jul james weight town heart received choose archives points magazine error camera jun girl toys clear golf receive domain methods chapter makes policies loan wide beauty manager india position taken sort listings models michael known half cases step florida simple quick none wireless license paul friday lake whole annual later basic sony shows google church method purchase active response practice hardware figure fire holiday chat enough designed along among death writing speed html loss face brand discount higher effects created remember oil bit yellow increase kingdom base near thought stuff french storage japan doing loans shoes entry stay nature orders africa summary turn mean growth notes agency king monday european activity copy although drug pics western income force cash overall bay river package contents seen players engine port album regional stop supplies started bar views plans double dog build screen exchange types soon lines continue across benefits needed season apply someone held anything printer believe effect asked eur mind sunday casino pdf lost tour menu volume cross anyone mortgage hope silver wish inside solution mature role rather weeks addition came supply nothing certain usr running lower union jewelry clothing mon com fine names robert homepage hour gas skills six bush islands advice career military rental decision leave british teens pre huge sat woman zip bid kind sellers middle move cable taking values division coming tuesday object lesbian machine logo length actually nice score client returns capital follow sample sent shown saturday england culture band flash lead george choice went starting fri thursday courses consumer airport foreign artist outside levels channel letter mode phones ideas fund summer allow degree contract button releases wed homes super male matter custom virginia almost took located multiple asian editor inn cause song cnet ltd los focus late fall featured idea rooms female inc win thomas primary cancer numbers reason tool browser spring answer voice friendly schedule purpose feature bed comes police everyone approach cameras brown physical hill maps medicine deal hold ratings chicago forms glass happy tue smith wanted thank safe unique survey prior sport ready feed animal sources mexico regular secure simply evidence station round paypal favorite option master valley recently probably thu rentals sea built blood cut improve hall larger anti networks earth parents nokia impact transfer kitchen strong tel carolina wedding hospital ground overview ship owners disease paid italy perfect hair kit classic basis command cities william express award distance tree peter ensure thus wall involved extra partners budget rated guides success maximum existing quite selected boy amazon patients warning wine horse vote forward flowers stars lists owner retail animals useful directly ways est son rule mac housing takes iii gmt bring catalog searches max trying mother told xml traffic joined input strategy feet agent valid bin modern senior ireland teaching door grand testing trial charge units instead canadian cool normal wrote ships entire leading metal positive fitness chinese opinion asia football abstract uses output funds greater likely develop artists java guest seems pass trust van contains session multi republic fees vacation century academic skin graphics indian prev ads mary expected ring grade dating pacific mountain pop filter mailing vehicle longer consider int northern behind panel floor german buying match proposed default require iraq boys outdoor deep morning allows rest protein plant reported hit pool mini politics partner authors boards faculty parties fish mission eye string sense modified pack released stage internal goods born unless richard detailed japanese race approved target except usb ability maybe moving brands places php pretty spain southern yourself etc winter battery youth pressure boston debt keywords medium core break purposes sets dance wood msn itself defined papers playing awards fee studio reader virtual device answers rent las remote dark external apple min offered theory enjoy remove aid surface minimum visual host variety teachers isbn martin manual block subjects agents repair fair civil steel songs fixed wrong hands finally updates desktop classes paris ohio gets sector capacity requires jersey fat fully father electric saw quotes officer driver dead respect unknown mike trip pst worth poor teacher eyes workers farm georgia peace campus tom showing creative coast benefit progress funding devices lord grant sub agree fiction hear watches careers beyond goes families led museum fan blogs wife accepted former ten hits zone complex cat die jack flat flow agencies parent spanish michigan columbia setting scale stand economy highest helpful monthly critical frame musical angeles path employee chief gives bottom packages detail laws changed pet heard begin colorado royal clean switch russian largest african guy titles relevant justice connect bible dev cup basket applied weekly vol demand suite vegas square chris advance skip diet army auction gear lee allowed correct charles nation selling lots piece sheet firm seven older illinois elements species jump cells module resort facility random pricing dvds minister motion looks fashion visitors monitor trading forest calls whose coverage couple giving chance vision ball ending clients actions listen discuss accept naked goal sold wind clinical sciences markets lowest highly appear lives currency leather palm patient actual stone bob commerce perhaps persons fit tests village accounts amateur met pain xbox factors coffee www settings buyer cultural steve easily oral ford poster edge root closed holidays ice pink zealand balance graduate replies shot initial label thinking scott llc sec canon league waste minute bus provider optional cold sections chair fishing effort phase fields bag fantasy letters motor context install shirt apparel foot mass crime count breast ibm johnson quickly dollars websites religion claim driving surgery patch heat wild measures kansas miss chemical doctor task reduce brought himself nor enable exercise bug santa mid leader diamond israel soft servers alone meetings seconds jones arizona keyword flight congress fuel username walk produced italian wait pocket saint rose freedom argument creating jim drugs joint premium fresh attorney upgrade factor growing stream pick hearing eastern auctions therapy entries dates signed upper serious prime samsung limit began louis steps errors shops del efforts informed thoughts creek worked quantity urban sorted myself tours platform load labor admin nursing defense machines tags heavy covered recovery joe guys merchant expert protect drop solid cds became orange vehicles prevent theme rich campaign marine guitar finding examples ipod saying spirit claims motorola seem affairs touch intended towards goals hire election suggest branch charges serve reasons magic mount smart talking gave ones latin avoid manage corner rank oregon element birth virus abuse requests separate quarter tables define racing facts kong column plants faith chain identify avenue missing died domestic sitemap moved houston reach mental viewed moment extended sequence inch attack sorry centers opening damage lab reserve recipes cvs gamma plastic produce snow placed truth counter failure follows weekend dollar camp ontario des films bridge native fill williams movement printing baseball owned approval draft chart played contacts jesus readers clubs lcd jackson equal matching offering shirts profit leaders posters variable ave expect parking compared workshop russia gone codes kinds seattle golden teams fort lighting senate forces funny brother gene turned portable tried disc returned pattern boat named theatre laser earlier sponsor icon warranty indiana harry objects ends delete evening assembly nuclear taxes mouse signal criminal issued brain sexual powerful dream obtained false cast flower felt passed supplied falls pic soul aids opinions promote stated stats hawaii appears carry flag decided covers hello designs maintain tourism priority adults clips savings graphic atom payments binding brief ended winning eight iron straight script served wants prepared void dining alert atlanta dakota tag mix disk queen vhs credits clearly fix handle sweet desk criteria pubmed dave diego hong vice truck behavior enlarge ray revenue measure changing votes duty looked bear gain festival ocean flights experts signs lack depth iowa whatever logged laptop vintage train exactly dry explore maryland spa concept nearly eligible checkout reality forgot handling origin knew gaming feeds billion scotland faster dallas bought con ups nations route followed broken frank alaska zoom blow battle anime speak protocol query clip equity speech wire rural shared sounds tape judge spam acid bytes cent forced fight height null zero speaker filed obtain offices designer remain managed failed marriage roll korea banks secret bath kelly leads negative austin toronto theater springs missouri andrew var perform healthy font assets injury joseph ministry drivers lawyer figures married proposal sharing portal waiting birthday beta fail gratis banking brian toward won slightly assist conduct lingerie calling jazz serving bags profiles miami comics matters houses doc postal wear controls breaking combined ultimate wales minor finish noted mom reduced physics rare spent extreme samples davis daniel bars reviewed row forecast removed helps singles cycle amounts contain accuracy dual rise usd sleep bird pharmacy brazil creation static scene hunter lady crystal famous writer chairman violence fans oklahoma speakers drink academy dynamic gender eat dell cleaning seat concerns colour vendor intel officers aim bids referred supports regions junior toll les cape ann rings meaning tip mine ladies henry ticket guess agreed whom ski soccer math import posting presence instant viewing majority christ dan dogs aspects austria ahead moon scheme utility preview fly manner matrix devel despite strength turkey proper degrees delta fear seeking inches phoenix shares daughter standing comfort colors wars cisco ordering kept alpha appeal cruise bonus hey bookmark specials beat disney adobe smoking bbc becomes drives arms alabama tea improved trees avg achieve dress dealer sky utah nearby rom carried happen exposure hide gambling refer miller outdoors clothes caused luxury babes frames indeed toy circuit layer printed slow removal easier src hip printers faqs nine adding kentucky mostly eric spot taylor prints spend factory interior revised grow optical relative amazing clock dot hiv identity suites feeling hidden victoria serial relief revision ratio pda rain onto dsl planet copies recipe zum permit seeing proof dna diff tennis bass bedroom empty instance hole pets ride licensed orlando tim bureau maine sql pair ideal specs recorded don pieces finished parks dinner lawyers sydney stress cream runs trends yeah discover patterns boxes hills fourth advisor evil aware wilson shape irish stations gps remains acc greatest firms euro operator generic usage cap ink charts mixed census peak exist wheel transit salt compact poetry lights tracking angel bell keeping attempt matches width noise engines forget array accurate stephen climate pin alcohol greek managing sister raw walking explain smaller newest gnu happened jeff extent sharp lesbians ben lane kill aol export managers aircraft modules sweden conflict versions employer occur knows describe concern backup citizens heritage holding trouble spread coach kevin expand audience assigned jordan ages plug cook affect virgin raised hat directed dealers sporting helping perl affected lib bike totally plate expenses indicate blonde anderson utc der lose organic seek albums cheats guests hosted diseases tony nevada kits thailand agenda anyway tracks advisory cam logic template prince circle soil grants anywhere atlantic wet edward investor ram leaving wildlife matt cooking speaking sponsors fox respond sizes plain exit entered iran arm keys launch wave checking costa belgium holy acts guidance mesh trail symbol crafts highway buddy observed dean setup poll booking glossary fiscal styles denver unix filled bond channels ericsson appendix notify blues pub portion scope supplier cables cotton biology dental killed border ancient debate starts causes arkansas leisure learned notebook explorer historic attached opened husband disabled crazy upcoming britain concert scores comedy adopted weblog linear bears jean hop carrier edited constant visa mouth jewish meter linked portland concepts gun reflect pure deliver wonder lessons fruit begins reform lens alerts treated draw mysql relating assume alliance confirm warm neither lewis howard offline leaves engineer replace babe checks reached becoming safari sugar crew legs sam stick allen pdt relation enabled genre slide montana tested rear enhance exact bound adapter node formal lock hockey storm micro colleges laptops mile showed editors mens threads bowl supreme brothers presents ref tank dolls estimate navy kid cancel limits weapons paint delay pilot outlet czech novel pan ultra winner idaho episode potter dish plays bulletin modify oxford adam truly epinions painting universe patent slot psp eating planned watching lodge mirror sterling sessions kernel stocks buyers journals gray jennifer antonio charged broad taiwan und chosen demo greece swiss sarah clark labour hate terminal nights behalf liquid rice nebraska loop salary foods gourmet guard properly orleans saving nfl empire resume twenty newly raise prepare avatar gary illegal vary hundreds rome arab lincoln helped premier tomorrow milk decide consent drama visiting downtown keyboard contest bands boot suitable millions lunch audit push chamber guinea findings muscle iso clicking polls typical tower yours sum misc chicken attend shower alan sending jason tonight dear holdem shell province catholic oak vat governor beer seemed swimming spyware formula solar jose catch jane pakistan reliable sir doubt earn finder unable periods tasks attacks kim const doors symptoms resorts biggest memorial visitor twin forth insert gateway dont alumni drawing ordered fighting happens spy romance bruce split themes powers heaven bits pregnant twice focused egypt bargain cellular norway vermont asking blocks normally hunting diabetes suit shift chip res sit bodies cutting wow simon writers marks flexible loved mapping numerous birds char indexed superior saved paying cartoon shots moore granted choices carbon spending magnetic registry crisis outlook massive denmark employed bright treat header poverty formed piano echo que grid sheets patrick puerto displays plasma allowing earnings voip mystery journey delaware bidding risks banner charter fig barbara counties ports dreams blogger stands teach occurred rapid pull hairy reverse deposit seminar latina nasa wheels specify dutch formats tab depends boots holds router concrete editing poland folder womens css upload pulse voting courts notices detroit metro toshiba strip pearl accident nick resident plot qty possibly airline regard pump exists smooth strike flashing narrow threat surveys sitting putting vietnam trailer anne castle gardens missed malaysia antique labels willing bio acting heads stored exam logos antiques density hundred ryan strange beds mention pcs grey parallel honda amended operate bills bold bathroom stable opera von doctors lesson cinema asset scan drinking reaction blank enhanced entitled severe generate deluxe humor aged monitors lived duration bulk pursuant sci fabric edt visits tight domains pmid contrast flying sin berlin cute para siemens adoption meant capture pounds buffalo plane seed desire camping meets welfare peer caught marked driven measured medline bottle marshall massage rubber closing tampa thousand meat legend grace susan ing adams python monster alex bang villa bone columns bugs hamilton ftp cookies inner tutorial med entity cruises gate holder portugal lawrence roman duties valuable tone ethics forever dragon busy captain imagine brings heating leg neck wing scripts abc stereo taste dealing commit tiny rail airlines liberal livecam jay trips gap sides tube turns cache belt jacket oracle matthew lease aviation hobbies proud excess disaster console commands giant achieved injuries shipped seats biz alarm voltage anthony nintendo usual loading stamps appeared franklin angle rob vinyl mining ongoing worst imaging betting liberty wyoming era convert analyst garage exciting thongs gcc ringtone finland morgan derived pleasure honor asp oriented eagle desktops pants columbus nurse prayer quiet luck postage producer dial cheese comic jet crown par maker crack picks gang semester fetish applies casinos smoke apache filters craft cake apart fellow blind lounge mad semi coins andy gross strongly cafe hilton ken proteins horror exp familiar capable douglas debian till pen epson shoe elected carrying victory sand madison joy editions cpu mainly ethnic ran actor finds seal fifth citizen vertical prize occurs jon absolute consists anytime lies pipe soldiers guardian lecture layout ill classics lbs lay horses lol dirty deck wayne donate taught worker alive temple prove wings breaks genetic waters promise thin prefer ridge cabinet modem harris mph bringing sick dose evaluate tiffany tropical collect bet toyota streets vector shaved turning buffer purple larry def lets mutual pipeline syntax prison skill chairs everyday moves inquiry ethernet checked exhibit throw trend sierra visible cats desert oldest rhode nba mercury steven handbook greg navigate worse summit victims epa spaces burning escape coupons somewhat receiver cialis boats glance scottish arcade richmond ron russell tells obvious fiber graph covering platinum judgment bedrooms talks filing foster modeling passing awarded trials tissue clinton masters bonds alberta folk org commons fraud spectrum arrival okay pottery emphasis roger aspect awesome mexican counts priced hist crash lift desired inter closer assumes heights shadow riding firefox lisa expense grove venture clinic korean healing princess mall entering packet spray studios dad buttons funded thompson winners extend roads pat dublin rolling fell yard memories nelson arrived creates faces tourist mayor murder sean adequate senator yield grades cartoons pour digest reg lodging tion dust hence wiki entirely replaced radar rescue losses combat reducing stopped lakes closely diary kings shooting kent adds nsw ear flags pci baker launched shock walls abroad ebony tie ward drawn arthur ian visited roof walker suggests kiss beast operated targets overseas dodge counsel pizza invited yards gordon mod farmers queries bmw rush ukraine absence nearest cluster vendors mpeg whereas yoga serves woods surprise lamp rico partial shoppers phil couples ranking jokes cst http ceo simpson twiki sublime palace glad wins verify globe trusted copper rack rep dicke kerry receipt supposed ordinary nobody ghost mit applying boss pride knowing reporter keith champion cloudy linda ross chile anna plenty solo sentence throat ignore maria uniform wealth tall vacuum dancing brass writes plaza pdas outcomes survival quest publish sri toe trans jonathan whenever nova lifetime api pioneer booty acrobat plates acres venue athletic thermal essays vital telling fairly coastal config charity excel modes campbell wake stupid harbor hungary traveler urw segment realize lan enemy puzzle rising aluminum wells wishlist opens insight sms secrets lucky latter thick trailers repeat syndrome philips penalty drum glasses enables nec iraqi builder vista jessica chips terry flood foto ease arena pupils stewart tabs outcome expanded casual grown polish lovely extras centres jerry clause smile lands troops indoor bulgaria armed broker charger believed pine cooling tend gulf rick trucks divorce laura shopper tokyo partly nikon candy pills tiger donald folks sensor exposed telecom hunt angels deputy sealed thai loaded fred scenes boost spanking mill founded chronic icons moral den catering aud finger keeps pound locate trained burn roses labs bread tobacco wooden motors tough roberts incident gonna dynamics lie crm decrease chest pension billy revenues emerging worship craig herself churches damages reserves solve shorts minority diverse amp johnny sole recorder facing nancy tones passion sight laid clay defence patches weak refund usc towns trembl divided blvd amd wise emails cyprus odds insider seminars makers hearts worry eve carter legacy marc pleased danger vitamin widely phrase genuine raising paradise hybrid reads roles sons leaf pad glory bigger billing diesel versus combine exceed rod saudi fault cuba hrs silk kate babies karen compiled romantic revealed albert examine jimmy graham bristol margaret compaq sad wolf slowly rugby cal portions infant sectors samuel fluid grounds fits kick regards meal hurt unlike equation baskets pot wright img barry proven cached warren slip studied reviewer involves rpm profits devil grass comply marie florist cherry deutsch kenya webcam cuts funeral nutten earrings enjoyed chapters pee charlie quebec dennis mars francis tvs sized manga noticed socket silent literary egg mhz signals caps pill theft swing symbols lat meta humans analog facial choosing talent dated seeker wisdom shoot boundary mint packard offset payday philip elite spin holders believes swedish poems deadline robot witness collins equipped stages sur winds powder broadway acquired assess wash stones entrance gnome roots losing attempts gadgets noble glasgow impacts rev gospel shore loves induced knight loose aims linking appeals earned illness islamic ieee pending parker lebanon corp kennedy teenage soap triple cooper nyc vincent jam secured unusual answered slots disorder routine toolbar rocks titans wearing axis sought genes mounted habitat firewall median guns scanner herein animated judicial rio hero integer bachelor attitude engaged falling basics montreal carpet struct lenses binary genetics attended punk dropped duke walter pace besides wage arc hosts moments atlas strings dawn feels torture carl deleted coat mitchell mrs rica ralph warner app embedded inkjet wizard corps actors liver liable brochure morris petition eminem recall antenna picked assumed belief killing bikini memphis shoulder decor lookup texts harvard brokers roy ion diameter ottawa doll podcast seasons peru refine bidder singer evans herald literacy fails aging nike fed plugin diving invite alice latinas suppose reed involve moderate terror younger thirty mice opposite rapidly dealtime ban temp intro mercedes zus clerk vast mills outline tramadol holland receives jeans fonts ent odd wrap refers mood favor veterans quiz sigma xhtml occasion victim demands sleeping careful ext beam arrive sunset tracked moreover minimal lottery tops framed aside licence michelle essay amy dialogue camps declared aaron handheld trace disposal shut florists packs switches romania ncaa thou consult phd greatly blogging mask cycling midnight commonly inform turkish coal cry pentium quantum murray intent zoo largely pleasant announce spoke aka arrow sampling rough weird tee lion inspired holes weddings blade suddenly oxygen cookie meals canyon goto meters merely passes pointer stretch durham permits muslim neil sleeve netscape cleaner cricket beef feeding stroke township rankings cad hats robin robinson strap sharon crowd tcp surf olympic remained dir entities customs rainbow hook roulette decline gloves israeli medicare cord skiing cloud valve val hewlett explains proceed flickr feelings knife jamaica shelf timing liked adopt denied fotos britney freeware donation outer crop deaths rivers tales katrina islam nodes thumbs seeds cited lite ghz hub targeted skype realized twelve founder decade gamecube dispute tired titten adverse excerpt eng steam drinks ace voices acute climbing stood sing tons perfume carol honest albany restore stack somebody sue hang gbp curve creator amber museums coding tracker passage trunk hiking pierre jelsoft headset oakland colombia waves camel lamps hood suicide archived chi arabia juice chase logical sauce fame extract panama payable courtesy rfc athens judges seo retired isp remarks detected decades walked arising nissan bracelet ins eggs juvenile afraid acoustic railway cassette pointed jpg causing mistake norton locked fusion mineral ruby steering beads fortune canvas parish claimed screens cemetery planner croatia flows stadium mins fewer coupon nurses ssl stem proxy lanka opt edwards drew contests flu mlb costume tagged berkeley voted killer bikes gates adjusted rap tune bishop pulled corn shaped seasonal farmer counters puts grew tin slave cultures norfolk coaching examined trek encoding oem heroes painted lycos zdnet artwork cosmetic resulted portrait ethical carriers mobility floral builders ties struggle schemes neutral fisher rat spears bedding joining heading equally bearing brad combo seniors worlds guilty haven tablet jury dos tail charm lawn violent basin soup ranch crossing cottage drunk crimes resolved mozilla byte toner nose latex branches anymore oclc delhi holdings alien locator plc broke nepal zimbabwe juan msg browsing resolve cod melissa moscow thesis thru jews nylon discs rocky bargains frequent trim nigeria ceiling pixels ensuring hispanic gen anybody diamonds espn fleet untitled bunch totals marriott singing afford starring referral nhl optimal quit distinct lung turner";
+
+    class TrieNode { constructor() { this.c = {}; this.e = false; } }
+    class Trie {
+      constructor() { this.root = new TrieNode(); }
+      insert(w) { let n=this.root; for(let ch of w){if(!n.c[ch])n.c[ch]=new TrieNode();n=n.c[ch];} n.e=true; }
+      check(w) { let n=this.root; for(let ch of w){if(!n.c[ch])return 0;n=n.c[ch];} return n.e?2:1; }
+    }
+    const dictTrie = new Trie();
+
+    const STAGES = [];
         for(let i=1; i<=25; i++) {
             if(i<=5) STAGES.push({ id:i, target: 500+i*200, moves: 8+i*2, desc: `Score ${500+i*200} in ${8+i*2} moves` });
             else if(i<=12) STAGES.push({ id:i, frozen: 4+Math.floor((i-5)/2), moves: 10+(i-5), desc: `Break ${4+Math.floor((i-5)/2)} ice blocks` });
@@ -216,15 +268,15 @@
             else STAGES.push({ id:i, target: 1500, frozen: 4, bomb: 2, moves: 18, desc: `Master Trial ${i-18}` });
         }
         
-        const BIOMES = [
+        
+    const BIOMES = [
             { id: 'slate', name: 'Slate Core', cost: 0 },
             { id: 'cyber', name: 'Cyber Neon', cost: 100 },
             { id: 'amber', name: 'Amber Flare', cost: 100 },
             { id: 'emerald', name: 'Emerald Forest', cost: 100 },
             { id: 'cosmic', name: 'Cosmic Nebula', cost: 100 }
         ];
-        
-        const ACHVS = [
+    const ACHVS = [
             {id:'first_word', n:'First Word', d:'Submit your first word.'},
             {id:'long_word', n:'Long Word', d:'Submit a 6+ letter word.'},
             {id:'combo_5', n:'Combo Master', d:'Reach a 5-word combo streak.'},
@@ -238,15 +290,15 @@
             {id:'ice_break', n:'Ice Breaker', d:'Break a frozen tile.'},
             {id:'wildcard_use', n:'Wildcard', d:'Submit a word using the wildcard.'}
         ];
-        
-        // 3. Engines
-        const AdProvider = {
+    const LETTER_PTS = {A:1,E:1,I:1,O:1,U:1,N:1,R:1,S:1,T:1,L:1,D:2,G:2,B:3,C:3,M:3,P:3,F:4,H:4,V:4,W:4,Y:4,K:5,J:8,X:8,Q:10,Z:10};
+    const AdProvider = {
             init() {}, gameplayStart() {}, gameplayStop() {},
             gameLoadingFinished() { console.log('AdProvider ready'); },
             commercialBreak(cb) { if(cb) cb(); }
         };
         
-        const AudioEngine = {
+        
+    const AudioEngine = {
             ctx: null,
             init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
             play(freqs, type, dur, vol=0.1) {
@@ -270,450 +322,688 @@
             achievement() { this.play([880, 1047, 1319], 'triangle', 0.3); }
         };
         
-        const fxCanvas = document.getElementById('fx-canvas');
-        const fxCtx = fxCanvas.getContext('2d');
-        let particles = [];
-        function resizeCanvas() { fxCanvas.width = window.innerWidth; fxCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas); resizeCanvas();
         
-        function spawnParticles(x, y, color, type, count) {
-            for(let i=0; i<count; i++) {
-                let ang = Math.random() * Math.PI * 2;
-                let spd = Math.random() * 5 + 2;
-                particles.push({
-                    x, y, vx: Math.cos(ang)*spd, vy: Math.sin(ang)*spd,
-                    life: 1, type, color, size: Math.random()*4+2
-                });
-            }
-        }
-        function updateParticles() {
-            fxCtx.clearRect(0,0, fxCanvas.width, fxCanvas.height);
-            for(let i=particles.length-1; i>=0; i--) {
-                let p = particles[i];
-                p.x += p.vx; p.y += p.vy;
-                if(p.type==='shard') p.vy += 0.15; // gravity
-                p.life -= 0.02;
-                if(p.life <= 0) { particles.splice(i,1); continue; }
-                fxCtx.globalAlpha = Math.max(0, p.life);
-                fxCtx.fillStyle = p.color;
-                fxCtx.beginPath();
-                if(p.type==='spark') fxCtx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                else fxCtx.rect(p.x, p.y, p.size, p.size);
-                fxCtx.fill();
-            }
-            fxCtx.globalAlpha = 1;
-            requestAnimationFrame(updateParticles);
-        }
-        requestAnimationFrame(updateParticles);
-        
-        // 4. State & PRNG
-        let rand = Math.random;
-        function mulberry32(a) { return function() { var t = a += 0x6D2B79F5; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; } }
-        const VOWELS = "AAAAEEEEIIIOOOUU";
-        const CONS = "BBCCDDFFGGHHJKLLMMNNPPRRSSTTVVWWXYYZ";
-        function getRandomLetter() { return (rand() < 0.4) ? VOWELS[Math.floor(rand() * VOWELS.length)] : CONS[Math.floor(rand() * CONS.length)]; }
-        
-        let STATE = { mode: 'menu', stage: null, score: 0, moves: 20, time: 120, combo: 1, shards: parseInt(localStorage.getItem('lexigrid_shards')||0), board: [], path: [], wordsSubmitted: parseInt(localStorage.getItem('lexigrid_words')||0) };
-        let COLS = 4, ROWS = 4;
-        let isSubmitting = false, isDragging = false;
-        let comboTimer = null, gameTimer = null;
-        
-        // 5. Game Logic
-        function startGame(mode, stageId=null) {
-            STATE.mode = mode; STATE.stage = stageId;
-            STATE.score = 0; STATE.combo = 1; STATE.path = [];
-            COLS = (mode==='blitz' && localStorage.getItem('lexigrid_expert')==='1') ? 5 : 4; ROWS = COLS;
-            document.documentElement.style.setProperty('--cols', COLS);
-            document.documentElement.style.setProperty('--rows', ROWS);
-            
-            if(mode === 'daily') {
-                let d = new Date(); rand = mulberry32(d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate());
-            } else rand = Math.random;
-            
-            if(mode === 'blitz') { STATE.time = 120; document.getElementById('ui-time-box').style.display='flex'; document.getElementById('ui-moves-box').style.display='none'; }
-            else { STATE.moves = (stageId ? STAGES[stageId-1].moves : 20); document.getElementById('ui-time-box').style.display='none'; document.getElementById('ui-moves-box').style.display='flex'; }
-            
-            initBoard(); updateHUD(); hideModal();
-            document.getElementById('objective-text').innerText = stageId ? STAGES[stageId-1].desc : (mode==='collapse'?"Survive!":(mode==='daily'?"Daily Challenge":"Score max in 120s!"));
-            
-            clearInterval(gameTimer);
-            if(mode === 'blitz') {
-                gameTimer = setInterval(() => {
-                    STATE.time--; updateHUD();
-                    if(STATE.time<=0) endGame(false);
-                }, 1000);
-            }
-            AdProvider.gameplayStart();
-        }
-        
-        function initBoard() {
-            const grid = document.getElementById('board-grid');
-            grid.innerHTML = ''; STATE.board = [];
-            for(let r=0; r<ROWS; r++) {
-                let row = [];
-                for(let c=0; c<COLS; c++) { let t = createTile(r, c, false); row.push(t); grid.appendChild(t.el); }
-                STATE.board.push(row);
-            }
-            
-            if(STATE.mode === 'adventure') {
-                let st = STAGES[STATE.stage-1];
-                let specialCount = (st.frozen||0) + (st.bomb||0);
-                let flat = STATE.board.flat().sort(() => rand() - 0.5);
-                for(let i=0; i<specialCount; i++) {
-                    if(i < (st.frozen||0)) flat[i].type = 'frozen';
-                    else { flat[i].type = 'bomb'; flat[i].countdown = 5; }
-                    updateTileDOM(flat[i]);
-                }
-            } else if(STATE.mode !== 'daily') {
-                let flat = STATE.board.flat();
-                flat[Math.floor(rand()*16)].type = 'wild';
-                flat[Math.floor(rand()*16)].type = (rand()>0.5?'mult2':'mult3');
-                flat.forEach(t => updateTileDOM(t));
-            }
-        }
-        
-        function createTile(r, c, isDrop) {
-            let letter = getRandomLetter();
-            let el = document.createElement('div');
-            el.className = 'tile';
-            el.innerHTML = `<span>${letter}</span>`;
-            el.style.setProperty('--r', isDrop ? r - ROWS : r);
-            el.style.setProperty('--c', c);
-            if(isDrop) setTimeout(() => el.style.setProperty('--r', r), 50);
-            return { id: r*100+c+rand(), r, c, letter, type: 'normal', el, countdown: 0, actualLetter: letter };
-        }
-        
-        function updateTileDOM(t) {
-            t.el.className = `tile ${t.type} ${t.type==='frozen' && t.cracked?'cracked':''}`;
-            t.el.querySelector('span').innerText = t.type==='wild' ? '?' : t.letter;
-            if(t.type==='bomb') t.el.dataset.countdown = t.countdown;
-        }
-        
-        // 6. Interaction
-        const bg = document.getElementById('board-container');
-        bg.addEventListener('pointerdown', e => {
-            if(isSubmitting) return;
-            AudioEngine.init();
-            let el = e.target.closest('.tile');
-            if(el) { isDragging = true; STATE.path = []; handleEnter(el); }
-            e.preventDefault();
-        });
-        window.addEventListener('pointermove', e => {
-            if(!isDragging || isSubmitting) return;
-            let el = document.elementFromPoint(e.clientX, e.clientY)?.closest('.tile');
-            if(el) handleEnter(el);
-        });
-        window.addEventListener('pointerup', () => { if(isDragging) { isDragging = false; submitWord(); } });
-        
-        function handleEnter(tileEl) {
-            let t = STATE.board.flat().find(x => x.el === tileEl);
-            if(!t) return;
-            if(STATE.path.includes(t)) {
-                let idx = STATE.path.indexOf(t);
-                if(idx < STATE.path.length-1) {
-                    STATE.path.slice(idx+1).forEach(pt => pt.el.classList.remove('selected'));
-                    STATE.path = STATE.path.slice(0, idx+1);
-                    AudioEngine.note(STATE.path.length-1); updateTrace();
-                }
-                return;
-            }
-            if(STATE.path.length > 0) {
-                let last = STATE.path[STATE.path.length-1];
-                if(Math.abs(last.r - t.r) > 1 || Math.abs(last.c - t.c) > 1) return;
-            }
-            STATE.path.push(t); t.el.classList.add('selected');
-            
-            if(t.type === 'wild') {
-                let p = STATE.path.map(x=>x.actualLetter).join('').slice(0,-1);
-                t.actualLetter = 'A';
-                for(let ch of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") { if(dictTrie.check(p+ch) > 0) { t.actualLetter = ch; break; } }
-                t.el.querySelector('span').innerText = t.actualLetter;
-            } else t.actualLetter = t.letter;
-            
-            AudioEngine.note(STATE.path.length-1); updateTrace();
-            let word = STATE.path.map(x=>x.actualLetter).join('');
-            document.getElementById('word-display').innerText = word;
-            let st = dictTrie.check(word);
-            document.getElementById('trace-svg').setAttribute('class', st===2 ? 'trace-valid' : (st===1 ? '' : 'trace-invalid'));
-        }
-        
-        function updateTrace() {
-            if(STATE.path.length < 2) { document.getElementById('trace-glow').setAttribute('d',''); document.getElementById('trace-core').setAttribute('d',''); return; }
-            let pts = STATE.path.map(t => {
-                let rect = t.el.getBoundingClientRect(), pRect = bg.getBoundingClientRect();
-                return `${rect.left - pRect.left + rect.width/2},${rect.top - pRect.top + rect.height/2}`;
-            });
-            let d = `M ${pts[0]} ` + pts.slice(1).map(p => `L ${p}`).join(' ');
-            document.getElementById('trace-glow').setAttribute('d', d); document.getElementById('trace-core').setAttribute('d', d);
-        }
-        
-        // 7. Submission
-        function submitWord() {
-            if(STATE.path.length < 3) { clearPath(); return; }
-            isSubmitting = true;
-            let word = STATE.path.map(x=>x.actualLetter).join('');
-            if(dictTrie.check(word) === 2) {
-                checkAchv('first_word');
-                if(word.length >= 6) checkAchv('long_word');
-                STATE.wordsSubmitted++; localStorage.setItem('lexigrid_words', STATE.wordsSubmitted);
-                if(STATE.wordsSubmitted >= 100) checkAchv('lifetime_100');
-                
-                AudioEngine.valid();
-                let base = [0,0,0,100,200,400,700,1100,1600][Math.min(word.length, 8)];
-                let mult = 1, usedWild = false;
-                STATE.path.forEach(t => {
-                    if(t.type==='mult2') mult *= 2; if(t.type==='mult3') mult *= 3;
-                    if(t.type==='wild') usedWild = true;
-                });
-                if(usedWild) checkAchv('wildcard_use');
-                
-                let pts = Math.floor(base * mult * STATE.combo);
-                STATE.score += pts;
-                if(STATE.score >= 1000) checkAchv('score_1000');
-                
-                let rect = STATE.path[STATE.path.length-1].el.getBoundingClientRect();
-                showFloatingScore(pts, rect.left, rect.top);
-                spawnParticles(rect.left+rect.width/2, rect.top+rect.height/2, 'var(--trail)', 'spark', 15);
-                
-                STATE.shards += (word.length==4?5:(word.length==5?15:(word.length>=6?35:0)));
-                localStorage.setItem('lexigrid_shards', STATE.shards);
-                if(STATE.shards >= 500) checkAchv('shards_500');
-                
-                STATE.combo = Math.min(3, STATE.combo + 0.5);
-                if(STATE.combo >= 2.5) checkAchv('combo_5');
-                clearTimeout(comboTimer);
-                comboTimer = setTimeout(() => { STATE.combo = 1; updateHUD(); }, 5000);
-                
-                let toRemove = [];
-                STATE.path.forEach(t => {
-                    if(t.type==='frozen') {
-                        if(!t.cracked) { t.cracked = true; updateTileDOM(t); AudioEngine.shatter(); }
-                        else { toRemove.push(t); checkAchv('ice_break'); }
-                    } else toRemove.push(t);
-                    if(t.type==='bomb') { AudioEngine.shatter(); spawnParticles(rect.left, rect.top, '#ef4444', 'spark', 20); checkAchv('bomb_defuse'); }
-                });
-                
-                STATE.board.flat().forEach(t => {
-                    if(t.type==='bomb' && !toRemove.includes(t)) {
-                        t.countdown--; updateTileDOM(t);
-                        if(t.countdown<=0) {
-                            STATE.score = Math.max(0, STATE.score - 500); t.type = 'normal'; updateTileDOM(t); AudioEngine.invalid();
-                            bg.style.transform = 'translate(10px, 10px)'; setTimeout(()=>bg.style.transform='none', 100);
-                        }
-                    }
-                });
-                
-                collapse(toRemove);
-                if(STATE.mode !== 'blitz') STATE.moves--;
-                checkWinLoss();
-            } else { AudioEngine.invalid(); clearPath(); isSubmitting = false; }
-            updateHUD();
-        }
-        
-        function clearPath() {
-            STATE.path.forEach(t => t.el.classList.remove('selected')); STATE.path = [];
-            document.getElementById('word-display').innerText = '';
-            document.getElementById('trace-glow').setAttribute('d',''); document.getElementById('trace-core').setAttribute('d','');
-            document.getElementById('trace-svg').setAttribute('class','');
-        }
-        
-        function collapse(toRemove) {
-            toRemove.forEach(t => t.el.remove());
-            for(let c=0; c<COLS; c++) {
-                let write = ROWS - 1;
-                for(let r=ROWS-1; r>=0; r--) {
-                    let t = STATE.board[r][c];
-                    if(!toRemove.includes(t)) { STATE.board[write][c] = t; t.r = write; t.el.style.setProperty('--r', write); write--; }
-                }
-                for(let r=write; r>=0; r--) { let t = createTile(r, c, true); STATE.board[r][c] = t; document.getElementById('board-grid').appendChild(t.el); }
-            }
-            clearPath(); setTimeout(() => { isSubmitting = false; }, 300);
-        }
-        
-        function checkWinLoss() {
-            if(STATE.mode === 'adventure') {
-                let st = STAGES[STATE.stage-1], won = false;
-                if(st.target && STATE.score >= st.target) won = true;
-                if(st.frozen && STATE.board.flat().filter(t=>t.type==='frozen').length===0) won = true;
-                if(st.bomb && STATE.board.flat().filter(t=>t.type==='bomb').length===0) won = true;
-                if(won) endGame(true); else if(STATE.moves <= 0) endGame(false);
-            } else if (STATE.mode !== 'blitz' && STATE.moves <= 0) endGame(false);
-        }
-        
-        function endGame(won) {
-            AdProvider.gameplayStop(); clearInterval(gameTimer);
-            let starsStr = won ? (STATE.moves >= STAGES[STATE.stage-1].moves*0.5 ? '⭐⭐⭐' : (STATE.moves >= STAGES[STATE.stage-1].moves*0.25 ? '⭐⭐' : '⭐')) : '❌';
-            document.getElementById('end-title').innerText = won ? "Stage Clear!" : "Game Over";
-            document.getElementById('end-desc').innerText = won ? `You earned 100 💎!` : `Better luck next time.`;
-            document.getElementById('end-stars').innerText = STATE.mode==='adventure' ? starsStr : `Score: ${STATE.score}`;
-            
-            if(won && STATE.mode === 'adventure') {
-                STATE.shards += 100; localStorage.setItem('lexigrid_shards', STATE.shards);
-                let adv = JSON.parse(localStorage.getItem('lexigrid_adventure')||'{}');
-                adv[STATE.stage] = Math.max(adv[STATE.stage]||0, starsStr.length);
-                localStorage.setItem('lexigrid_adventure', JSON.stringify(adv));
-                AudioEngine.play([523, 659, 784, 1047], 'sine', 0.2);
-                
-                let clearedCount = Object.keys(adv).length;
-                if(clearedCount >= 3) checkAchv('adventure_3');
-                if(Object.values(adv).filter(x=>x===3).length >= 5) checkAchv('adventure_3stars');
-            }
-            if(STATE.mode === 'daily') {
-                let log = JSON.parse(localStorage.getItem('lexigrid_daily_log')||'[]');
-                let today = new Date().toISOString().split('T')[0];
-                if(!log.includes(today)) { log.push(today); localStorage.setItem('lexigrid_daily_log', JSON.stringify(log)); }
-                if(log.length >= 7) checkAchv('streak_7');
-            }
-            showModal('end-modal');
-        }
-        
-        // 8. Achievements
-        function checkAchv(id) {
-            let a = JSON.parse(localStorage.getItem('lexigrid_achievements')||'[]');
-            if(!a.includes(id)) {
-                a.push(id); localStorage.setItem('lexigrid_achievements', JSON.stringify(a));
-                let ac = ACHVS.find(x=>x.id===id);
-                document.getElementById('toast-title').innerText = ac.n;
-                document.getElementById('toast-desc').innerText = ac.d;
-                document.getElementById('achievement-toast').classList.add('show');
-                AudioEngine.achievement();
-                setTimeout(()=>document.getElementById('achievement-toast').classList.remove('show'), 4000);
-            }
-        }
-        function populateAchvModal() {
-            let list = document.getElementById('achievements-list'); list.innerHTML='';
-            let a = JSON.parse(localStorage.getItem('lexigrid_achievements')||'[]');
-            ACHVS.forEach(ac => {
-                let d = document.createElement('div');
-                d.style.padding = '10px'; d.style.background = 'rgba(255,255,255,0.05)'; d.style.borderRadius = '8px';
-                d.innerHTML = `<b>${a.includes(ac.id)?'✅':'🔒'} ${ac.n}</b><br><small>${ac.d}</small>`;
-                list.appendChild(d);
-            });
-        }
-        
-        // 9. UI Helpers
-        function updateHUD() {
-            document.getElementById('ui-score').innerText = STATE.score; document.getElementById('ui-moves').innerText = STATE.moves;
-            document.getElementById('ui-time').innerText = STATE.time; document.getElementById('ui-combo').innerText = STATE.combo + 'x';
-            document.getElementById('ui-shards').innerText = STATE.shards;
-        }
-        function showModal(id) { document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-        function hideModal() { document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active')); }
-        
-        function openStageSelect() {
-            let grid = document.getElementById('stage-grid'); grid.innerHTML='';
-            let adv = JSON.parse(localStorage.getItem('lexigrid_adventure')||'{}');
-            STAGES.forEach(st => {
-                let unlocked = st.id===1 || adv[st.id-1];
-                let btn = document.createElement('div');
-                btn.className = `stage-btn ${unlocked?'unlocked':''}`;
-                btn.innerHTML = `<div>${st.id}</div><div class="stars">${'⭐'.repeat(adv[st.id]||0)}</div>`;
-                if(unlocked) btn.onclick = () => startGame('adventure', st.id);
-                grid.appendChild(btn);
-            });
-            showModal('stage-modal');
-        }
-        
-        function setupThemes() {
-            let list = document.getElementById('themes-list'); list.innerHTML='';
-            let unlocked = JSON.parse(localStorage.getItem('lexigrid_themes')||'["slate"]');
-            BIOMES.forEach(b => {
-                let btn = document.createElement('button'); btn.className = 'btn';
-                let isU = unlocked.includes(b.id) || b.cost===0;
-                btn.innerText = `${b.name} ${isU ? '' : '(100💎)'}`;
-                btn.onclick = () => {
-                    if(isU) { document.documentElement.setAttribute('data-theme', b.id); localStorage.setItem('lexigrid_theme', b.id); hideModal(); }
-                    else if(STATE.shards >= 100) {
-                        STATE.shards -= 100; localStorage.setItem('lexigrid_shards', STATE.shards);
-                        unlocked.push(b.id); localStorage.setItem('lexigrid_themes', JSON.stringify(unlocked));
-                        setupThemes(); updateHUD();
-                    }
-                };
-                list.appendChild(btn);
-            });
-            document.documentElement.setAttribute('data-theme', localStorage.getItem('lexigrid_theme')||'slate');
-        }
-        
-        function showStatsModal() {
-            let cal = document.getElementById('calendar-grid'); cal.innerHTML='';
-            let log = JSON.parse(localStorage.getItem('lexigrid_daily_log')||'[]');
-            for(let i=1; i<=30; i++) {
-                let d = document.createElement('div');
-                d.className = 'cal-day ' + (log.length>=i ? 'done' : '');
-                d.innerText = i; cal.appendChild(d);
-            }
-            document.getElementById('streak-text').innerText = `Current Streak: ${log.length} days`;
-            showModal('stats-modal');
-        }
-        
-        function showFloatingScore(pts, x, y) {
-            let el = document.createElement('div'); el.className = 'float-score'; el.innerText = '+' + pts;
-            el.style.left = x + 'px'; el.style.top = y + 'px';
-            document.getElementById('float-container').appendChild(el); setTimeout(()=>el.remove(), 1000);
-        }
-        function toggleMute() {
-            let m = localStorage.getItem('lexigrid_muted')==='1'; localStorage.setItem('lexigrid_muted', m ? '0' : '1');
-            document.getElementById('btn-mute').innerText = m ? '🔊' : '🔇';
-        }
-        function shareResult() {
-            let text = `LexiGrid ${STATE.mode} 🟣\nScore: ${STATE.score}\nhttps://snappgrid.com/lexigrid`;
-            if(navigator.clipboard) navigator.clipboard.writeText(text);
-            let btn = document.getElementById('end-next-btn');
-            btn.innerText = "Copied!"; setTimeout(()=>btn.innerText="Continue", 2000);
-        }
-        
-        let focusedTile = -1; // keyboard nav state: index into flat board array
 
-        window.addEventListener('keydown', e => {
-            if(e.key==='Escape') { clearPath(); return; }
-            
-            // Arrow key tile focus navigation
-            const cols = STATE.board ? STATE.board[0].length : 4;
-            const total = STATE.board ? STATE.board.flat().length : 16;
-            if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) {
-                e.preventDefault();
-                if(focusedTile < 0) focusedTile = 0;
-                else if(e.key==='ArrowRight') focusedTile = Math.min(focusedTile + 1, total - 1);
-                else if(e.key==='ArrowLeft')  focusedTile = Math.max(focusedTile - 1, 0);
-                else if(e.key==='ArrowDown')  focusedTile = Math.min(focusedTile + cols, total - 1);
-                else if(e.key==='ArrowUp')    focusedTile = Math.max(focusedTile - cols, 0);
-                updateTileFocus();
-                return;
-            }
-            // Enter or Space: select focused tile or submit
-            if(e.key==='Enter' || e.key===' ') {
-                e.preventDefault();
-                if(focusedTile >= 0 && STATE.board) {
-                    const row = Math.floor(focusedTile / cols);
-                    const col = focusedTile % cols;
-                    const tile = STATE.board[row] && STATE.board[row][col];
-                    if(tile) {
-                        if(STATE.path.includes(tile) && STATE.path.length > 1) submitWord();
-                        else if(!STATE.path.includes(tile)) handleEnter(tile.el);
-                    }
-                }
-            }
-        });
-        
-        function updateTileFocus() {
-            document.querySelectorAll('.tile').forEach(t => t.classList.remove('keyboard-focus'));
-            if(!STATE.board || focusedTile < 0) return;
-            const cols = STATE.board[0].length;
-            const row = Math.floor(focusedTile / cols);
-            const col = focusedTile % cols;
-            const tile = STATE.board[row] && STATE.board[row][col];
-            if(tile && tile.el) { tile.el.classList.add('keyboard-focus'); }
-        }
+    let rand = Math.random;
+    function mulberry32(a){ return function(){ var t=a+=0x6D2B79F5; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return((t^t>>>14)>>>0)/4294967296; }; }
+    const VOWELS='AAAAEEEEIIIOOOUU', CONS='BBCCDDFFGGHHJKLLMMNNPPRRSSTTVVWWXYYZ';
+    function getRandomLetter(){ return(rand()<.4)?VOWELS[Math.floor(rand()*VOWELS.length)]:CONS[Math.floor(rand()*CONS.length)]; }
+    let COLS=4, ROWS=4, isSubmitting=false, isDragging=false, comboTimer=null, gameTimer=null, focusedTile=-1;
+    let STATE = { mode:'menu', stage:null, score:0, moves:20, time:120, combo:1, shards:parseInt(localStorage.getItem('lexigrid_shards')||0), board:[], path:[], wordsSubmitted:parseInt(localStorage.getItem('lexigrid_words')||0) };
 
-        
-        window.onload = () => {
-            RAW_DICTIONARY.split(' ').forEach(w => dictTrie.insert(w.toUpperCase()));
-            document.getElementById('loadingScreen').style.opacity = '0';
-            setTimeout(() => document.getElementById('loadingScreen').style.display = 'none', 500);
-            AdProvider.gameLoadingFinished();
-            setupThemes();
-            document.getElementById('btn-mute').innerText = localStorage.getItem('lexigrid_muted')==='1' ? '🔇' : '🔊';
-        };
-    </script>
+    let app, boardContainer, trailGfx, moteContainer;
+    let tileSprites = []; 
+    const TILE_GAP = 6;
+    let BOARD_SIZE=0, TILE_SIZE=0;
+
+    const PALETTES = {
+      slate:   { bg:0x1e293b, top:0x283548, active:0x4f46e5, accent:0x818cf8, trail:0xf59e0b, shadow:0x080e1c, frozen:0x93c5fd, bomb:0x7f1d1d, bombBorder:0xef4444, mult2:0xf59e0b, mult3:0xef4444 },
+      cyber:   { bg:0x0c1220, top:0x112030, active:0x06b6d4, accent:0x22d3ee, trail:0xec4899, shadow:0x020810, frozen:0x7dd3fc, bomb:0x450a0a, bombBorder:0xf87171, mult2:0xfbbf24, mult3:0xf97316 },
+      amber:   { bg:0x27272a, top:0x323236, active:0xea580c, accent:0xfb923c, trail:0xeab308, shadow:0x111113, frozen:0x93c5fd, bomb:0x3b1515, bombBorder:0xfca5a5, mult2:0xfbbf24, mult3:0xf97316 },
+      emerald: { bg:0x064e3b, top:0x0a6650, active:0x059669, accent:0x6ee7b7, trail:0x34d399, shadow:0x021a14, frozen:0x7dd3fc, bomb:0x2d0a0a, bombBorder:0xf87171, mult2:0xfbbf24, mult3:0xf97316 },
+      cosmic:  { bg:0x2e2663, top:0x3d3280, active:0x9333ea, accent:0xc084fc, trail:0xa855f7, shadow:0x0d0b25, frozen:0x93c5fd, bomb:0x3b0d5c, bombBorder:0xf87171, mult2:0xfbbf24, mult3:0xf97316 }
+    };
+    function pal(){ return PALETTES[document.documentElement.getAttribute('data-theme')||'slate']||PALETTES.slate; }
+
+    async function initPixi() {
+      const mount = document.getElementById('pixi-mount');
+      BOARD_SIZE = Math.min(window.innerWidth * 0.88, window.innerHeight * 0.50, 420);
+      TILE_SIZE  = Math.floor((BOARD_SIZE - TILE_GAP * (COLS + 1)) / COLS);
+      const SZ   = TILE_SIZE * COLS + TILE_GAP * (COLS + 1);
+      mount.style.width = mount.style.height = SZ + 'px';
+
+      app = new PIXI.Application();
+      await app.init({
+        width: SZ, height: SZ,
+        backgroundAlpha: 0,
+        antialias: true,
+        resolution: window.devicePixelRatio || 2,
+        autoDensity: true
+      });
+      const cv = app.canvas;
+      cv.style.width = cv.style.height = SZ + 'px';
+      cv.style.display = 'block';
+      cv.style.touchAction = 'none';
+      mount.appendChild(cv);
+
+      const chassis = new PIXI.Graphics();
+      chassis.roundRect(0, 0, SZ, SZ, 16);
+      chassis.fill({ color:0x0a1220, alpha:0.55 });
+      chassis.stroke({ color:0xffffff, alpha:0.07, width:1 });
+      app.stage.addChild(chassis);
+
+      boardContainer = new PIXI.Container();
+      app.stage.addChild(boardContainer);
+      trailGfx = new PIXI.Graphics();
+      app.stage.addChild(trailGfx);
+      moteContainer = new PIXI.Container();
+      app.stage.addChild(moteContainer);
+
+      initMotes(SZ);
+      app.ticker.add(tickMotes);
+      setupInput(cv);
+    }
+
+    function makeTileSprite(td, col, row) {
+      const p = pal(), S = TILE_SIZE, R = 11;
+      const x = TILE_GAP + col * (S + TILE_GAP);
+      const y = TILE_GAP + row * (S + TILE_GAP);
+      const ct = new PIXI.Container();
+      ct.x = x; ct.y = y;
+
+      const sh = new PIXI.Graphics();
+      sh.roundRect(2, 7, S-2, S-1, R); sh.fill({ color: p.shadow, alpha: 0.7 });
+      ct.addChild(sh);
+
+      const bg = new PIXI.Graphics();
+      paintTile(bg, td.type, false, S, R, p);
+      ct.addChild(bg);
+
+      const shine = new PIXI.Graphics();
+      shine.roundRect(0, 0, S, S*0.45, R); shine.fill({ color:0xffffff, alpha:0.09 });
+      ct.addChild(shine);
+
+      const lbl = new PIXI.Text({
+        text: td.type==='wild' ? '?' : td.letter,
+        style: new PIXI.TextStyle({
+          fontFamily: 'Segoe UI, system-ui, sans-serif',
+          fontSize: Math.floor(S * 0.41), fontWeight: '800',
+          fill: td.type==='frozen' ? 0xbae6fd : (td.type==='wild' ? p.trail : 0xf1f5f9),
+          dropShadow: { color:0x000000, blur:4, distance:1, alpha:.7 }
+        })
+      });
+      lbl.anchor.set(0.5); lbl.x = S/2; lbl.y = S/2 - 2;
+      ct.addChild(lbl);
+
+      if (td.type !== 'bomb' && td.type !== 'wild') {
+        const pts = LETTER_PTS[td.letter] || 1;
+        const badge = new PIXI.Text({ text: String(pts), style: new PIXI.TextStyle({ fontFamily:'Segoe UI,sans-serif', fontSize:Math.floor(S*.14), fontWeight:'700', fill:0xffffff }) });
+        badge.alpha = 0.4; badge.anchor.set(1,1); badge.x = S-4; badge.y = S-4;
+        ct.addChild(badge);
+      }
+
+      if (td.type === 'bomb') {
+        const cb = new PIXI.Text({ text: String(td.countdown||5), style: new PIXI.TextStyle({ fontFamily:'Segoe UI,sans-serif', fontSize:Math.floor(S*.2), fontWeight:'900', fill:0xffffff }) });
+        cb.name = 'cb'; cb.anchor.set(0.5,0); cb.x=S/2; cb.y=4;
+        ct.addChild(cb);
+      }
+
+      ct.eventMode = 'static';
+      ct.hitArea = new PIXI.Rectangle(0, 0, S, S);
+      boardContainer.addChild(ct);
+      const sp = { container:ct, bg, lbl, tileData:td, pxX:x, pxY:y };
+      return sp;
+    }
+
+    function paintTile(g, type, selected, S, R, p) {
+      g.clear();
+      if (selected) {
+        g.roundRect(0,0,S,S,R); g.fill({ color:p.active }); g.stroke({ color:p.accent, alpha:.8, width:2 });
+      } else if (type==='mult2') {
+        g.roundRect(0,0,S,S,R); g.fill({ color:p.bg }); g.stroke({ color:p.mult2, alpha:.9, width:2 });
+      } else if (type==='mult3') {
+        g.roundRect(0,0,S,S,R); g.fill({ color:p.bg }); g.stroke({ color:p.mult3, alpha:.9, width:2 });
+      } else if (type==='frozen') {
+        g.roundRect(0,0,S,S,R); g.fill({ color:0x1d4ed8, alpha:.4 }); g.stroke({ color:p.frozen, alpha:.7, width:2 });
+      } else if (type==='bomb') {
+        g.roundRect(0,0,S,S,R); g.fill({ color:p.bomb }); g.stroke({ color:p.bombBorder, alpha:.85, width:2 });
+      } else {
+        g.roundRect(0,0,S,S,R); g.fill({ color:p.top });
+        g.stroke({ color:0xffffff, alpha:.07, width:1 });
+      }
+    }
+
+    function refreshSprite(sp) {
+      const p = pal(), S = TILE_SIZE, R = 11;
+      const t = sp.tileData;
+      const sel = STATE.path.includes(t);
+      paintTile(sp.bg, t.type, sel, S, R, p);
+      sp.lbl.text = (t.type==='wild') ? (t.actualLetter||'?') : t.letter;
+      sp.lbl.style.fill = t.type==='frozen' ? 0xbae6fd : (t.type==='wild' ? p.trail : 0xf1f5f9);
+      const cb = sp.container.getChildByName('cb');
+      if (cb) cb.text = String(t.countdown);
+    }
+
+    function canvasCoords(e, cv) {
+      const r = cv.getBoundingClientRect();
+      const sx = (app.canvas.width / app.renderer.resolution) / r.width;
+      const sy = (app.canvas.height / app.renderer.resolution) / r.height;
+      return { x:(e.clientX - r.left)*sx, y:(e.clientY - r.top)*sy };
+    }
+    function hitTest(lx, ly) {
+      for (const sp of tileSprites) {
+        if (lx>=sp.pxX && lx<=sp.pxX+TILE_SIZE && ly>=sp.pxY && ly<=sp.pxY+TILE_SIZE) return sp;
+      }
+      return null;
+    }
+    function setupInput(cv) {
+      cv.addEventListener('pointerdown', e=>{ if(isSubmitting)return; AudioEngine.init(); const {x,y}=canvasCoords(e,cv); const sp=hitTest(x,y); if(sp){isDragging=true;STATE.path=[];enterTile(sp);} e.preventDefault(); },{passive:false});
+      window.addEventListener('pointermove', e=>{ if(!isDragging||isSubmitting)return; const {x,y}=canvasCoords(e,app.canvas); const sp=hitTest(x,y); if(sp)enterTile(sp); });
+      window.addEventListener('pointerup', ()=>{ if(isDragging){isDragging=false;submitWord();} });
+    }
+
+    function enterTile(sp) {
+      const t = sp.tileData;
+      if (STATE.path.includes(t)) {
+        const idx = STATE.path.indexOf(t);
+        if (idx < STATE.path.length-1) {
+          const removed = STATE.path.splice(idx+1);
+          removed.forEach(pt => { const s=tileSprites.find(x=>x.tileData===pt); if(s){gsap.to(s.container,{scaleX:1,scaleY:1,duration:.15,ease:'back.out(2)'});refreshSprite(s);} });
+          AudioEngine.note(STATE.path.length-1); drawTrail();
+        }
+        return;
+      }
+      if (STATE.path.length > 0) {
+        const last = STATE.path[STATE.path.length-1];
+        if (Math.abs(last.r-t.r)>1 || Math.abs(last.c-t.c)>1) return;
+      }
+      STATE.path.push(t);
+      if (t.type==='wild') {
+        let p=STATE.path.map(x=>x.actualLetter).join('').slice(0,-1);
+        t.actualLetter='A';
+        for(let ch of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'){if(dictTrie.check(p+ch)>0){t.actualLetter=ch;break;}}
+      } else t.actualLetter=t.letter;
+      gsap.killTweensOf(sp.container,{scaleX:true,scaleY:true});
+      gsap.to(sp.container,{scaleX:.87,scaleY:1.15,duration:.08,ease:'power2.out',onComplete:()=>gsap.to(sp.container,{scaleX:1,scaleY:1,duration:.3,ease:'back.out(2.5)'}),});
+      refreshSprite(sp);
+      AudioEngine.note(STATE.path.length-1);
+      drawTrail();
+      const word = STATE.path.map(x=>x.actualLetter).join('');
+      const wd = document.getElementById('word-display');
+      wd.innerText = word;
+      const st = dictTrie.check(word);
+      wd.style.color = st===2?'#4ade80':(st===1?'var(--trail-color)':'#f87171');
+      wd.style.textShadow = st===2?'0 0 20px #4ade80':(st===1?'0 0 20px var(--trail-color)':'0 0 20px #f87171');
+    }
+
+    function drawTrail() {
+      trailGfx.clear();
+      if (STATE.path.length < 2) return;
+      const p = pal();
+      const word = STATE.path.map(x=>x.actualLetter).join('');
+      const valid = dictTrie.check(word);
+      const color = valid===2 ? 0x4ade80 : (valid===1 ? p.trail : 0xf87171);
+      const pts = STATE.path.map(t=>{ const sp=tileSprites.find(s=>s.tileData===t); if(!sp)return null; return {x:sp.pxX+TILE_SIZE/2, y:sp.pxY+TILE_SIZE/2}; }).filter(Boolean);
+      if (pts.length < 2) return;
+      trailGfx.moveTo(pts[0].x,pts[0].y);
+      for(let i=1;i<pts.length;i++)trailGfx.lineTo(pts[i].x,pts[i].y);
+      trailGfx.stroke({color,width:14,alpha:.22,cap:'round',join:'round'});
+      trailGfx.moveTo(pts[0].x,pts[0].y);
+      for(let i=1;i<pts.length;i++)trailGfx.lineTo(pts[i].x,pts[i].y);
+      trailGfx.stroke({color,width:4.5,alpha:.95,cap:'round',join:'round'});
+      const L=pts[pts.length-1];
+      trailGfx.circle(L.x,L.y,7); trailGfx.fill({color,alpha:.85});
+    }
+
+    function clearPath() {
+      STATE.path.forEach(t=>{ const sp=tileSprites.find(s=>s.tileData===t); if(sp){gsap.to(sp.container,{scaleX:1,scaleY:1,duration:.2});refreshSprite(sp);} });
+      STATE.path=[];
+      trailGfx.clear();
+      const wd=document.getElementById('word-display');
+      wd.innerText=''; wd.style.color=''; wd.style.textShadow='';
+    }
+
+    function pixiToScreen(lx, ly) {
+      const r = app.canvas.getBoundingClientRect();
+      const lw = app.canvas.width / app.renderer.resolution;
+      const lh = app.canvas.height / app.renderer.resolution;
+      return { x: r.left + lx * (r.width/lw), y: r.top + ly * (r.height/lh) };
+    }
+
+    function submitWord() {
+      if(STATE.path.length < 3) { clearPath(); return; }
+      isSubmitting = true;
+      let word = STATE.path.map(x=>x.actualLetter).join('');
+      if(dictTrie.check(word) === 2) {
+          checkAchv('first_word');
+          if(word.length >= 6) checkAchv('long_word');
+          STATE.wordsSubmitted++; localStorage.setItem('lexigrid_words', STATE.wordsSubmitted);
+          if(STATE.wordsSubmitted >= 100) checkAchv('lifetime_100');
+          
+          AudioEngine.valid();
+          if (word.length >= 5) {
+             gsap.to(document.getElementById('pixi-mount'), {x:7,duration:.04,ease:'power1.inOut',yoyo:true,repeat:4,onComplete:()=>gsap.set(document.getElementById('pixi-mount'),{x:0})});
+          }
+          let base = [0,0,0,100,200,400,700,1100,1600][Math.min(word.length, 8)];
+          let mult = 1, usedWild = false;
+          STATE.path.forEach(t => {
+              if(t.type==='mult2') mult *= 2; if(t.type==='mult3') mult *= 3;
+              if(t.type==='wild') usedWild = true;
+          });
+          if(usedWild) checkAchv('wildcard_use');
+          
+          let pts = Math.floor(base * mult * STATE.combo);
+          STATE.score += pts;
+          if(STATE.score >= 1000) checkAchv('score_1000');
+          
+          let lastSp = tileSprites.find(s=>s.tileData===STATE.path[STATE.path.length-1]);
+          if(lastSp) {
+              const sc = pixiToScreen(lastSp.pxX+TILE_SIZE/2, lastSp.pxY+TILE_SIZE/2);
+              floatScore(pts, sc.x, sc.y, word.length>=5);
+              burstAt(lastSp.pxX+TILE_SIZE/2, lastSp.pxY+TILE_SIZE/2);
+          }
+          
+          STATE.shards += (word.length==4?5:(word.length==5?15:(word.length>=6?35:0)));
+          localStorage.setItem('lexigrid_shards', STATE.shards);
+          if(STATE.shards >= 500) checkAchv('shards_500');
+          
+          STATE.combo = Math.min(3, STATE.combo + 0.5);
+          if(STATE.combo >= 2.5) checkAchv('combo_5');
+          clearTimeout(comboTimer);
+          comboTimer = setTimeout(() => { STATE.combo = 1; updateHUD(); }, 5000);
+          
+          let toRemove = [];
+          STATE.path.forEach(t => {
+              const sp = tileSprites.find(s=>s.tileData===t);
+              if(t.type==='frozen') {
+                  if(!t.cracked) { t.cracked = true; refreshSprite(sp); AudioEngine.shatter(); }
+                  else { toRemove.push(t); checkAchv('ice_break'); if(sp) iceShatter(sp); }
+              } else {
+                  toRemove.push(t);
+              }
+              if(t.type==='bomb') { 
+                  AudioEngine.shatter(); 
+                  if(sp) bombBlast(sp); 
+                  checkAchv('bomb_defuse'); 
+              }
+          });
+          
+          STATE.board.flat().forEach(t => {
+              if(t.type==='bomb' && !toRemove.includes(t)) {
+                  t.countdown--; 
+                  const sp = tileSprites.find(s=>s.tileData===t);
+                  if(sp) refreshSprite(sp);
+                  if(t.countdown<=0) {
+                      STATE.score = Math.max(0, STATE.score - 500); t.type = 'normal'; if(sp)refreshSprite(sp); AudioEngine.invalid();
+                      gsap.to(document.getElementById('pixi-mount'), {x:7,duration:.04,ease:'power1.inOut',yoyo:true,repeat:4,onComplete:()=>gsap.set(document.getElementById('pixi-mount'),{x:0})});
+                  }
+              }
+          });
+          
+          collapse(toRemove);
+          if(STATE.mode !== 'blitz') STATE.moves--;
+          checkWinLoss();
+      } else { AudioEngine.invalid(); clearPath(); isSubmitting = false; }
+      updateHUD();
+    }
+
+    function createTile(r, c) {
+      let letter = getRandomLetter();
+      return { id: r*100+c+rand(), r, c, letter, type: 'normal', countdown: 0, actualLetter: letter };
+    }
+
+    function collapse(toRemove) {
+      toRemove.forEach(t => {
+          const sp = tileSprites.find(s=>s.tileData===t);
+          if(sp) {
+              gsap.to(sp.container, {alpha:0, scaleX:1.3, scaleY:1.3, duration:.2, onComplete:() => {
+                  boardContainer.removeChild(sp.container);
+                  tileSprites = tileSprites.filter(x=>x!==sp);
+              }});
+          }
+      });
+      for(let c=0; c<COLS; c++) {
+          let write = ROWS - 1;
+          for(let r=ROWS-1; r>=0; r--) {
+              let t = STATE.board[r][c];
+              if(!toRemove.includes(t)) { 
+                  STATE.board[write][c] = t; 
+                  t.r = write; 
+                  const sp = tileSprites.find(s=>s.tileData===t);
+                  if(sp) {
+                      const newY = TILE_GAP + write * (TILE_SIZE + TILE_GAP);
+                      sp.pxY = newY;
+                      gsap.to(sp.container, {y:newY, duration:.35, ease:'bounce.out', delay:.18});
+                  }
+                  write--; 
+              }
+          }
+          for(let r=write; r>=0; r--) { 
+              let t = createTile(r, c); 
+              STATE.board[r][c] = t; 
+              const sp = makeTileSprite(t, c, r);
+              const targetY = sp.pxY;
+              sp.container.y = targetY - (ROWS * (TILE_SIZE + TILE_GAP));
+              gsap.to(sp.container, {y:targetY, duration:.35, ease:'bounce.out', delay:.18});
+              tileSprites.push(sp);
+          }
+      }
+      clearPath(); setTimeout(() => { isSubmitting = false; }, 400);
+    }
+
+    const motePool = [];
+    function initMotes(SZ) {
+      for(let i=0;i<20;i++) {
+        const g=new PIXI.Graphics();
+        const r=Math.random()*1.5+.4;
+        g.circle(0,0,r); g.fill({color:0x818cf8,alpha:1});
+        g.x=Math.random()*SZ; g.y=Math.random()*SZ; g.alpha=Math.random()*.25+.06;
+        motePool.push({g,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,SZ});
+        moteContainer.addChild(g);
+      }
+    }
+    function tickMotes() {
+      motePool.forEach(m=>{ m.g.x+=m.vx; m.g.y+=m.vy; if(m.g.x<0)m.g.x=m.SZ; if(m.g.x>m.SZ)m.g.x=0; if(m.g.y<0)m.g.y=m.SZ; if(m.g.y>m.SZ)m.g.y=0; });
+    }
+    function burstAt(lx, ly) {
+      const p=pal();
+      for(let i=0;i<12;i++) {
+        const g=new PIXI.Graphics(); g.circle(0,0,Math.random()*3+1.5); g.fill({color:p.trail,alpha:1});
+        g.x=lx; g.y=ly; app.stage.addChild(g);
+        const a=Math.random()*Math.PI*2,spd=Math.random()*5+3;
+        gsap.to(g,{x:lx+Math.cos(a)*spd*16,y:ly+Math.sin(a)*spd*16,alpha:0,duration:.7+Math.random()*.4,ease:'power2.out',onComplete:()=>app.stage.removeChild(g)});
+      }
+    }
+    function iceShatter(sp) {
+      const cx=sp.pxX+TILE_SIZE/2, cy=sp.pxY+TILE_SIZE/2;
+      for(let i=0;i<8;i++) {
+        const g=new PIXI.Graphics(); const sz=Math.random()*8+3;
+        g.rect(-sz/2,-sz/2,sz,sz); g.fill({color:0x93c5fd,alpha:1}); g.rotation=Math.random()*Math.PI*2;
+        g.x=cx; g.y=cy; app.stage.addChild(g);
+        const a=Math.random()*Math.PI*2,spd=Math.random()*4+2;
+        gsap.to(g,{x:cx+Math.cos(a)*spd*20,y:cy+Math.sin(a)*spd*20+45,rotation:Math.random()*8,alpha:0,duration:.9,ease:'power2.out',onComplete:()=>app.stage.removeChild(g)});
+      }
+    }
+    function bombBlast(sp) {
+      const cx=sp.pxX+TILE_SIZE/2, cy=sp.pxY+TILE_SIZE/2;
+      const ring=new PIXI.Graphics(); ring.circle(0,0,12); ring.stroke({color:0xef4444,alpha:.9,width:3});
+      ring.x=cx; ring.y=cy; app.stage.addChild(ring);
+      gsap.to(ring,{pixi:{scaleX:7,scaleY:7},alpha:0,duration:.55,ease:'power2.out',onComplete:()=>app.stage.removeChild(ring)});
+      for(let i=0;i<16;i++) {
+        const g=new PIXI.Graphics(); g.circle(0,0,2.5); g.fill({color:0xfca5a5,alpha:1});
+        g.x=cx; g.y=cy; app.stage.addChild(g);
+        const a=Math.random()*Math.PI*2,spd=Math.random()*7+4;
+        gsap.to(g,{x:cx+Math.cos(a)*spd*20,y:cy+Math.sin(a)*spd*20+30,alpha:0,duration:.8,ease:'power2.out',onComplete:()=>app.stage.removeChild(g)});
+      }
+    }
+    function floatScore(pts, sx, sy, big) {
+      const el=document.createElement('div'); el.className='float-tag';
+      el.style.cssText=`left:${sx}px;top:${sy}px;color:${big?'#4ade80':'var(--trail-color)'};font-size:${big?'32px':'26px'};`;
+      el.innerText=`+${pts}${big?' ✨':''}`;
+      document.getElementById('float-container').appendChild(el);
+      gsap.to(el,{y:-70,x:(Math.random()-.5)*40,alpha:0,scale:big?1.4:.95,rotation:(Math.random()-.5)*16,duration:1.15,ease:'power2.out',onComplete:()=>el.remove()});
+    }
+
+    function checkWinLoss() {
+      if(STATE.mode === 'adventure') {
+          let st = STAGES[STATE.stage-1], won = false;
+          if(st.target && STATE.score >= st.target) won = true;
+          if(st.frozen && STATE.board.flat().filter(t=>t.type==='frozen').length===0) won = true;
+          if(st.bomb && STATE.board.flat().filter(t=>t.type==='bomb').length===0) won = true;
+          if(won) endGame(true); else if(STATE.moves <= 0) endGame(false);
+      } else if (STATE.mode !== 'blitz' && STATE.moves <= 0) endGame(false);
+    }
+    
+    function endGame(won) {
+      AdProvider.gameplayStop(); clearInterval(gameTimer);
+      let starsStr = won ? (STATE.moves >= STAGES[STATE.stage-1].moves*0.5 ? '⭐⭐⭐' : (STATE.moves >= STAGES[STATE.stage-1].moves*0.25 ? '⭐⭐' : '⭐')) : '❌';
+      document.getElementById('end-title').innerText = won ? "Stage Clear!" : "Game Over";
+      document.getElementById('end-desc').innerText = won ? `You earned 100 💎!` : `Better luck next time.`;
+      document.getElementById('end-stars').innerText = STATE.mode==='adventure' ? starsStr : `Score: ${STATE.score}`;
+      
+      if(won && STATE.mode === 'adventure') {
+          STATE.shards += 100; localStorage.setItem('lexigrid_shards', STATE.shards);
+          let adv = JSON.parse(localStorage.getItem('lexigrid_adventure')||'{}');
+          adv[STATE.stage] = Math.max(adv[STATE.stage]||0, starsStr.length);
+          localStorage.setItem('lexigrid_adventure', JSON.stringify(adv));
+          AudioEngine.play([523, 659, 784, 1047], 'sine', 0.2);
+          
+          let clearedCount = Object.keys(adv).length;
+          if(clearedCount >= 3) checkAchv('adventure_3');
+          if(Object.values(adv).filter(x=>x===3).length >= 5) checkAchv('adventure_3stars');
+      }
+      if(STATE.mode === 'daily') {
+          let log = JSON.parse(localStorage.getItem('lexigrid_daily_log')||'[]');
+          let today = new Date().toISOString().split('T')[0];
+          if(!log.includes(today)) { log.push(today); localStorage.setItem('lexigrid_daily_log', JSON.stringify(log)); }
+          if(log.length >= 7) checkAchv('streak_7');
+      }
+      showModal('end-modal');
+        // Update book recommendation card based on game mode
+        (function(){
+          var mode = STATE.mode || 'adventure';
+          var isWordMode = ['blitz','zen','daily'].includes(mode);
+          var card = document.getElementById('book-rec-card');
+          if (!card) return;
+          var title = document.getElementById('book-rec-title');
+          var subtitle = document.getElementById('book-rec-subtitle');
+          var cta = document.getElementById('book-rec-cta');
+          var spine = document.getElementById('book-rec-spine');
+          var cover = document.getElementById('book-rec-cover');
+          if (isWordMode) {
+            title.textContent = 'Crossword Puzzles for Adults';
+            subtitle.textContent = '30 original large-print crosswords \u2014 medium-to-hard difficulty, full answer key.';
+            cta.setAttribute('data-product','crossword-adults');
+            cta.href = '/books/#crossword-adults';
+            spine.style.background = '#C8922A';
+            cover.style.background = 'linear-gradient(145deg,#3d2a0f,#6b4a1a)';
+          } else {
+            title.textContent = 'Brain Boost Challenge';
+            subtitle.textContent = '30-day cognitive workout \u2014 logic grids, memory, pattern recognition. Instant PDF.';
+            cta.setAttribute('data-product','brain-boost');
+            cta.href = '/books/#brain-boost';
+            spine.style.background = '#2A6EA6';
+            cover.style.background = 'linear-gradient(145deg,#0f2744,#1a3f6f)';
+          }
+        })();
+    }
+    
+    function checkAchv(id) {
+      let a = JSON.parse(localStorage.getItem('lexigrid_achievements')||'[]');
+      if(!a.includes(id)) {
+          a.push(id); localStorage.setItem('lexigrid_achievements', JSON.stringify(a));
+          let ac = ACHVS.find(x=>x.id===id);
+          document.getElementById('toast-title').innerText = ac.n;
+          document.getElementById('toast-desc').innerText = ac.d;
+          document.getElementById('achievement-toast').classList.add('show');
+          AudioEngine.achievement();
+          setTimeout(()=>document.getElementById('achievement-toast').classList.remove('show'), 4000);
+      }
+    }
+    function populateAchvModal() {
+      let list = document.getElementById('achievements-list'); list.innerHTML='';
+      let a = JSON.parse(localStorage.getItem('lexigrid_achievements')||'[]');
+      ACHVS.forEach(ac => {
+          let d = document.createElement('div');
+          d.style.padding = '10px'; d.style.background = 'rgba(255,255,255,0.05)'; d.style.borderRadius = '8px';
+          d.innerHTML = `<b>${a.includes(ac.id)?'✅':'🔒'} ${ac.n}</b><br><small>${ac.d}</small>`;
+          list.appendChild(d);
+      });
+    }
+
+    function updateHUD() {
+      const scoreEl = document.getElementById('ui-score');
+      const prev = scoreEl.innerText;
+      scoreEl.innerText = STATE.score;
+      if (String(STATE.score) !== prev) {
+          scoreEl.classList.remove('pop'); void scoreEl.offsetWidth;
+          scoreEl.classList.add('pop');
+          setTimeout(() => scoreEl.classList.remove('pop'), 300);
+      }
+      document.getElementById('ui-moves').innerText = STATE.moves;
+      document.getElementById('ui-time').innerText = STATE.time;
+      document.getElementById('ui-combo').innerText = STATE.combo + 'x';
+      document.getElementById('ui-shards').innerText = STATE.shards;
+    }
+    function showModal(id) { document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    function hideModal() { document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active')); }
+    
+    function openStageSelect() {
+      let grid = document.getElementById('stage-grid'); grid.innerHTML='';
+      let adv = JSON.parse(localStorage.getItem('lexigrid_adventure')||'{}');
+      STAGES.forEach(st => {
+          let unlocked = st.id===1 || adv[st.id-1];
+          let btn = document.createElement('div');
+          btn.className = `stage-btn ${unlocked?'unlocked':''}`;
+          btn.innerHTML = `<div>${st.id}</div><div class="stars-row ${adv[st.id]?'lit':''}">${'⭐'.repeat(adv[st.id]||0)}</div>`;
+          if(unlocked) btn.onclick = () => startGame('adventure', st.id);
+          grid.appendChild(btn);
+      });
+      showModal('stage-modal');
+    }
+
+    function refreshAllTiles() {
+      tileSprites.forEach(sp=>refreshSprite(sp)); drawTrail();
+    }
+    
+    function setupThemes() {
+      let list = document.getElementById('themes-list'); list.innerHTML='';
+      let unlocked = JSON.parse(localStorage.getItem('lexigrid_themes')||'["slate"]');
+      BIOMES.forEach(b => {
+          let btn = document.createElement('button'); btn.className = 'btn';
+          let isU = unlocked.includes(b.id) || b.cost===0;
+          btn.innerText = `${b.name} ${isU ? '' : '(100💎)'}`;
+          btn.onclick = () => {
+              if(isU) { document.documentElement.setAttribute('data-theme', b.id); localStorage.setItem('lexigrid_theme', b.id); hideModal(); refreshAllTiles(); }
+              else if(STATE.shards >= 100) {
+                  STATE.shards -= 100; localStorage.setItem('lexigrid_shards', STATE.shards);
+                  unlocked.push(b.id); localStorage.setItem('lexigrid_themes', JSON.stringify(unlocked));
+                  setupThemes(); updateHUD();
+              }
+          };
+          list.appendChild(btn);
+      });
+      document.documentElement.setAttribute('data-theme', localStorage.getItem('lexigrid_theme')||'slate');
+    }
+    
+    function showStatsModal() {
+      let cal = document.getElementById('calendar-grid'); cal.innerHTML='';
+      let log = JSON.parse(localStorage.getItem('lexigrid_daily_log')||'[]');
+      for(let i=1; i<=30; i++) {
+          let d = document.createElement('div');
+          d.className = 'cal-day ' + (log.length>=i ? 'done' : '');
+          d.innerText = i; cal.appendChild(d);
+      }
+      document.getElementById('streak-text').innerText = `Current Streak: ${log.length} days`;
+      showModal('stats-modal');
+    }
+    
+    function toggleMute() {
+      let m = localStorage.getItem('lexigrid_muted')==='1'; localStorage.setItem('lexigrid_muted', m ? '0' : '1');
+      document.getElementById('btn-mute').innerText = m ? '🔊' : '🔇';
+    }
+    function shareResult() {
+      let text = `LexiGrid ${STATE.mode} 🟩\nScore: ${STATE.score}\nhttps://snappgrid.com/lexigrid`;
+      if(navigator.clipboard) navigator.clipboard.writeText(text);
+      let btn = document.getElementById('end-next-btn');
+      btn.innerText = "Copied!"; setTimeout(()=>btn.innerText="Continue", 2000);
+    }
+    
+    function initBoard() {
+      boardContainer.removeChildren(); tileSprites=[];
+      STATE.board = [];
+      for(let r=0; r<ROWS; r++) {
+          let row = [];
+          for(let c=0; c<COLS; c++) { let t = createTile(r, c); row.push(t); }
+          STATE.board.push(row);
+      }
+      
+      if(STATE.mode === 'adventure') {
+          let st = STAGES[STATE.stage-1];
+          let specialCount = (st.frozen||0) + (st.bomb||0);
+          let flat = STATE.board.flat().sort(() => rand() - 0.5);
+          for(let i=0; i<specialCount; i++) {
+              if(i < (st.frozen||0)) flat[i].type = 'frozen';
+              else { flat[i].type = 'bomb'; flat[i].countdown = 5; }
+          }
+      } else if(STATE.mode !== 'daily') {
+          let flat = STATE.board.flat();
+          flat[Math.floor(rand()*16)].type = 'wild';
+          flat[Math.floor(rand()*16)].type = (rand()>0.5?'mult2':'mult3');
+      }
+      
+      for(let r=0; r<ROWS; r++) {
+          for(let c=0; c<COLS; c++) {
+              let t = STATE.board[r][c];
+              let sp = makeTileSprite(t, c, r);
+              tileSprites.push(sp);
+          }
+      }
+    }
+
+    function startGame(mode, stageId=null) {
+      STATE.mode = mode; STATE.stage = stageId;
+      STATE.score = 0; STATE.combo = 1; STATE.path = [];
+      COLS = (mode==='blitz' && localStorage.getItem('lexigrid_expert')==='1') ? 5 : 4; ROWS = COLS;
+      document.documentElement.style.setProperty('--cols', COLS);
+      document.documentElement.style.setProperty('--rows', ROWS);
+      
+      if(mode === 'daily') {
+          let d = new Date(); rand = mulberry32(d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate());
+      } else rand = Math.random;
+      
+      if(mode === 'blitz') { STATE.time = 120; document.getElementById('ui-time-box').style.display='flex'; document.getElementById('ui-moves-box').style.display='none'; }
+      else { STATE.moves = (stageId ? STAGES[stageId-1].moves : 20); document.getElementById('ui-time-box').style.display='none'; document.getElementById('ui-moves-box').style.display='flex'; }
+      
+      initBoard(); updateHUD(); hideModal();
+      document.getElementById('objective-text').innerText = stageId ? STAGES[stageId-1].desc : (mode==='collapse'?"Survive!":(mode==='daily'?"Daily Challenge":"Score max in 120s!"));
+      
+      clearInterval(gameTimer);
+      if(mode === 'blitz') {
+          gameTimer = setInterval(() => {
+              STATE.time--; updateHUD();
+              if(STATE.time<=0) endGame(false);
+          }, 1000);
+      }
+      AdProvider.gameplayStart();
+    }
+
+    window.addEventListener('keydown', e => {
+      if(e.key==='Escape') { clearPath(); return; }
+      
+      const total = tileSprites.length;
+      if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) {
+          e.preventDefault();
+          if(focusedTile < 0) focusedTile = 0;
+          else if(e.key==='ArrowRight') focusedTile = Math.min(focusedTile + 1, total - 1);
+          else if(e.key==='ArrowLeft')  focusedTile = Math.max(focusedTile - 1, 0);
+          else if(e.key==='ArrowDown')  focusedTile = Math.min(focusedTile + COLS, total - 1);
+          else if(e.key==='ArrowUp')    focusedTile = Math.max(focusedTile - COLS, 0);
+          updateTileFocus();
+          return;
+      }
+      if(e.key==='Enter' || e.key===' ') {
+          e.preventDefault();
+          if(focusedTile >= 0 && STATE.board) {
+              const row = Math.floor(focusedTile / COLS);
+              const col = focusedTile % COLS;
+              const tile = STATE.board[row] && STATE.board[row][col];
+              if(tile) {
+                  if(STATE.path.includes(tile) && STATE.path.length > 1) submitWord();
+                  else if(!STATE.path.includes(tile)) {
+                      const sp = tileSprites.find(s=>s.tileData===tile);
+                      if(sp) enterTile(sp);
+                  }
+              }
+          }
+      }
+    });
+    
+    function updateTileFocus() {
+      tileSprites.forEach(sp => {
+          gsap.to(sp.container, {alpha:1, scaleX:1, scaleY:1, duration:0.1});
+      });
+      if(focusedTile < 0) return;
+      const row = Math.floor(focusedTile / COLS);
+      const col = focusedTile % COLS;
+      const tile = STATE.board[row] && STATE.board[row][col];
+      if(tile) {
+          const sp = tileSprites.find(s=>s.tileData===tile);
+          if(sp) {
+              gsap.to(sp.container, {alpha:0.8, scaleX:0.95, scaleY:0.95, duration:0.1});
+          }
+      }
+    }
+
+    window.addEventListener('load', async () => {
+      RAW_DICTIONARY.split(' ').forEach(w=>dictTrie.insert(w.toUpperCase()));
+      await initPixi();
+      setupThemes();
+      document.getElementById('btn-mute').innerText = localStorage.getItem('lexigrid_muted')==='1'?'🔇':'🔊';
+      document.getElementById('loadingScreen').style.opacity='0';
+      setTimeout(()=>document.getElementById('loadingScreen').style.display='none',500);
+      AdProvider.gameLoadingFinished();
+    });
+  </script>
 </body>
 </html>

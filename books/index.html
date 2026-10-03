@@ -580,6 +580,7 @@
       <a href="/games/sudoku/">Sudoku</a>
       <a href="/games/trivia/">Trivia</a>
       <a href="/books/" class="active">Books</a>
+      <a href="/printables/">Printables</a>
       <a href="/blog/">Blog</a>
     </div>
   </nav>
@@ -592,6 +593,14 @@
     <h1>SnappGrid Library</h1>
     <p>Premium Puzzle, Trivia, and Brain Training Books</p>
   </section>
+
+  <div style="background:var(--ink);padding:16px 24px;text-align:center;">
+    <p style="margin:0;font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.6);letter-spacing:1px;">
+      &#9889; <strong style="color:#818cf8;">Warm Up Your Brain</strong> &mdash;
+      Play Today's Free Grid Game &mdash;
+      <a href="/lexigrid" style="color:#f59e0b;text-decoration:none;font-weight:700;">Play LexiGrid Now &rarr;</a>
+    </p>
+  </div>
 
   <!-- Books Listing Grid (Generated via JS) -->
   <section class="books-section" id="books-list">
@@ -879,6 +888,7 @@
       <a href="/">Home</a>
       <a href="/games/">Games</a>
       <a href="/books/">Books</a>
+      <a href="/printables/">Printables</a>
       <a href="/blog/">Blog</a>
       <a href="#">Privacy</a>
       <a href="#">Terms</a>
@@ -902,7 +912,8 @@
         puzzles: '15 Case Files',
         difficulty: 'Medium–Hard',
         blurb: '15 true crime case files packed with evidence boards, suspect charts, and classic logic grid challenges. Can you crack the case before turning the page?',
-        features: ['15 logic grid case files', 'Evidence & clue boards', 'Full solution key', 'Print-friendly layout']
+        features: ['15 logic grid case files', 'Evidence & clue boards', 'Full solution key', 'Print-friendly layout'],
+        companionUrl: '/blog/how-to-solve-logic-grid-puzzles/'
       },
       'brain-boost': {
         id: 'brain-boost',
@@ -917,7 +928,8 @@
         puzzles: '30 Daily Sessions',
         difficulty: 'Progressive',
         blurb: 'A structured 30-day cognitive workout plan combining memory exercises, logic puzzles, and pattern recognition to sharpen your mind daily.',
-        features: ['30 progressive daily sessions', 'Memory & logic exercises', 'Pattern recognition drills', 'Progress tracking sheets']
+        features: ['30 progressive daily sessions', 'Memory & logic exercises', 'Pattern recognition drills', 'Progress tracking sheets'],
+        companionUrl: '/blog/brain-training-neuroplasticity-puzzle-science/'
       },
       'crossword-adults': {
         id: 'crossword-adults',
@@ -932,7 +944,8 @@
         puzzles: '30 Puzzles',
         difficulty: 'Medium–Hard',
         blurb: '30 fresh, hand-crafted crossword puzzles in large-print format — designed to sharpen vocabulary and keep your mind engaged for hours.',
-        features: ['30 original crossword grids', 'Large-print format', 'Across & down clues', 'Complete answer key']
+        features: ['30 original crossword grids', 'Large-print format', 'Across & down clues', 'Complete answer key'],
+        companionUrl: '/blog/crossword-puzzle-solving-strategies-guide/'
       },
       'food-culture-trivia': {
         id: 'food-culture-trivia',
@@ -947,7 +960,8 @@
         puzzles: '720 Questions',
         difficulty: 'Mixed',
         blurb: '720 culinary trivia questions across 16 chapters — from street food secrets to fine dining traditions. Fact bombs, true/false, multiple choice, and quick-fire rounds.',
-        features: ['720 trivia questions', '16 themed chapters', 'Multiple question formats', 'Fun facts throughout']
+        features: ['720 trivia questions', '16 themed chapters', 'Multiple question formats', 'Fun facts throughout'],
+        companionUrl: '/blog/science-of-trivia-memory-recall/'
       },
       'forbidden-history': {
         id: 'forbidden-history',
@@ -962,7 +976,8 @@
         puzzles: '630 Questions',
         difficulty: 'Mixed',
         blurb: 'Shocking trivia they never taught you in school. 630 questions across 14 chapters covering suppressed stories, cover-ups, and the history books got wrong.',
-        features: ['630 trivia questions', '14 chapters of dark history', 'Fact bombs & deep dives', 'Multiple question formats']
+        features: ['630 trivia questions', '14 chapters of dark history', 'Fact bombs & deep dives', 'Multiple question formats'],
+        companionUrl: '/blog/world-history-trivia-memorization-techniques/'
       },
       'knowledge-quest': {
         id: 'knowledge-quest',
@@ -977,7 +992,8 @@
         puzzles: '250 Puzzles',
         difficulty: 'Mixed',
         blurb: '250 diverse puzzles spanning trivia, word search, cryptograms, scrambles, and true/false challenges across 10 fascinating subjects.',
-        features: ['250 mixed puzzle types', '10 subject categories', 'Trivia, word search, cryptograms', 'Full answer key']
+        features: ['250 mixed puzzle types', '10 subject categories', 'Trivia, word search, cryptograms', 'Full answer key'],
+        companionUrl: '/blog/advanced-logic-grid-deduction-techniques/'
       },
       'trivia-challenge': {
         id: 'trivia-challenge',
@@ -992,7 +1008,8 @@
         puzzles: '420 Questions',
         difficulty: 'Mixed',
         blurb: '420 questions across 12 subjects — history, science, geography, pop culture, and more. Multiple choice, true/false, and quick-fire rounds.',
-        features: ['420 trivia questions', '12 subject categories', 'Three question formats', 'Score tracker included']
+        features: ['420 trivia questions', '12 subject categories', 'Three question formats', 'Score tracker included'],
+        companionUrl: '/blog/science-trivia-facts-and-mnemonics/'
       },
       'unbelievable-trivia': {
         id: 'unbelievable-trivia',
@@ -1007,7 +1024,8 @@
         puzzles: '630 Questions',
         difficulty: 'Mixed',
         blurb: '630 mind-bending trivia questions about facts so strange you will not believe they are real. 14 chapters of fact reveals, true/false, and quick-fire rounds.',
-        features: ['630 trivia questions', '14 chapters of wild facts', 'Fact Reveal & Quick Fire rounds', 'Fun for groups & solo']
+        features: ['630 trivia questions', '14 chapters of wild facts', 'Fact Reveal & Quick Fire rounds', 'Fun for groups & solo'],
+        companionUrl: '/blog/pop-culture-cinema-trivia-mastery/'
       }
     };
 
@@ -1020,6 +1038,10 @@
       card.setAttribute('data-book-id', book.id);
       
       const featuresHTML = book.features.map(f => `<li>${f}</li>`).join('');
+      
+      const companionHTML = book.companionUrl 
+        ? `<a href="${book.companionUrl}" class="companion-link" style="display:block;margin-top:10px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:.5px;">Read the Complete Guide &amp; Sample Walkthrough &rarr;</a>` 
+        : '';
       
       card.innerHTML = `
         <div class="book-cover">
@@ -1049,6 +1071,7 @@
             <button class="btn btn-gold buy-btn lemonsqueezy-button" data-book-id="${book.id}">Buy Digital Edition (PDF)</button>
             <button class="btn btn-outline preview-btn" data-book-id="${book.id}">Preview Sample &rarr;</button>
             <span class="physical-badge">Physical Edition: Direct Order Coming Soon</span>
+            ${companionHTML}
           </div>
         </div>
       `;

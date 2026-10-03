@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 380" width="620" height="380" role="img" aria-label="Cognitive Reserve Fluid Intelligence Curve Chart">
+  <title>Cognitive Reserve Fluid Intelligence Curve Chart</title>
+  <defs>
+    <linearGradient id="hdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="620" height="380" rx="12" fill="#0f172a"/>
+<rect width="620" height="380" rx="12" fill="#0f172a"/>
+<rect width="620" height="38" rx="0" fill="url(#hdr)"/>
+<text x="310" y="24" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13" font-weight="700" fill="white">Cognitive Reserve: Fluid Intelligence vs. Age</text>
+<line x1="60" y1="50" x2="60" y2="310" stroke="#334155" stroke-width="1.5"/>
+<line x1="60" y1="310" x2="580" y2="310" stroke="#334155" stroke-width="1.5"/>
+<text x="52" y="314" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">20</text>
+<line x1="60" y1="310" x2="580" y2="310" stroke="#1e293b" stroke-width="0.8" stroke-dasharray="3,3"/>
+<text x="52" y="249" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">40</text>
+<line x1="60" y1="245" x2="580" y2="245" stroke="#1e293b" stroke-width="0.8" stroke-dasharray="3,3"/>
+<text x="52" y="184" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">60</text>
+<line x1="60" y1="180" x2="580" y2="180" stroke="#1e293b" stroke-width="0.8" stroke-dasharray="3,3"/>
+<text x="52" y="119" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">80</text>
+<line x1="60" y1="115" x2="580" y2="115" stroke="#1e293b" stroke-width="0.8" stroke-dasharray="3,3"/>
+<text x="52" y="54" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">100</text>
+<line x1="60" y1="50" x2="580" y2="50" stroke="#1e293b" stroke-width="0.8" stroke-dasharray="3,3"/>
+<text x="60" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">20</text>
+<text x="146" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">30</text>
+<text x="233" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">40</text>
+<text x="320" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">50</text>
+<text x="406" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">60</text>
+<text x="493" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">70</text>
+<text x="580" y="324" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#64748b">80</text>
+<text x="320" y="338" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" fill="#94a3b8">Age</text>
+<text x="14" y="180" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" fill="#94a3b8" transform="rotate(-90,14,180)">Cognitive Score (%)</text>
+<polygon points="60,63 148,69 231,76 320,89 408,102 491,118 580,128 580,219 491,199 408,170 320,134 231,97 148,76 60,63" fill="#4f46e5" opacity="0.15"/>
+<path d="M 60,63 L 148,76 L 231,97 L 320,134 L 408,170 L 491,199 L 580,219" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,3"/>
+<path d="M 60,63 L 148,69 L 231,76 L 320,89 L 408,102 L 491,118 L 580,128"  fill="none" stroke="#4ade80" stroke-width="2.5"/>
+<circle cx="60" cy="63" r="4" fill="#4ade80" opacity="0.8"/>
+<circle cx="148" cy="69" r="4" fill="#4ade80" opacity="0.8"/>
+<circle cx="231" cy="76" r="4" fill="#4ade80" opacity="0.8"/>
+<circle cx="320" cy="89" r="4" fill="#4ade80" opacity="0.8"/>
+<circle cx="408" cy="102" r="4" fill="#4ade80" opacity="0.8"/>
+<circle cx="491" cy="118" r="4" fill="#4ade80" opacity="0.8"/>
+<circle cx="580" cy="128" r="4" fill="#4ade80" opacity="0.8"/>
+<text x="328" y="134" font-family="Segoe UI,sans-serif" font-size="9" fill="#ef4444">No regular puzzle practice</text>
+<text x="328" y="84" font-family="Segoe UI,sans-serif" font-size="9" fill="#4ade80">Daily puzzle practice</text>
+<rect x="360" y="210" width="160" height="50" rx="6" fill="#1e293b" opacity="0.9"/>
+<text x="440" y="226" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#818cf8">Cognitive Reserve Gap</text>
+<text x="440" y="239" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#94a3b8">Up to 35% score</text>
+<text x="440" y="250" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#94a3b8">difference by age 70</text>
+<text x="16" y="372" font-family="Segoe UI,sans-serif" font-size="9" fill="#475569">SnappGrid · snappgrid.com · Based on published neuroplasticity research (Cattell-Horn fluid intelligence model)</text>
+</svg>

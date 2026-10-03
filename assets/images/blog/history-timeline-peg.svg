@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 280" width="780" height="280" role="img" aria-label="World History Chronological Peg System Timeline">
+  <title>World History Chronological Peg System Timeline</title>
+  <defs>
+    <linearGradient id="hdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="780" height="280" rx="12" fill="#0f172a"/>
+<rect width="780" height="280" rx="12" fill="#0f172a"/>
+<rect width="780" height="38" rx="0" fill="url(#hdr)"/>
+<text x="390" y="24" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13" font-weight="700" fill="white">World History Trivia: Chronological Peg System</text>
+<line x1="30" y1="130" x2="750" y2="130" stroke="#334155" stroke-width="2"/>
+<polygon points="750,130 738,125 738,135" fill="#334155"/>
+<circle cx="40" cy="130" r="5" fill="#7c3aed" stroke="white" stroke-width="1.5"/>
+<line x1="40" y1="100" x2="40" y2="70" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="30" y="48" width="96" height="22" rx="4" fill="#7c3aed" opacity="0.85"/>
+<text x="78" y="62" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Sumerian Writing</text>
+<text x="40" y="48" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">3000 BC</text>
+<circle cx="103" cy="130" r="5" fill="#7c3aed" stroke="white" stroke-width="1.5"/>
+<line x1="103" y1="134" x2="103" y2="185" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="61" y="186" width="84" height="22" rx="4" fill="#7c3aed" opacity="0.85"/>
+<text x="103" y="200" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">First Olympics</text>
+<text x="103" y="210" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">776 BC</text>
+<circle cx="167" cy="130" r="5" fill="#7c3aed" stroke="white" stroke-width="1.5"/>
+<line x1="167" y1="100" x2="167" y2="70" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="128" y="48" width="78" height="22" rx="4" fill="#7c3aed" opacity="0.85"/>
+<text x="167" y="62" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Julius Caesar</text>
+<text x="167" y="48" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">44 BC</text>
+<circle cx="230" cy="130" r="5" fill="#1d4ed8" stroke="white" stroke-width="1.5"/>
+<line x1="230" y1="134" x2="230" y2="185" stroke="#1d4ed8" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="194" y="186" width="72" height="22" rx="4" fill="#1d4ed8" opacity="0.85"/>
+<text x="230" y="200" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Fall of Rome</text>
+<text x="230" y="210" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">476 AD</text>
+<circle cx="294" cy="130" r="5" fill="#1d4ed8" stroke="white" stroke-width="1.5"/>
+<line x1="294" y1="100" x2="294" y2="70" stroke="#1d4ed8" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="240" y="48" width="108" height="22" rx="4" fill="#1d4ed8" opacity="0.85"/>
+<text x="294" y="62" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Battle of Hastings</text>
+<text x="294" y="48" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1066</text>
+<circle cx="358" cy="130" r="5" fill="#065f46" stroke="white" stroke-width="1.5"/>
+<line x1="358" y1="134" x2="358" y2="185" stroke="#065f46" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="328" y="186" width="60" height="22" rx="4" fill="#065f46" opacity="0.85"/>
+<text x="358" y="200" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Columbus</text>
+<text x="358" y="210" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1492</text>
+<circle cx="421" cy="130" r="5" fill="#92400e" stroke="white" stroke-width="1.5"/>
+<line x1="421" y1="100" x2="421" y2="70" stroke="#92400e" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="376" y="48" width="90" height="22" rx="4" fill="#92400e" opacity="0.85"/>
+<text x="421" y="62" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">US Independence</text>
+<text x="421" y="48" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1776</text>
+<circle cx="485" cy="130" r="5" fill="#92400e" stroke="white" stroke-width="1.5"/>
+<line x1="485" y1="134" x2="485" y2="185" stroke="#92400e" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="428" y="186" width="114" height="22" rx="4" fill="#92400e" opacity="0.85"/>
+<text x="485" y="200" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Year of Revolutions</text>
+<text x="485" y="210" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1848</text>
+<circle cx="549" cy="130" r="5" fill="#92400e" stroke="white" stroke-width="1.5"/>
+<line x1="549" y1="100" x2="549" y2="70" stroke="#92400e" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="519" y="48" width="60" height="22" rx="4" fill="#92400e" opacity="0.85"/>
+<text x="549" y="62" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">WWI Begins</text>
+<text x="549" y="48" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1914</text>
+<circle cx="612" cy="130" r="5" fill="#be185d" stroke="white" stroke-width="1.5"/>
+<line x1="612" y1="134" x2="612" y2="185" stroke="#be185d" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="582" y="186" width="60" height="22" rx="4" fill="#be185d" opacity="0.85"/>
+<text x="612" y="200" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">WWII Ends</text>
+<text x="612" y="210" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1945</text>
+<circle cx="676" cy="130" r="5" fill="#be185d" stroke="white" stroke-width="1.5"/>
+<line x1="676" y1="100" x2="676" y2="70" stroke="#be185d" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="640" y="48" width="72" height="22" rx="4" fill="#be185d" opacity="0.85"/>
+<text x="676" y="62" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Moon Landing</text>
+<text x="676" y="48" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1969</text>
+<circle cx="740" cy="130" r="5" fill="#be185d" stroke="white" stroke-width="1.5"/>
+<line x1="740" y1="134" x2="740" y2="185" stroke="#be185d" stroke-width="1.2" stroke-dasharray="2,2"/>
+<rect x="668" y="186" width="102" height="22" rx="4" fill="#be185d" opacity="0.85"/>
+<text x="719" y="200" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600" fill="white">Berlin Wall Falls</text>
+<text x="740" y="210" text-anchor="middle" font-family="Segoe UI,mono,sans-serif" font-size="8" fill="#64748b">1989</text>
+<rect x="16" y="250" width="10" height="10" rx="2" fill="#7c3aed"/>
+<text x="30" y="258" font-family="Segoe UI,sans-serif" font-size="8" fill="#94a3b8">Ancient</text>
+<rect x="85" y="250" width="10" height="10" rx="2" fill="#1d4ed8"/>
+<text x="99" y="258" font-family="Segoe UI,sans-serif" font-size="8" fill="#94a3b8">Medieval</text>
+<rect x="159" y="250" width="10" height="10" rx="2" fill="#065f46"/>
+<text x="173" y="258" font-family="Segoe UI,sans-serif" font-size="8" fill="#94a3b8">Early Modern</text>
+<rect x="253" y="250" width="10" height="10" rx="2" fill="#92400e"/>
+<text x="267" y="258" font-family="Segoe UI,sans-serif" font-size="8" fill="#94a3b8">Modern</text>
+<rect x="317" y="250" width="10" height="10" rx="2" fill="#be185d"/>
+<text x="331" y="258" font-family="Segoe UI,sans-serif" font-size="8" fill="#94a3b8">Contemporary</text>
+</svg>

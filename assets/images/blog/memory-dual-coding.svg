@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340" role="img" aria-label="Dual-Coding Memory Architecture for Trivia Recall">
+  <title>Dual-Coding Memory Architecture for Trivia Recall</title>
+  <defs>
+    <linearGradient id="hdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="600" height="340" rx="12" fill="#0f172a"/>
+<rect width="600" height="340" rx="12" fill="#0f172a"/>
+<rect width="600" height="38" rx="0" fill="url(#hdr)"/>
+<text x="300" y="24" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13" font-weight="700" fill="white">Dual-Coding Memory Architecture for Trivia Recall</text>
+<rect x="50" y="80" width="160" height="220" rx="8" fill="#1d4ed8" opacity="0.2" stroke="#93c5fd" stroke-width="1" stroke-opacity="0.4"/>
+<text x="130" y="100" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#93c5fd">ENCODE</text>
+<rect x="60" y="128" width="140" height="42" rx="6" fill="#1d4ed8" opacity="0.6"/>
+<text x="130" y="146" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Verbal Label</text>
+<text x="130" y="160" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#93c5fd" opacity="0.8">→ Tag memory traces</text>
+<rect x="60" y="184" width="140" height="42" rx="6" fill="#1d4ed8" opacity="0.6"/>
+<text x="130" y="202" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Visual Anchor</text>
+<text x="130" y="216" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#93c5fd" opacity="0.8">→ Long-term potentiation</text>
+<rect x="60" y="240" width="140" height="42" rx="6" fill="#1d4ed8" opacity="0.6"/>
+<text x="130" y="258" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Emotional Hook</text>
+<text x="130" y="272" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#93c5fd" opacity="0.8">→ Context reinstatement</text>
+<rect x="220" y="80" width="160" height="220" rx="8" fill="#7c3aed" opacity="0.2" stroke="#c4b5fd" stroke-width="1" stroke-opacity="0.4"/>
+<text x="300" y="100" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#c4b5fd">STORE</text>
+<rect x="230" y="128" width="140" height="42" rx="6" fill="#7c3aed" opacity="0.6"/>
+<text x="300" y="146" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Semantic Net</text>
+<text x="300" y="160" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#c4b5fd" opacity="0.8">→ Tag memory traces</text>
+<rect x="230" y="184" width="140" height="42" rx="6" fill="#7c3aed" opacity="0.6"/>
+<text x="300" y="202" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Episodic Layer</text>
+<text x="300" y="216" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#c4b5fd" opacity="0.8">→ Long-term potentiation</text>
+<rect x="230" y="240" width="140" height="42" rx="6" fill="#7c3aed" opacity="0.6"/>
+<text x="300" y="258" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Schema Cluster</text>
+<text x="300" y="272" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#c4b5fd" opacity="0.8">→ Context reinstatement</text>
+<rect x="390" y="80" width="160" height="220" rx="8" fill="#065f46" opacity="0.2" stroke="#86efac" stroke-width="1" stroke-opacity="0.4"/>
+<text x="470" y="100" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#86efac">RETRIEVE</text>
+<rect x="400" y="128" width="140" height="42" rx="6" fill="#065f46" opacity="0.6"/>
+<text x="470" y="146" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Cue → Tag</text>
+<text x="470" y="160" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#86efac" opacity="0.8">→ Tag memory traces</text>
+<rect x="400" y="184" width="140" height="42" rx="6" fill="#065f46" opacity="0.6"/>
+<text x="470" y="202" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Spread Activate</text>
+<text x="470" y="216" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#86efac" opacity="0.8">→ Long-term potentiation</text>
+<rect x="400" y="240" width="140" height="42" rx="6" fill="#065f46" opacity="0.6"/>
+<text x="470" y="258" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="600" fill="white">Reconstruct</text>
+<text x="470" y="272" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="8" fill="#86efac" opacity="0.8">→ Context reinstatement</text>
+<line x1="210" y1="190" x2="224" y2="190" stroke="#4f46e5" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="380" y1="190" x2="394" y2="190" stroke="#4f46e5" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="16" y="294" width="568" height="36" rx="6" fill="#1e293b"/>
+<text x="300" y="310" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#f59e0b">Key Insight: Tip-of-the-tongue failure = retrieval failure, not storage failure</text>
+<text x="300" y="323" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" fill="#94a3b8">Fix: rebuild the retrieval CUE, not the memory itself</text>
+</svg>

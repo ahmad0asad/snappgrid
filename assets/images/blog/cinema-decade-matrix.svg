@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 748 352" width="748" height="352" role="img" aria-label="Cinema Decade Matrix — Box-Office Landmark Reference">
+  <title>Cinema Decade Matrix — Box-Office Landmark Reference</title>
+  <defs>
+    <linearGradient id="hdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="748" height="352" rx="12" fill="#0f172a"/>
+<rect width="748" height="352" rx="12" fill="#0f172a"/>
+<rect width="748" height="38" rx="0" fill="url(#hdr)"/>
+<text x="374" y="24" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13" font-weight="700" fill="white">Cinema Decade Matrix — Box-Office Landmark Reference</text>
+<rect x="76" y="56" width="80" height="20" rx="4" fill="#1e3a5f"/>
+<text x="117" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">1950s</text>
+<rect x="158" y="56" width="80" height="20" rx="4" fill="#1d4437"/>
+<text x="199" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">1960s</text>
+<rect x="240" y="56" width="80" height="20" rx="4" fill="#3b1a6b"/>
+<text x="281" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">1970s</text>
+<rect x="322" y="56" width="80" height="20" rx="4" fill="#7c1d1d"/>
+<text x="363" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">1980s</text>
+<rect x="404" y="56" width="80" height="20" rx="4" fill="#1a3d5c"/>
+<text x="445" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">1990s</text>
+<rect x="486" y="56" width="80" height="20" rx="4" fill="#2d1b3d"/>
+<text x="527" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">2000s</text>
+<rect x="568" y="56" width="80" height="20" rx="4" fill="#0f3d2e"/>
+<text x="609" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">2010s</text>
+<rect x="650" y="56" width="80" height="20" rx="4" fill="#1a1a3d"/>
+<text x="691" y="70" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700" fill="#94a3b8">2020s</text>
+<rect x="4" y="80" width="68" height="36" rx="4" fill="#4f46e5" opacity="0.7"/>
+<text x="36" y="103" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="600" fill="white">Drama</text>
+<rect x="76" y="80" width="80" height="36" rx="4" fill="#4f46e5" opacity="0.7"/>
+<text x="117" y="96" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">All About</text>
+<text x="117" y="107" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">Eve</text>
+<rect x="158" y="80" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="240" y="80" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="322" y="80" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="404" y="80" width="80" height="36" rx="4" fill="#4f46e5" opacity="0.7"/>
+<text x="445" y="103" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Schindler's List</text>
+<rect x="486" y="80" width="80" height="36" rx="4" fill="#4f46e5" opacity="0.7"/>
+<text x="527" y="96" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">No Country</text>
+<text x="527" y="107" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">for Old Men</text>
+<rect x="568" y="80" width="80" height="36" rx="4" fill="#4f46e5" opacity="0.7"/>
+<text x="609" y="103" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Parasite (2019)</text>
+<rect x="650" y="80" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="4" y="118" width="68" height="36" rx="4" fill="#059669" opacity="0.7"/>
+<text x="36" y="141" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="600" fill="white">Comedy</text>
+<rect x="76" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="158" y="118" width="80" height="36" rx="4" fill="#059669" opacity="0.7"/>
+<text x="199" y="134" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Some Like</text>
+<text x="199" y="145" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">It Hot</text>
+<rect x="240" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="322" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="404" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="486" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="568" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="650" y="118" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="4" y="156" width="68" height="36" rx="4" fill="#dc2626" opacity="0.7"/>
+<text x="36" y="179" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="600" fill="white">Action</text>
+<rect x="76" y="156" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="158" y="156" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="240" y="156" width="80" height="36" rx="4" fill="#dc2626" opacity="0.7"/>
+<text x="281" y="179" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Jaws</text>
+<rect x="322" y="156" width="80" height="36" rx="4" fill="#dc2626" opacity="0.7"/>
+<text x="363" y="179" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Die Hard</text>
+<rect x="404" y="156" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="486" y="156" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="568" y="156" width="80" height="36" rx="4" fill="#dc2626" opacity="0.7"/>
+<text x="609" y="179" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Avengers: Endgame</text>
+<rect x="650" y="156" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="4" y="194" width="68" height="36" rx="4" fill="#7c3aed" opacity="0.7"/>
+<text x="36" y="217" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="600" fill="white">Sci-Fi</text>
+<rect x="76" y="194" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="158" y="194" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="240" y="194" width="80" height="36" rx="4" fill="#7c3aed" opacity="0.7"/>
+<text x="281" y="210" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Star Wars</text>
+<text x="281" y="221" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">(1977)</text>
+<rect x="322" y="194" width="80" height="36" rx="4" fill="#7c3aed" opacity="0.7"/>
+<text x="363" y="217" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">E.T.</text>
+<rect x="404" y="194" width="80" height="36" rx="4" fill="#7c3aed" opacity="0.7"/>
+<text x="445" y="217" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">The Matrix</text>
+<rect x="486" y="194" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="568" y="194" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="650" y="194" width="80" height="36" rx="4" fill="#7c3aed" opacity="0.7"/>
+<text x="691" y="210" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Dune: Part</text>
+<text x="691" y="221" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">Two</text>
+<rect x="4" y="232" width="68" height="36" rx="4" fill="#c2410c" opacity="0.7"/>
+<text x="36" y="255" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="600" fill="white">Horror</text>
+<rect x="76" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="158" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="240" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="322" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="404" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="486" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="568" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="650" y="232" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="4" y="270" width="68" height="36" rx="4" fill="#d97706" opacity="0.7"/>
+<text x="36" y="293" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="9" font-weight="600" fill="white">Animation</text>
+<rect x="76" y="270" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="158" y="270" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="240" y="270" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="322" y="270" width="80" height="36" rx="4" fill="#d97706" opacity="0.7"/>
+<text x="363" y="286" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">The Little</text>
+<text x="363" y="297" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">Mermaid</text>
+<rect x="404" y="270" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="486" y="270" width="80" height="36" rx="4" fill="#d97706" opacity="0.7"/>
+<text x="527" y="286" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7.5" font-weight="600" fill="white">Shrek /</text>
+<text x="527" y="297" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="7" fill="white" opacity="0.9">Finding Nemo</text>
+<rect x="568" y="270" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<rect x="650" y="270" width="80" height="36" rx="4" fill="#94a3b8" opacity="0.06"/>
+<text x="16" y="344" font-family="Segoe UI,sans-serif" font-size="9" fill="#475569">SnappGrid · snappgrid.com · Highlighted cells = landmark releases for each genre/decade pairing</text>
+</svg>
