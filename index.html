@@ -4,14 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SnappGrid — Free Daily Crossword, Sudoku, Word Search & Trivia</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
 <meta name="description" content="Play free daily crossword, word search, sudoku and trivia puzzles. New puzzles every day. No login, no download — just play.">
 <link rel="canonical" href="https://snappgrid.com/">
 <meta property="og:title" content="SnappGrid — Free Daily Crossword, Sudoku, Word Search & Trivia">
 <meta property="og:description" content="Play free daily crossword, word search, sudoku and trivia puzzles. New puzzles every day. No login, no download — just play.">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snappgrid.com/">
-<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SnappGrid — Free Daily Crossword, Sudoku, Word Search & Trivia">
 <meta name="twitter:description" content="Play free daily crossword, word search, sudoku and trivia puzzles. New puzzles every day. No login, no download — just play.">
 <meta name="robots" content="index, follow">
@@ -115,11 +124,15 @@
   .hero-grid { grid-template-columns:repeat(5,42px); grid-template-rows:repeat(5,42px); }
   .hc { font-size:18px; }
 }
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
 </style>
 <body>
 <nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
-  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/lexigrid">LexiGrid</a></li><li><a href="/books/">Books</a></li><li><a href="/printables/">Printables</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
+  <a href="/" class="nav-logo" aria-label="SnappGrid home"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a>
+  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/lexigrid">LexiGrid</a></li><li><a href="/books/">Books</a></li><li><a href="/printables/">Printables</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
     <span></span><span></span><span></span>
   </button>
@@ -201,17 +214,7 @@
         <span class="play-btn">Play now →</span>
       </div>
     </a>
-    <a href="/games/connections/" class="game-card" style="--card-accent:#8A2A8A;" aria-label="Play daily connections">
-      <span class="game-badge badge-new">🔥 Hot</span>
-      <div class="game-icon" style="background:#F4EBF8;">🔗</div>
-      <h3 class="game-title">Connections</h3>
-      <p class="game-desc">Group 16 words into 4 hidden categories. Watch out for red herrings — one word can feel like it belongs to multiple groups.</p>
-      <div class="game-meta">
-        <div class="diff"><span>Medium</span><div class="diff-dots"><div class="diff-dot on" style="background:#8A2A8A;"></div><div class="diff-dot on" style="background:#8A2A8A;"></div><div class="diff-dot"></div></div></div>
-        <span class="play-btn" style="color:#8A2A8A;">Play now →</span>
-      </div>
-    </a>
-    <a href="/lexigrid" class="game-card" style="--card-accent:#6366F1;" aria-label="Play LexiGrid word puzzle">
+<a href="/lexigrid" class="game-card" style="--card-accent:#6366F1;" aria-label="Play LexiGrid word puzzle">
       <span class="game-badge badge-new">⚡ New</span>
       <div class="game-icon" style="background:#EEF0FE;">🔤</div>
       <h3 class="game-title">LexiGrid</h3>
@@ -358,7 +361,7 @@
       <li><a href="/games/crossword/">Crossword</a></li>
       <li><a href="/games/wordsearch/">Word Search</a></li>
       <li><a href="/games/sudoku/">Sudoku</a></li>
-      <li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li>
+      <li><a href="/games/trivia/">Trivia</a></li>
       <li><a href="/lexigrid">LexiGrid</a></li>
       <li><a href="/books/">Books</a></li>
       <li><a href="/printables/">Printables</a></li>

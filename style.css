@@ -137,3 +137,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script>function handleSub(e){e.preventDefault();const btn=e.target.querySelector('button');btn.textContent='Subscribed ✓';btn.style.background='#3B6D11';e.target.email.value='';e.target.email.disabled=true;btn.disabled=true;}</script>
 </body></html>
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
