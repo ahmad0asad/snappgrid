@@ -4,14 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact SnappGrid — Get in Touch</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
 <meta name="description" content="Contact SnappGrid with questions, bug reports, or puzzle suggestions. We read every message.">
 <link rel="canonical" href="https://snappgrid.com/contact/">
 <meta property="og:title" content="Contact SnappGrid — Get in Touch">
 <meta property="og:description" content="Contact SnappGrid with questions, bug reports, or puzzle suggestions. We read every message.">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snappgrid.com/contact/">
-<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contact SnappGrid — Get in Touch">
 <meta name="twitter:description" content="Contact SnappGrid with questions, bug reports, or puzzle suggestions. We read every message.">
 <meta name="robots" content="index, follow">
@@ -47,9 +56,13 @@
 .success-msg{display:none;background:#EAF3DE;border:1.5px solid #C0DD97;border-radius:var(--radius);padding:12px 15px;font-size:13px;color:#3B6D11;text-align:center;margin-top:14px;}
 .success-msg.visible{display:block;}
 @media(max-width:660px){.page-wrap{grid-template-columns:1fr;gap:32px;}}
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
 </style>
 <body><nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
+  <a href="/" class="nav-logo" aria-label="SnappGrid home"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a>
   <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
     <span></span><span></span><span></span>

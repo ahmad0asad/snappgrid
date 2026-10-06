@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Word Search Archive — All Puzzles | SnappGrid</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
 <meta name="description" content="Browse and play every word search puzzle from the SnappGrid archive. All 30 puzzles available to play anytime.">
 <link rel="canonical" href="https://snappgrid.com/games/wordsearch/archive/">
 <meta name="robots" content="index,follow">
@@ -24,12 +35,16 @@
 .search-input{width:100%;padding:11px 16px;border:1.5px solid var(--border-strong);border-radius:var(--radius-lg);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color .15s;}
 .search-input:focus{border-color:var(--gold);}
 @media(max-width:540px){.arc-row{grid-template-columns:50px 1fr auto;gap:10px;}.arc-play{display:none;}}
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
 </style>
 </head>
 <body>
 <nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
-  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/"class=active>Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li></ul>
+  <a href="/" class="nav-logo" aria-label="SnappGrid home"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a>
+  <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/"class=active>Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li></ul>
   <button class="nav-hamburger" onclick="toggleNav()" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
 <div class="arc-header">
@@ -81,9 +96,7 @@
     <a href="/" class="footer-logo">SnappGrid</a>
     <ul class="footer-links">
       <li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li>
-      <li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li>
-      <li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li>
-      <li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li>
+      <li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li>
     </ul>
     <div class="footer-copy">&copy; <span id="yr"></span> SnappGrid</div>
   </div>

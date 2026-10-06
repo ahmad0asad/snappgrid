@@ -4,9 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>LexiGrid — Free Word Puzzle Game | SnappGrid</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
   <link rel="canonical" href="https://snappgrid.com/lexigrid">
   <meta property="og:title" content="LexiGrid — Free Word Puzzle Game | SnappGrid">
   <meta property="og:description" content="Swipe adjacent letters to build words on a live grid. Play free — 3 game modes, no download needed.">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
   <meta property="og:url" content="https://snappgrid.com/lexigrid">
   <script src="https://cdn.jsdelivr.net/npm/pixi.js@8.6.1/dist/pixi.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><!-- gsap@3 -->
@@ -38,8 +49,9 @@
     #loadingScreen p { color:rgba(255,255,255,.4); font-size:13px; }
 
     /* Back link */
-    #back-link { position:fixed; top:10px; left:10px; color:var(--text); text-decoration:none; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; z-index:100; padding:4px 8px; border:1px solid rgba(255,255,255,.12); border-radius:6px; transition:opacity .2s; }
-    #back-link:hover { opacity:.9; }
+    #back-link { position:fixed; top:10px; left:10px; color:var(--text); text-decoration:none; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; opacity:.7; z-index:100; padding:4px 8px; border:1px solid rgba(255,255,255,.12); border-radius:6px; transition:opacity .2s; display:inline-flex; align-items:center; gap:6px; }
+    #back-link img { border-radius:4px; vertical-align:middle; width:20px; height:20px; }
+    #back-link:hover { opacity:1; }
 
     /* HUD */
     #hud { position:relative; z-index:50; padding:8px 14px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,.40); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.07); flex-shrink:0; }
@@ -91,7 +103,11 @@
     .calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:12px; }
     .cal-day { width:30px; height:30px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); border-radius:6px; font-size:11px; border:1px solid rgba(255,255,255,.07); }
     .cal-day.done { background:#059669; color:white; border-color:#34d399; }
-  </style>
+  
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
+</style>
 </head>
 <body>
   <div id="loadingScreen">
@@ -100,7 +116,7 @@
     <p>Preparing dictionary…</p>
   </div>
 
-  <a href="/" id="back-link">← SnappGrid</a>
+  <a href="/" id="back-link">← <img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> SnappGrid</a>
 
   <header id="hud">
     <div class="hud-stat"><span>Score</span><span id="ui-score" class="hud-val">0</span></div>

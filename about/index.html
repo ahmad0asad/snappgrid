@@ -4,14 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About SnappGrid — Free Daily Puzzle Games</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
 <meta name="description" content="SnappGrid is a free daily puzzle site. Crossword, word search, sudoku, trivia — fresh puzzles every day, no account needed.">
 <link rel="canonical" href="https://snappgrid.com/about/">
 <meta property="og:title" content="About SnappGrid — Free Daily Puzzle Games">
 <meta property="og:description" content="SnappGrid is a free daily puzzle site. Crossword, word search, sudoku, trivia — fresh puzzles every day, no account needed.">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snappgrid.com/about/">
-<meta property="og:image" content="https://snappgrid.com/assets/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About SnappGrid — Free Daily Puzzle Games">
 <meta name="twitter:description" content="SnappGrid is a free daily puzzle site. Crossword, word search, sudoku, trivia — fresh puzzles every day, no account needed.">
 <meta name="robots" content="index, follow">
@@ -55,9 +64,13 @@
 .btn-cta{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:var(--cream);padding:13px 26px;border-radius:var(--radius);font-size:14px;font-weight:600;text-decoration:none;box-shadow:3px 3px 0 var(--gold);transition:transform .15s,box-shadow .15s;}
 .btn-cta:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--gold);}
 @media(max-width:600px){.mission{grid-template-columns:1fr;}}
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
 </style>
 <body><nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a>
+  <a href="/" class="nav-logo" aria-label="SnappGrid home"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a>
   <ul class="nav-links" id="nav-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul>
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
     <span></span><span></span><span></span>

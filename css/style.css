@@ -142,3 +142,8 @@ footer{background:var(--ink);color:rgba(247,243,236,.6);padding:40px clamp(16px,
   .wdl-key{height:46px;min-width:clamp(28px,7vw,36px);padding:0 4px;font-size:12px;}
   .wdl-key.wide{min-width:clamp(42px,10vw,54px);font-size:10px;}
 }
+
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }

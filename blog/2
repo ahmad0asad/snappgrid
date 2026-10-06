@@ -140,9 +140,7 @@
       <li><a href="https://snappgrid.com/sudoku">Sudoku</a></li>
       <li><a href="https://snappgrid.com/crossword">Crossword</a></li>
       <li><a href="https://snappgrid.com/wordsearch">Word Search</a></li>
-      <li><a href="https://snappgrid.com/trivia">Trivia</a></li>
-      <li><a href="https://snappgrid.com/connections">Connections</a></li>
-      <li><a href="#blog" class="active">Blog</a></li>
+      <li><a href="https://snappgrid.com/trivia">Trivia</a></li><li><a href="#blog" class="active">Blog</a></li>
       <li><a href="https://snappgrid.com/" class="nav-cta">Play Free Games</a></li>
     </ul>
   </nav>
@@ -187,14 +185,7 @@
           <span class="next-card-desc">Visual scanning flow state designed to lower stress & anxiety.</span>
           <span class="next-card-arrow">&rarr;</span>
         </a>
-        <!-- Connections Link -->
-        <a href="https://snappgrid.com/connections" class="next-card">
-          <span class="next-card-label">Categorical Sorting</span>
-          <span class="next-card-title">Connections</span>
-          <span class="next-card-desc">Group secret word sets & beat the 2 PM afternoon slump.</span>
-          <span class="next-card-arrow">&rarr;</span>
-        </a>
-      </div>
+        </div>
     </section>
 
     <article class="article-body" id="blog">
@@ -290,7 +281,7 @@
       <h2>4. Beating the 2 PM Afternoon Slump with Connections & Trivia</h2>
       <p>It’s 2:15 PM on a Thursday afternoon. You’re staring at a spreadsheet or an email draft, and your brain feels completely stalled. For years, my default response was to walk to the breakroom and pour a third cup of coffee. But by 3:00 PM, all that extra caffeine gave me was jittery hands, a racing heart, and the exact same lack of mental clarity.</p>
 
-      <p>Replacing that afternoon coffee break with a quick session on <a href="https://snappgrid.com/connections" style="color:var(--gold); font-weight:700;">SnappGrid Connections</a> or <a href="https://snappgrid.com/trivia" style="color:var(--gold); font-weight:700;">Daily Trivia</a> proved to be a game-changer:</p>
+      <p>Replacing that afternoon coffee break with a quick session on  or <a href="https://snappgrid.com/trivia" style="color:var(--gold); font-weight:700;">Daily Trivia</a> proved to be a game-changer:</p>
 
       <ol>
         <li><strong>Categorical Sorting Cleanses Memory:</strong> Grouping sixteen words into four hidden categories forces your working memory buffer to flush out accumulated task fatigue.</li>
@@ -303,7 +294,7 @@
 
       <ul>
         <li><strong>Anchor to an Existing Habit:</strong> Pair your daily game time with morning coffee, your afternoon tea break, or your evening wind-down routine.</li>
-        <li><strong>Rotate Your Game Selection:</strong> Play <a href="https://snappgrid.com/sudoku">Sudoku</a> for logic on Monday, <a href="https://snappgrid.com/crossword">Crossword</a> for vocabulary on Tuesday, <a href="https://snappgrid.com/connections">Connections</a> for pattern recognition on Wednesday, and <a href="https://snappgrid.com/trivia">Trivia</a> for memory on Thursday.</li>
+        <li><strong>Rotate Your Game Selection:</strong> Play <a href="https://snappgrid.com/sudoku">Sudoku</a> for logic on Monday, <a href="https://snappgrid.com/crossword">Crossword</a> for vocabulary on Tuesday,  for pattern recognition on Wednesday, and <a href="https://snappgrid.com/trivia">Trivia</a> for memory on Thursday.</li>
         <li><strong>Keep It Screen-Free When Needed:</strong> For moments when you want to rest your eyes entirely from digital screens, paper puzzle workbooks offer a tactile, screen-free escape for your desk or bedside table.</li>
       </ul>
 
@@ -332,9 +323,7 @@
         <li><a href="https://snappgrid.com/sudoku">Daily Sudoku</a></li>
         <li><a href="https://snappgrid.com/crossword">Daily Crossword</a></li>
         <li><a href="https://snappgrid.com/wordsearch">Word Search</a></li>
-        <li><a href="https://snappgrid.com/trivia">Daily Trivia</a></li>
-        <li><a href="https://snappgrid.com/connections">Connections</a></li>
-      </ul>
+        <li><a href="https://snappgrid.com/trivia">Daily Trivia</a></li></ul>
       <p class="footer-copy">Copyright &copy; 2025-2026 SnappGrid Studio. All rights reserved. Play free daily casual brain games online.</p>
     </div>
   </footer>

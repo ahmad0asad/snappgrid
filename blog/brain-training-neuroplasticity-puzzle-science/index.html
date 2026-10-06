@@ -4,19 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Do Brain Games Work? Puzzles & Neuroplasticity Science Guide</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
   <meta name="description" content="The FTC sued Lumosity for $2M in false claims. What does the actual science say about puzzles and fluid intelligence? The research is more specific than you think.">
   <link rel="canonical" href="https://snappgrid.com/blog/brain-training-neuroplasticity-puzzle-science/">
   
   <meta property="og:title" content="Do Brain Games Work? Puzzles & Neuroplasticity Science Guide">
   <meta property="og:description" content="The FTC sued Lumosity for $2M in false claims. What does the actual science say about puzzles and fluid intelligence? The research is more specific than you think.">
-  <meta property="og:image" content="https://snappgrid.com/assets/og-blog-brain.png">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
   <meta property="og:url" content="https://snappgrid.com/blog/brain-training-neuroplasticity-puzzle-science/">
   <meta property="og:type" content="article">
   
-  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Do Brain Games Work? Puzzles & Neuroplasticity Science Guide">
   <meta name="twitter:description" content="The FTC sued Lumosity for $2M in false claims. What does the actual science say about puzzles and fluid intelligence?">
-  <meta name="twitter:image" content="https://snappgrid.com/assets/og-blog-brain.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -298,7 +306,11 @@
       .layout { flex-direction: column; }
       .toc { width: 100%; position: static; margin-bottom: 2rem; border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; }
     }
-  </style>
+  
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
+</style>
   <script>
     window.addEventListener('scroll', () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -312,9 +324,9 @@
   <div class="progress-bar" id="progressBar"></div>
   
   <header>
-    <a href="/" class="logo">SnappGrid</a>
+    <a href="/" class="logo"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> SnappGrid</a>
     <nav class="nav-links">
-      <a href="/lexigrid">LexiGrid</a>
+      <a href="/games/lexigrid/">LexiGrid</a>
       <a href="/books/">Books</a>
       <a href="/blog/">Blog</a>
     </nav>
@@ -408,7 +420,7 @@
           <h4 style="font-family:'Playfair Display',serif;font-size:18px;color:white;margin:0 0 6px;">Test Your Pattern Recognition in LexiGrid</h4>
           <p style="font-size:13px;color:rgba(255,255,255,.65);margin:0;">Free browser game &mdash; swipe letters, build words, beat the clock. No download, no login.</p>
         </div>
-        <a href="/lexigrid" style="background:#4f46e5;color:white;padding:10px 20px;border-radius:var(--radius-lg);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;">Play LexiGrid &rarr;</a>
+        <a href="/games/lexigrid/" style="background:#4f46e5;color:white;padding:10px 20px;border-radius:var(--radius-lg);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;">Play LexiGrid &rarr;</a>
       </aside>
 
       <p>The neuroanatomical research is sobering. A notable study by Loh & Kanai (2014) investigated media multitasking and brain structure. They found that individuals who reported high levels of concurrent media usage (e.g., browsing the web while watching television) exhibited lower grey matter density in the anterior cingulate cortex. This region of the brain is absolutely critical for attention control, error detection, and executive function.</p>
@@ -437,7 +449,7 @@
       
       <p>Logic grids are the most direct working memory and executive control exercises available outside of a psychological laboratory. Every time you apply a constraint ("The person wearing the blue shirt did not arrive at 3:00 PM"), you are forcing a massive working memory load. You must hold the current state of the grid, the specific text of the clue, and the overarching rule system in your mind simultaneously.</p>
       
-      <p>The evidence supporting this format is robust. Raven's Progressive Matrices is widely considered the gold-standard test for fluid intelligence (Gf). Performance on Raven's correlates strongly with performance on novel logic constraint tasks. Furthermore, research on cognitive reflection (e.g., Stanovich & West, 2000) indicates that individuals who regularly engage in complex logical deduction exhibit measurably higher resistance to cognitive biases and heuristic errors.</p>
+      <p>The evidence supporting this format is robust. Raven's Progressive Matrices is widely considered the gold-standard test for fluid intelligence (Gf). Performance on Raven's correlates strongly with performance on novel logic constraint tasks. In addition, research on cognitive reflection (e.g., Stanovich & West, 2000) indicates that individuals who regularly engage in complex logical deduction exhibit measurably higher resistance to cognitive biases and heuristic errors.</p>
       
       <div class="css-diagram logic-grid">
         <table>
@@ -541,8 +553,8 @@
             <h4 style="font-family:'Playfair Display',serif;font-size:20px;color:white;margin:0 0 8px;">Brain Boost Challenge</h4>
             <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 16px;line-height:1.7;">A structured 30-day cognitive workout combining memory exercises, logic grids, and pattern recognition — 15 minutes per day, progressive difficulty.</p>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <a href="/books/#brain-boost" style="background:var(--gold);color:var(--ink);padding:9px 18px;border-radius:var(--radius);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;">Buy Digital Edition ($8.99) &rarr;</a>
-              <a href="/books/#brain-boost" style="color:var(--gold-light);font-family:'DM Mono',monospace;font-size:12px;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--gold-light);">Preview Sample &rarr;</a>
+              <a href="/books/#brain-boost-challenge" style="background:var(--gold);color:var(--ink);padding:9px 18px;border-radius:var(--radius);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;">Buy Digital Edition ($8.99) &rarr;</a>
+              <a href="/books/#brain-boost-challenge" style="color:var(--gold-light);font-family:'DM Mono',monospace;font-size:12px;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--gold-light);">Preview Sample &rarr;</a>
             </div>
           </div>
         </div>
@@ -590,7 +602,7 @@
   <footer>
     <p>&copy; 2026 SnappGrid. All rights reserved.</p>
     <div class="nav-links">
-      <a href="/lexigrid">LexiGrid</a>
+      <a href="/games/lexigrid/">LexiGrid</a>
       <a href="/books/">Books</a>
       <a href="/">Home</a>
     </div>

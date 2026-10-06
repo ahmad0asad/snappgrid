@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puzzle Strategy & Brain Training — SnappGrid Blog</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
     <meta name="description" content="Expert guides on solving logic grids, crosswords, trivia mastery, and brain training science. Articles by Ahmad Asad.">
     <link rel="canonical" href="https://snappgrid.com/blog/">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
     <meta property="og:url" content="https://snappgrid.com/blog/">
     <meta property="og:title" content="Puzzle Strategy & Brain Training — SnappGrid Blog">
     <meta property="og:description" content="Expert guides on solving logic grids, crosswords, trivia mastery, and brain training science. Articles by Ahmad Asad.">
@@ -642,13 +653,17 @@
         .hidden {
             display: none !important;
         }
-    </style>
+    
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
+</style>
 </head>
 <body>
 
     <!-- Nav -->
     <nav class="navbar">
-        <a href="/" class="nav-brand">Snapp<span>Grid</span></a>
+        <a href="/" class="nav-brand"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a>
         <div class="nav-links">
             <a href="/">Home</a>
             <div class="dropdown">
@@ -660,7 +675,7 @@
                     <a href="/games/trivia/">Trivia</a>
                 </div>
             </div>
-            <a href="/lexigrid">LexiGrid</a>
+            <a href="/games/lexigrid/">LexiGrid</a>
             <a href="/books/">Books</a>
             <a href="/printables/">Printables</a>
             <a href="/blog/" class="active">Blog</a>
@@ -856,7 +871,7 @@
                 <div class="section-label mono" style="color:var(--gold); margin-bottom: 16px;">⚡ Sharp your vocabulary right now</div>
                 <h2>Play LexiGrid</h2>
                 <p>Swipe letters on a live grid, build combos, beat the clock. Free, no login, no download.</p>
-                <a href="/lexigrid" class="btn">Play LexiGrid &rarr;</a>
+                <a href="/games/lexigrid/" class="btn">Play LexiGrid &rarr;</a>
             </div>
         </section>
 
@@ -892,7 +907,7 @@
                     <li><a href="/games/wordsearch/">Word Search</a></li>
                     <li><a href="/games/sudoku/">Sudoku</a></li>
                     <li><a href="/games/trivia/">Trivia</a></li>
-                    <li><a href="/lexigrid">LexiGrid</a></li>
+                    <li><a href="/games/lexigrid/">LexiGrid</a></li>
                 </ul>
             </div>
             <div class="footer-col">

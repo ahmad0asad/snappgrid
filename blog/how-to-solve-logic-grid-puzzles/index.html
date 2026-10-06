@@ -4,22 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
     <title>Logic Grid Puzzles: The Detective's Grid Method — No Guessing</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
     <meta name="description" content="Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now.">
     <link rel="canonical" href="https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
     <meta property="og:url" content="https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/">
     <meta property="og:title" content="Logic Grid Puzzles: The Detective's Grid Method — No Guessing">
     <meta property="og:description" content="Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now.">
-    <meta property="og:image" content="https://snappgrid.com/assets/og-blog-logic.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://snappgrid.com/blog/how-to-solve-logic-grid-puzzles/">
     <meta property="twitter:title" content="Logic Grid Puzzles: The Detective's Grid Method — No Guessing">
     <meta property="twitter:description" content="Master logic grid puzzles with the 5-rule elimination method. Step-by-step walkthrough, interactive case file, and a free bonus puzzle to try right now.">
-    <meta property="twitter:image" content="https://snappgrid.com/assets/og-blog-logic.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -341,17 +350,21 @@
             .toc-sidebar { display: none; }
             .layout-container { justify-content: center; padding: 0 1rem; margin-top: 2rem; }
         }
-    </style>
+    
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
+</style>
 </head>
 <body>
     <div id="progress-bar"></div>
 
     <header class="site-nav">
-        <a href="/" class="logo">Snapp<span>Grid</span></a>
+        <a href="/" class="logo"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a>
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="/play">Games</a>
-            <a href="/lexigrid">LexiGrid</a>
+            <a href="/games/lexigrid/">LexiGrid</a>
             <a href="/books/">Books</a>
             <a href="/blog/" class="active">Blog</a>
             <a href="#subscribe" class="subscribe-btn">Subscribe</a>
@@ -365,10 +378,10 @@
             <a href="#what-makes-it-tick">What Makes a Logic Grid Tick</a>
             <a href="#anatomy">The Anatomy of the Elimination Matrix</a>
             <a href="#rules-of-deduction">The 5 Golden Rules of Deduction</a>
-            <a href="#walkthrough">Case Walkthrough: The Gallery Heist</a>
+            <a href="#walkthrough">Case Walkthrough: The Phantom's Fingerprint</a>
             <a href="#bonus-puzzle">Bonus Puzzle: Try It Yourself</a>
             <a href="#building-speed">Building Speed: From 40 Minutes to 12</a>
-            <a href="#more-cases">Why This Book Has 15 More Cases</a>
+            <a href="#more-cases">15 Cases in The 10-Minute Detective</a>
         </aside>
 
         <main class="article-content">
@@ -488,152 +501,101 @@
                 <h4 style="font-family:'Playfair Display',serif;font-size:18px;color:white;margin:0 0 6px;">Test Your Deduction Speed in LexiGrid</h4>
                 <p style="font-size:13px;color:rgba(255,255,255,.65);margin:0;">Free browser game &mdash; swipe letters, build words, beat the clock. No download, no login.</p>
               </div>
-              <a href="/lexigrid" style="background:#4f46e5;color:white;padding:10px 20px;border-radius:var(--radius-lg);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;">Play LexiGrid &rarr;</a>
+              <a href="/games/lexigrid/" style="background:#4f46e5;color:white;padding:10px 20px;border-radius:var(--radius-lg);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap;">Play LexiGrid &rarr;</a>
             </aside>
 
-            <h2 id="walkthrough">Case Walkthrough: The Gallery Heist (Step-by-Step)</h2>
+                                    <h2 id="walkthrough">Case Walkthrough: The Phantom's Fingerprint (Case 1 from The 10-Minute Detective)</h2>
 
-            <p>Let's apply the five rules to a controlled scenario. This is an introductory case featuring three suspects, three motives, and three locations within an art gallery.</p>
+            <p>To see the elimination method in action on authentic material, here is the full breakdown of Case File #1 directly from the manuscript of <em>The 10-Minute Detective</em> by Ahmad Asad.</p>
             
+            <div style="background:#f4f2ee;border-left:4px solid var(--gold);padding:18px 22px;border-radius:6px;margin:24px 0;font-size:15px;line-height:1.7;">
+                <strong>FORENSIC EVIDENCE LOG · CASE FILE #1</strong><br>
+                <em>"The glass display case holding the 16th-century Voss Manuscript is shattered. A partial fingerprint blazes under UV light on the inner rim. The artifact is gone. Four guests remain in the manor. One of them knows where it is."</em>
+            </div>
+
             <ul>
-                <li><strong>Suspects:</strong> Marcus (Guard), Diana (Curator), Elena (Restorer)</li>
-                <li><strong>Motives:</strong> Debt, Vendetta, Fraud</li>
-                <li><strong>Locations:</strong> Rooftop, Storage, Entrance</li>
+                <li><strong>Suspects:</strong> Suspect 1, Suspect 2, Suspect 3, Suspect 4</li>
+                <li><strong>Locations:</strong> Library, Study, Garden, Kitchen</li>
+                <li><strong>Weapons:</strong> Knife, Poison, Rope, Pistol</li>
+                <li><strong>Time Windows:</strong> 7 PM, 8 PM, 9 PM, 10 PM</li>
             </ul>
 
-            <p><strong>Clue 1: "The security guard (Marcus) was not on the rooftop."</strong><br>
-            Rule 1 applied. We place a negative constraint. Marcus / Rooftop = ✗.</p>
+            <p><strong>Clue 1: "The fingerprint was lifted from inside the Library's display case — the crime scene."</strong><br>
+            Direct positive anchor: The crime scene is conclusively established as the Library. The culprit must match the Library location.</p>
+
+            <p><strong>Clue 2: "Suspect 1 left the Study before the suspect who used the Knife had even arrived there."</strong><br>
+            Two deductions: First, Suspect 1 was stationed in the Study (✓ at Suspect 1 / Study, generating ✗ across all other locations for Suspect 1, confirming Suspect 1 is NOT the Library thief). Second, Suspect 1 did not use the Knife (Suspect 1 / Knife = ✗).</p>
+
+            <p><strong>Clue 3: "The crime was committed before 10 PM — the last guest departed at exactly that hour."</strong><br>
+            Negative constraint: 10 PM is eliminated for the crime timestamp (Crime / 10 PM = ✗).</p>
+
+            <p><strong>Clue 4: "Suspect 3 was seen in the Garden earlier in the evening than Suspect 4."</strong><br>
+            Temporal sequence: Suspect 3 was active earlier in the Garden before moving inside, while Suspect 4 remained until departure at 10 PM.</p>
+
+            <p><strong>Clue 5: "The Library suspect did not use Rope — no ligature evidence was found in that room."</strong><br>
+            Negative constraint: Library / Rope = ✗. With Suspect 1 in the Study and Suspect 2 matching the Rope ligature marks elsewhere, the remaining weapon matching the Library crime scene is isolated to Poison.</p>
 
             <div class="grid-wrapper">
                 <table class="logic-grid">
                     <tr>
                         <th style="background:white; border:none;"></th>
-                        <th class="header-top">Rooftop</th>
-                        <th class="header-top">Storage</th>
-                        <th class="header-top">Entrance</th>
+                        <th class="header-top">Library</th>
+                        <th class="header-top">Study</th>
+                        <th class="header-top">Garden</th>
+                        <th class="header-top">Kitchen</th>
+                        <th class="header-top" style="border-left: 3px solid var(--ink)">Knife</th>
+                        <th class="header-top">Poison</th>
+                        <th class="header-top">Rope</th>
+                        <th class="header-top">Pistol</th>
                     </tr>
                     <tr>
-                        <th>Marcus</th>
+                        <th>Suspect 1</th>
                         <td class="cell-x">✗</td>
-                        <td class="cell-o">○</td>
-                        <td class="cell-o">○</td>
-                    </tr>
-                    <tr>
-                        <th>Diana</th>
-                        <td class="cell-o">○</td>
-                        <td class="cell-o">○</td>
-                        <td class="cell-o">○</td>
-                    </tr>
-                    <tr>
-                        <th>Elena</th>
-                        <td class="cell-o">○</td>
-                        <td class="cell-o">○</td>
-                        <td class="cell-o">○</td>
-                    </tr>
-                </table>
-            </div>
-
-            <p><strong>Clue 2: "Diana, who does not need money, was found at the front entrance."</strong><br>
-            This clue contains two data points. First, "does not need money" eliminates the 'Debt' and 'Fraud' motives for Diana. Using Rule 3 (Last Man Standing), Diana's motive must be Vendetta. Second, Diana is at the Entrance. We place a ✓ at Diana/Entrance, and fill the rest of her row and column with ✗.</p>
-
-            <div class="grid-wrapper">
-                <table class="logic-grid">
-                    <tr>
-                        <th style="background:white; border:none;"></th>
-                        <th class="header-top">Rooftop</th>
-                        <th class="header-top">Storage</th>
-                        <th class="header-top">Entrance</th>
-                        <th class="header-top" style="border-left: 3px solid var(--ink)">Debt</th>
-                        <th class="header-top">Vendetta</th>
-                        <th class="header-top">Fraud</th>
-                    </tr>
-                    <tr>
-                        <th>Marcus</th>
+                        <td class="cell-v">✓</td>
                         <td class="cell-x">✗</td>
-                        <td class="cell-o">○</td>
                         <td class="cell-x">✗</td>
-                        <td style="border-left: 3px solid var(--ink)" class="cell-o">○</td>
+                        <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
                         <td class="cell-x">✗</td>
-                        <td class="cell-o">○</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
                     </tr>
                     <tr>
-                        <th>Diana</th>
+                        <th>Suspect 2</th>
+                        <td class="cell-x">✗</td>
                         <td class="cell-x">✗</td>
                         <td class="cell-x">✗</td>
                         <td class="cell-v">✓</td>
                         <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
                         <td class="cell-v">✓</td>
                         <td class="cell-x">✗</td>
                     </tr>
                     <tr>
-                        <th>Elena</th>
-                        <td class="cell-o">○</td>
-                        <td class="cell-o">○</td>
-                        <td class="cell-x">✗</td>
-                        <td style="border-left: 3px solid var(--ink)" class="cell-o">○</td>
-                        <td class="cell-x">✗</td>
-                        <td class="cell-o">○</td>
-                    </tr>
-                </table>
-            </div>
-
-            <p>Look at Marcus's location row. Rooftop is ✗. Entrance is ✗. By Rule 3, Marcus MUST be in Storage (✓). Consequently, Elena MUST be on the Rooftop (✓).</p>
-
-            <p><strong>Clue 3: "The person in the storage room committed insurance fraud."</strong><br>
-            We already proved Marcus is in the Storage room. Therefore, applying Rule 2 (Transitive Links), Marcus is the one who committed Fraud. We check Marcus/Fraud. This means Elena must be the one with Debt.</p>
-
-            <div class="grid-wrapper">
-                <table class="logic-grid">
-                    <tr>
-                        <th style="background:white; border:none;"></th>
-                        <th class="header-top">Rooftop</th>
-                        <th class="header-top">Storage</th>
-                        <th class="header-top">Entrance</th>
-                        <th class="header-top" style="border-left: 3px solid var(--ink)">Debt</th>
-                        <th class="header-top">Vendetta</th>
-                        <th class="header-top">Fraud</th>
-                    </tr>
-                    <tr>
-                        <th>Marcus</th>
-                        <td class="cell-x">✗</td>
+                        <th>Suspect 3</th>
                         <td class="cell-v">✓</td>
                         <td class="cell-x">✗</td>
-                        <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
-                        <td class="cell-x">✗</td>
-                        <td class="cell-v">✓</td>
-                    </tr>
-                    <tr>
-                        <th>Diana</th>
                         <td class="cell-x">✗</td>
                         <td class="cell-x">✗</td>
-                        <td class="cell-v">✓</td>
                         <td style="border-left: 3px solid var(--ink)" class="cell-x">✗</td>
                         <td class="cell-v">✓</td>
                         <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
                     </tr>
                     <tr>
-                        <th>Elena</th>
-                        <td class="cell-v">✓</td>
+                        <th>Suspect 4</th>
                         <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
+                        <td class="cell-v">✓</td>
                         <td class="cell-x">✗</td>
                         <td style="border-left: 3px solid var(--ink)" class="cell-v">✓</td>
                         <td class="cell-x">✗</td>
                         <td class="cell-x">✗</td>
+                        <td class="cell-x">✗</td>
                     </tr>
                 </table>
             </div>
 
-            <p>The matrix is fully solved. We never guessed. We never assumed. We simply mapped the constraints mechanically until the only remaining possibilities were the objective truth. If you try to jump ahead of the logic, you invite error. The grid is infallible; the solver is not.</p>
-
-            <figure style="margin:36px 0;">
-              <img src="/assets/images/blog/logic-grid-3x3-solved.svg" 
-                   alt="Solved 3x3 logic deduction grid showing The Gallery Heist case file solution with checkmarks and eliminations" 
-                   width="560" 
-                   height="310" 
-                   loading="lazy"
-                   style="width:100%;height:auto;border-radius:var(--radius-lg);">
-              <figcaption style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-muted);text-align:center;margin-top:10px;letter-spacing:.3px;">The Gallery Heist Solved Logic Grid</figcaption>
-            </figure>
+            <p><strong>The Final Verdict:</strong> Through mechanical constraint cascading, the alibi matrix forces a unique solution: <strong>Culprit: Suspect 3 · Weapon: Poison · Crime Scene: Library · Window: 9 PM</strong>. Zero guessing required.</p>
 
             <h2 id="bonus-puzzle">Bonus Puzzle: Try It Yourself</h2>
 
@@ -731,7 +693,7 @@
             
             <p><strong>Pass 3: The Temporal Crunch.</strong> Now you engage with the heavy logic. Map out the "before/after" sequences on a scratchpad. The board is already populated with dozens of 'X's from the first two passes, meaning the temporal possibilities are radically constrained. The sequence practically builds itself.</p>
 
-            <p>If you practice this exact cadence—one puzzle per day for fourteen days—your completion time will plummet. The cognitive friction disappears. You stop translating the words into concepts and start translating the words directly into geometry. If you want to warm up your raw pattern-recognition speed before hitting a massive grid, spend ten minutes on <a href="/lexigrid" class="internal-link">LexiGrid</a> to get your neural pathways firing.</p>
+            <p>If you practice this exact cadence—one puzzle per day for fourteen days—your completion time will plummet. The cognitive friction disappears. You stop translating the words into concepts and start translating the words directly into geometry. If you want to warm up your raw pattern-recognition speed before hitting a massive grid, spend ten minutes on <a href="/games/lexigrid/" class="internal-link">LexiGrid</a> to get your neural pathways firing.</p>
 
             <h2 id="more-cases">Why This Book Has 15 More Cases Like It</h2>
 
@@ -752,14 +714,18 @@
 
             <aside class="book-cta" style="margin:40px 0;padding:28px;background:rgba(26,23,20,.96);border:1px solid var(--gold-light);border-radius:var(--radius-xl);backdrop-filter:blur(12px);">
               <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
-                <img src="/assets/images/books/book-true-crime-logic.svg" alt="The 10-Minute Detective cover" width="100" height="130" style="border-radius:6px;flex-shrink:0;" loading="lazy">
+                <div style="width:90px;height:120px;background:linear-gradient(145deg, #1f0f0f, #3b1818);border:1px solid rgba(255,255,255,0.2);border-radius:6px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8px;color:#fff;font-family:'Playfair Display',serif;font-size:12px;box-shadow:0 4px 15px rgba(0,0,0,0.5);flex-shrink:0;">
+                  <span style="font-family:'DM Mono',monospace;font-size:8px;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Logic</span>
+                  The 10-Minute Detective
+                  <span style="font-family:'DM Sans',sans-serif;font-size:8px;color:#aaa;margin-top:6px;">Ahmad Asad</span>
+                </div>
                 <div style="flex:1;min-width:200px;">
-                  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;">Logic Grid &bull; Digital Edition (PDF)</div>
-                  <h4 style="font-family:'Playfair Display',serif;font-size:20px;color:white;margin:0 0 8px;">The 10-Minute Detective</h4>
-                  <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 16px;line-height:1.7;">15 true crime case files — evidence boards, suspect charts, and full logic grids. The Gallery Heist is Case File #1.</p>
+                  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;">Logic &amp; Deduction &bull; Digital Edition (PDF)</div>
+                  <h4 style="font-family:'Playfair Display',serif;font-size:20px;color:white;margin:0 0 8px;">The 10-Minute Detective: True Crime Logic Puzzles for Adults</h4>
+                  <p style="font-size:13px;color:rgba(255,255,255,.7);margin:0 0 16px;line-height:1.7;">15 complete case files with evidence cards, forensic alibi matrices, and verified solutions. Case 1 ("The Phantom's Fingerprint") is included above.</p>
                   <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <a href="/books/#true-crime-logic" style="background:var(--gold);color:var(--ink);padding:9px 18px;border-radius:var(--radius);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;">Buy Digital Edition ($9.99) &rarr;</a>
-                    <a href="/books/#true-crime-logic" style="color:var(--gold-light);font-family:'DM Mono',monospace;font-size:12px;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--gold-light);">Preview Sample &rarr;</a>
+                    <a href="/books/#the-10-minute-detective" class="lemonsqueezy-button" data-checkout="#" style="background:var(--gold);color:var(--ink);padding:9px 18px;border-radius:var(--radius);font-weight:700;text-decoration:none;font-family:'DM Mono',monospace;font-size:12px;">Buy Digital Edition ($7.99) &rarr;</a>
+                    <a href="/books/#the-10-minute-detective" style="color:var(--gold-light);font-family:'DM Mono',monospace;font-size:12px;text-decoration:none;padding:9px 0;border-bottom:1px solid var(--gold-light);">Preview Sample &rarr;</a>
                   </div>
                 </div>
               </div>

@@ -4,13 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Free Daily Crossword Puzzle — SnappGrid</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
 <meta name="description" content="Play today's free mini crossword. 5 words, 5×5 grid, clues across and down. New puzzle every day — no login needed.">
 <link rel="canonical" href="https://snappgrid.com/games/crossword/">
 <meta property="og:title" content="Free Daily Crossword Puzzle — SnappGrid">
 <meta property="og:description" content="Play today's free mini crossword. 5 words, 5×5 grid, clues across and down. New puzzle every day — no login needed.">
+  <meta property="og:image" content="https://snappgrid.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://snappgrid.com/og-image.jpg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snappgrid.com/games/crossword/">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="index,follow">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SnappGrid Daily Crossword","applicationCategory":"GameApplication","url":"https://snappgrid.com/games/crossword/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -60,9 +70,13 @@ footer{content-visibility:auto;contain-intrinsic-size:0 150px;}
 .archive-link{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gold-light);padding-bottom:1px;}
 @media(max-width:720px){:root{--cell:46px;}.game-layout{grid-template-columns:1fr;gap:20px;}.cw-grid{margin:0 auto;}.cl{font-size:20px;}}
 @media(max-width:420px){:root{--cell:38px;}.cl{font-size:16px;}}
+
+/* SnappGrid Brand Nav Logo Alignment */
+.nav-logo, .nav-brand, .logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav-logo img, .nav-brand img, .logo img, img.nav-logo { display: inline-block; vertical-align: middle; border-radius: 4px; flex-shrink: 0; }
 </style>
 <body>
-<nav aria-label="Main navigation"><a href="/" class="nav-logo" aria-label="SnappGrid home">Snapp<span>Grid</span></a><ul class="nav-links" id="nav-links"><li><a href="/games/crossword/" class="active">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul><button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" id="hamburger"><span></span><span></span><span></span></button></nav>
+<nav aria-label="Main navigation"><a href="/" class="nav-logo" aria-label="SnappGrid home"><img src="/favicon-32x32.png" width="32" height="32" alt="SnappGrid Logo" class="nav-logo"> Snapp<span>Grid</span></a><ul class="nav-links" id="nav-links"><li><a href="/games/crossword/" class="active">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#subscribe" class="nav-cta">Subscribe</a></li></ul><button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu" id="hamburger"><span></span><span></span><span></span></button></nav>
 <div class="ad-wrap"><div class="ad-slot ad-top" aria-label="Advertisement">Advertisement</div></div>
 <div class="page-header">
   <div>
@@ -106,12 +120,12 @@ footer{content-visibility:auto;contain-intrinsic-size:0 150px;}
 </div>
 <div class="ad-wrap" style="margin-bottom:40px;"><div class="ad-slot ad-bottom" aria-label="Advertisement">Advertisement</div></div>
 <div class="next-section" style="max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,60px) 60px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-  <a href="/games/connections/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Connections</div><div class="next-card-desc">Group 16 words into 4 hidden categories.</div><div class="next-card-arrow">→</div></a>
-  <a href="/games/wordle/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Wordle</div><div class="next-card-desc">Guess the 5-letter word in 6 tries.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/wordsearch/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Word Search</div><div class="next-card-desc">Find hidden words in the daily letter grid.</div><div class="next-card-arrow">→</div></a>
+  <a href="/games/sudoku/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Sudoku</div><div class="next-card-desc">Fill every row, column, and 3×3 box.</div><div class="next-card-arrow">→</div></a>
   <a href="/games/trivia/" class="next-card"><div class="next-card-label">Also today</div><div class="next-card-title">Trivia</div><div class="next-card-desc">10 daily questions across mixed topics.</div><div class="next-card-arrow">→</div></a>
 </div>
 <div class="refresh-toast" id="refresh-toast">🎉 New puzzles ready!<button onclick="location.reload()">Refresh</button></div>
-<footer><div class="footer-inner"><a href="/" class="footer-logo">SnappGrid</a><ul class="footer-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/games/connections/">Connections</a></li><li><a href="/games/wordle/">Wordle</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul><div class="footer-copy">&copy; <span id="yr"></span> SnappGrid &middot; Free daily puzzles</div></div></footer>
+<footer><div class="footer-inner"><a href="/" class="footer-logo">SnappGrid</a><ul class="footer-links"><li><a href="/games/crossword/">Crossword</a></li><li><a href="/games/wordsearch/">Word Search</a></li><li><a href="/games/sudoku/">Sudoku</a></li><li><a href="/games/trivia/">Trivia</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul><div class="footer-copy">&copy; <span id="yr"></span> SnappGrid &middot; Free daily puzzles</div></div></footer>
 <script src="puzzles.js"></script>
 <script>
 
