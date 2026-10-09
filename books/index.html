@@ -1080,7 +1080,7 @@
     </div>
   </div>
 
-  <!-- Direct Digital Download / Purchase Modal -->
+  <!-- Direct Digital Download / Purchase Modal (Fallback only) -->
   <div id="comingSoonModal" class="modal-backdrop">
     <div class="modal-glass">
       <button class="modal-close" aria-label="Close" onclick="closeModal('comingSoonModal')">&times;</button>
@@ -1163,7 +1163,7 @@
               <span>Price: ${book.price}</span>
             </div>
             <div class="book-actions">
-              <button class="btn btn-gold buy-btn lemonsqueezy-button" data-checkout="${book.checkoutUrl}" data-book-id="${book.id}">Buy Digital Edition (PDF)</button>
+              <a href="${book.checkoutUrl}" class="btn btn-gold buy-btn lemonsqueezy-button" data-checkout="${book.checkoutUrl}" data-book-id="${book.id}">Buy Digital Edition (PDF)</a>
               <button class="btn btn-outline preview-btn" data-book-id="${book.id}">Preview Sample &rarr;</button>
               <span class="physical-badge">Physical Edition: Direct Order Coming Soon</span>
               ${companionHTML}
@@ -1173,6 +1173,11 @@
         
         booksList.appendChild(card);
       });
+
+      // Re-initialize Lemon Squeezy overlay for dynamically rendered links
+      if (window.createLemonSqueezy) {
+        window.createLemonSqueezy();
+      }
     }
 
     // Modal Opening & Closing Utilities
@@ -1192,7 +1197,20 @@
       const buyBtn = e.target.closest('.buy-btn');
       if (buyBtn) {
         const bookId = buyBtn.getAttribute('data-book-id');
-        const book = BOOKS_BY_ID[bookId];
+        const book = (typeof BOOKS_BY_ID !== 'undefined') ? BOOKS_BY_ID[bookId] : null;
+        const checkoutUrl = book ? book.checkoutUrl : buyBtn.getAttribute('href');
+
+        // If a real Lemon Squeezy link is present, let Lemon Squeezy overlay handle it
+        if (checkoutUrl && checkoutUrl !== '#' && checkoutUrl.startsWith('http')) {
+          if (window.LemonSqueezy && typeof window.LemonSqueezy.Url?.Open === 'function') {
+            e.preventDefault();
+            window.LemonSqueezy.Url.Open(checkoutUrl);
+          }
+          return; // Allow standard link navigation if Lemon Squeezy script is still initializing
+        }
+
+        // Fallback: Open waitlist voucher modal ONLY if no checkout URL is configured
+        e.preventDefault();
         if (book) {
           document.getElementById('comingSoonBookTitle').textContent = book.title;
           document.getElementById('comingSoonBookTitleInline').textContent = book.title;
@@ -1209,7 +1227,7 @@
       const previewBtn = e.target.closest('.preview-btn');
       if (previewBtn) {
         const bookId = previewBtn.getAttribute('data-book-id');
-        const book = BOOKS_BY_ID[bookId];
+        const book = (typeof BOOKS_BY_ID !== 'undefined') ? BOOKS_BY_ID[bookId] : null;
         if (book) {
           renderInteractivePreview(book);
           openModal('previewModal');
@@ -1279,8 +1297,7 @@
               <tbody>
                 ${data.suspects.map(s => `
                   <tr>
-                    <td><strong>${s}</strong></td>
-                    ${data.locations.map(() => `<td class="matrix-cell" onclick="cycleMatrixCell(this)">&nbsp;</td>`).join('')}
+                    <td><strong>${s}</strong></td>${data.locations.map(() => `<td class="matrix-cell" onclick="cycleMatrixCell(this)">&nbsp;</td>`).join('')}
                   </tr>
                 `).join('')}
               </tbody>
@@ -1364,7 +1381,7 @@
                 <h5>ACROSS (5 Letters)</h5>
                 ${data.across.map(c => `
                   <div class="cw-clue-item" onclick="focusCrosswordRow(${c.row})">
-                    <strong>${c.num}.</strong> ${c.clue}
+                    <strong>${c.num}.</strong>${c.clue}
                   </div>
                 `).join('')}
               </div>
@@ -1372,7 +1389,7 @@
                 <h5>DOWN (7 Letters)</h5>
                 ${data.down.map(c => `
                   <div class="cw-clue-item" onclick="focusCrosswordCol(${c.col})">
-                    <strong>${c.num}.</strong> ${c.clue}
+                    <strong>${c.num}.</strong>${c.clue}
                   </div>
                 `).join('')}
               </div>
@@ -1439,7 +1456,7 @@
           <div class="trivia-cards-stack">
             ${data.questions.map((q, idx) => `
               <div class="trivia-qcard">
-                <div class="trivia-qtext">${idx + 1}. ${q.q}</div>
+                <div class="trivia-qtext">${idx + 1}.${q.q}</div>
                 <div class="trivia-options">
                   ${q.options.map((opt, optIdx) => `
                     <button class="trivia-opt-btn" onclick="checkTriviaAnswer(this, ${optIdx === q.correct}, '${escapeHtml(q.explanation)}')">${opt}</button>
@@ -1472,7 +1489,7 @@
             <h4 style="margin:0 0 12px;color:var(--gold-light);font-size:14px;">04 · Topic Word Scrambles (World Geography)</h4>
             ${data.scrambles.map((sc, idx) => `
               <div class="scramble-row">
-                <span><strong>${idx + 1}.</strong> ${sc.scrambled} <span style="color:var(--ink-muted);font-size:12px;">(${sc.clue})</span></span>
+                <span><strong>${idx + 1}.</strong>${sc.scrambled} <span style="color:var(--ink-muted);font-size:12px;">(${sc.clue})</span></span>
                 <div style="display:flex;gap:6px;align-items:center;">
                   <input type="text" class="scramble-input" placeholder="ANSWER" oninput="checkScramble(this, '${sc.answer}')">
                   <span class="scramble-status" style="width:20px;text-align:center;"></span>
@@ -1648,7 +1665,6 @@
         btn.classList.add('correct');
       } else {
         btn.classList.add('wrong');
-        // highlight correct one
         buttons.forEach(b => {
           if (b.onclick.toString().includes('true')) {
             b.classList.add('correct');
