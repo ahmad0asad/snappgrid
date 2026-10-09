@@ -12,10 +12,10 @@ const BOOKS_CATALOG = [
     genreColor: '#C0392B',
     coverBg: 'linear-gradient(145deg, #1f0f0f, #3b1818)',
     spineColor: '#8E1B1B',
-    price: '$7.99',
+    price: '$4.99',
     pages: '96 Pages',
     puzzles: '15 Full Case Files',
-    difficulty: 'Progressive (Tiers 1–3)',
+    difficulty: 'Progressive (Tiers 1-3)',
     blurb: 'Step into the shoes of a lead investigator. Each case presents evidence logs, suspect profiles, forensic clues, and a multi-grid alibi tracking matrix. Eliminate the impossible until only the truth remains.',
     features: [
       '15 full case files with evidence cards',
@@ -24,7 +24,7 @@ const BOOKS_CATALOG = [
       'Complete verified solution keys'
     ],
     pdfUrl: '/assets/books/the-10-minute-detective.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/5a5179eb-b427-4a16-ac8b-4b515f95c5d2',
     companionUrl: '/blog/how-to-solve-logic-grid-puzzles/',
     sampleType: 'logic-matrix',
     sampleTitle: "Case 1: The Phantom's Fingerprint",
@@ -58,7 +58,7 @@ const BOOKS_CATALOG = [
     genreColor: '#16A085',
     coverBg: 'linear-gradient(145deg, #0d2621, #134239)',
     spineColor: '#116B59',
-    price: '$8.99',
+    price: '$4.99',
     pages: '113 Pages',
     puzzles: '100+ Grid Challenges',
     difficulty: 'Progressive',
@@ -70,7 +70,7 @@ const BOOKS_CATALOG = [
       'Step-by-step solutions for every puzzle'
     ],
     pdfUrl: '/assets/books/critical-thinking-puzzle-book.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/086e341a-7f23-47a6-926b-455f46ad0be3',
     companionUrl: '/blog/advanced-logic-grid-deduction-techniques/',
     sampleType: 'math-grid',
     sampleTitle: 'Futoshiki FT-01 & Binary BP-01',
@@ -129,7 +129,7 @@ const BOOKS_CATALOG = [
     genreColor: '#2980B9',
     coverBg: 'linear-gradient(145deg, #0e2436, #153c5b)',
     spineColor: '#1F618D',
-    price: '$7.99',
+    price: '$4.99',
     pages: '80 Pages',
     puzzles: '30 Thematic Grids',
     difficulty: 'Medium-to-Hard',
@@ -141,7 +141,7 @@ const BOOKS_CATALOG = [
       'Complete verified solution keys'
     ],
     pdfUrl: '/assets/books/crossword-puzzles-for-adults.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/6abc3c0c-166a-4c29-8fb5-7e9d1f7c34bc',
     companionUrl: '/blog/crossword-puzzle-solving-strategies-guide/',
     sampleType: 'crossword-grid',
     sampleTitle: 'Puzzle 01: Logic & Reason',
@@ -170,7 +170,7 @@ const BOOKS_CATALOG = [
     genreColor: '#8E44AD',
     coverBg: 'linear-gradient(145deg, #221230, #381a52)',
     spineColor: '#6C3483',
-    price: '$7.99',
+    price: '$4.99',
     pages: '100+ Pages',
     puzzles: '30 Daily Regimens',
     difficulty: 'Progressive Challenge',
@@ -182,7 +182,7 @@ const BOOKS_CATALOG = [
       'Daily reflection & mental clarity tracking'
     ],
     pdfUrl: '/assets/books/brain-boost-challenge.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/25d44dfd-6b89-44f6-afc1-8c9b3ea929f5',
     companionUrl: '/blog/brain-training-neuroplasticity-puzzle-science/',
     sampleType: 'brain-matrix',
     sampleTitle: 'Matrix Puzzle 1 & Hobbies Logic Puzzle',
@@ -222,7 +222,7 @@ const BOOKS_CATALOG = [
     genreColor: '#D35400',
     coverBg: 'linear-gradient(145deg, #2e1709, #4a240c)',
     spineColor: '#A04000',
-    price: '$6.99',
+    price: '$4.99',
     pages: '170+ Pages',
     puzzles: '630 Questions',
     difficulty: 'Moderate to Shocking',
@@ -234,7 +234,7 @@ const BOOKS_CATALOG = [
       'Answer keys & Knowledge Rank scorecard'
     ],
     pdfUrl: '/assets/books/forbidden-history.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/50d2013d-a3c6-48de-812b-99125c182355',
     companionUrl: '/blog/world-history-trivia-memorization-techniques/',
     sampleType: 'trivia-round',
     sampleTitle: 'Chapter 1: The Dark Side of the Ancient World',
@@ -287,7 +287,7 @@ const BOOKS_CATALOG = [
     genreColor: '#27AE60',
     coverBg: 'linear-gradient(145deg, #0e2918, #184729)',
     spineColor: '#1E8449',
-    price: '$6.99',
+    price: '$4.99',
     pages: '190+ Pages',
     puzzles: '720 Questions',
     difficulty: 'All Levels',
@@ -299,7 +299,7 @@ const BOOKS_CATALOG = [
       'Engaging solo or dinner-party game rounds'
     ],
     pdfUrl: '/assets/books/food-culture-how-the-world-eats.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/845bbf5a-48f4-4ad0-8d14-80a540e74c06',
     companionUrl: '/blog/science-trivia-facts-and-mnemonics/',
     sampleType: 'trivia-round',
     sampleTitle: 'Chapter 1: The Soul of Italian Food',
@@ -352,7 +352,7 @@ const BOOKS_CATALOG = [
     genreColor: '#C8922A',
     coverBg: 'linear-gradient(145deg, #2b1f09, #47320c)',
     spineColor: '#9A6B1A',
-    price: '$6.99',
+    price: '$4.99',
     pages: '180+ Pages',
     puzzles: '630 Questions',
     difficulty: 'Mixed Curiosities',
@@ -364,7 +364,7 @@ const BOOKS_CATALOG = [
       'Ideal for curious solo minds or pub quiz hosts'
     ],
     pdfUrl: '/assets/books/unbelievable-but-true-trivia.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/5535d843-0c37-4857-9815-c360be897988',
     companionUrl: '/blog/science-of-trivia-memory-recall/',
     sampleType: 'trivia-round',
     sampleTitle: 'Nature & Animal Anomalies',
@@ -417,7 +417,7 @@ const BOOKS_CATALOG = [
     genreColor: '#2A6EA6',
     coverBg: 'linear-gradient(145deg, #0e2033, #163654)',
     spineColor: '#1B4F72',
-    price: '$6.99',
+    price: '$4.99',
     pages: '140+ Pages',
     puzzles: '420 Questions',
     difficulty: 'Tiered (Easy to Expert)',
@@ -429,7 +429,7 @@ const BOOKS_CATALOG = [
       'Full answer key and knowledge tier ranking'
     ],
     pdfUrl: '/assets/books/ultimate-general-knowledge-trivia-challenge.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/390bc649-a253-41cf-8296-59ba760f0a8f',
     companionUrl: '/blog/geography-trivia-mnemonics-guide/',
     sampleType: 'trivia-round',
     sampleTitle: 'Chapter 1: World Geography',
@@ -482,7 +482,7 @@ const BOOKS_CATALOG = [
     genreColor: '#5A3A8A',
     coverBg: 'linear-gradient(145deg, #1c1033, #2e1852)',
     spineColor: '#4A235A',
-    price: '$8.99',
+    price: '$4.99',
     pages: '160+ Pages',
     puzzles: '250 Mixed Challenges',
     difficulty: 'Mixed Variety',
@@ -494,7 +494,7 @@ const BOOKS_CATALOG = [
       'Word scrambles & true/false fact checks'
     ],
     pdfUrl: '/assets/books/knowledge-quest-250-puzzles.pdf',
-    checkoutUrl: '#',
+    checkoutUrl: 'https://snappgrid.lemonsqueezy.com/checkout/buy/6615b4d1-6911-445c-8705-5b2fc95af29b',
     companionUrl: '/blog/pop-culture-cinema-trivia-mastery/',
     sampleType: 'mixed-quest',
     sampleTitle: 'Chapter 1: World Geography Cryptogram & Scrambles',
@@ -525,7 +525,12 @@ const BOOKS_BY_ID = BOOKS_CATALOG.reduce((acc, book) => {
   return acc;
 }, {});
 
-// Export for module or global use
+// Make available to browser and node environments
+if (typeof window !== 'undefined') {
+  window.BOOKS_CATALOG = BOOKS_CATALOG;
+  window.BOOKS_BY_ID = BOOKS_BY_ID;
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { BOOKS_CATALOG, BOOKS_BY_ID };
 }
